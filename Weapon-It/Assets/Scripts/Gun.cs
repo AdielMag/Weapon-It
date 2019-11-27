@@ -26,7 +26,9 @@ public class Gun : Weapon
     private void FixedUpdate()
     {
         targetRot = Vector3.Lerp(targetRot, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(targetRot), Time.deltaTime * 10);
+        transform.localRotation =
+            Quaternion.Lerp(transform.localRotation,
+            Quaternion.Euler(targetRot), Time.deltaTime * recoilRcoveryMultiplier * 4);
 
         targetPos = Vector3.Lerp(targetPos, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localPosition = 
@@ -52,10 +54,10 @@ public class Gun : Weapon
         targetRot -= transform.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
 
         // Set Y rot Recoil.
-        targetRot -= transform.up * Random.Range(-recoilForce, recoilForce) / 3f;
+        targetRot -= transform.up * Random.Range(-recoilForce, recoilForce) / 7f;
 
         // Set Z rot Recoil.
-        targetRot -= transform.forward * Random.Range(-recoilForce, recoilForce) / 2;
+        targetRot -= transform.forward * Random.Range(-recoilForce, recoilForce) / 5;
 
 
         //Set pos recoil.
@@ -75,7 +77,7 @@ public class Gun : Weapon
     {
         slidePosDiffrence = (slideOrigPos.z - slide.transform.localPosition.z) * 10;
         // Check if the transform rotation is back to normal - so can shoot again.
-        if (!canShoot && slidePosDiffrence < .02f)
+        if (!canShoot && slidePosDiffrence < .01f)
         {
             canShoot = true;
         }

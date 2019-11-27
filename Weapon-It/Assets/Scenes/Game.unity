@@ -315,11 +315,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunRange: 30
-  fireSpeed: 10
-  rotRecoilAmount: 150
-  posRecoilAmount: 4
+  recoilRcoveryMultiplier: 5
+  recoilForce: 10
   slide: {fileID: 247645551}
-  slideRecoilModifier: 20
   shellExit: {fileID: 0}
   canShoot: 0
 --- !u!1 &566434321
@@ -976,11 +974,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunRange: 50
-  fireSpeed: 10
-  rotRecoilAmount: 150
-  posRecoilAmount: 4
+  recoilRcoveryMultiplier: 6
+  recoilForce: 12
   slide: {fileID: 1306525965}
-  slideRecoilModifier: 20
   shellExit: {fileID: 0}
   canShoot: 0
 --- !u!1 &1950840671
