@@ -25,21 +25,25 @@ public class Gun : Weapon
 
     private void FixedUpdate()
     {
-        targetRot = Vector3.Lerp(targetRot, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
+
+        // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
+        #region Lerping
+        targetRot = 
+            Vector3.Lerp(targetRot, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localRotation =
             Quaternion.Lerp(transform.localRotation,
             Quaternion.Euler(targetRot), Time.deltaTime * recoilRcoveryMultiplier * 4);
 
-        targetPos = Vector3.Lerp(targetPos, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
+        targetPos = 
+            Vector3.Lerp(targetPos, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localPosition = 
             Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * recoilRcoveryMultiplier);
 
-        slideTargetPos = Vector3.Lerp(slideTargetPos, slideOrigPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
+        slideTargetPos = 
+            Vector3.Lerp(slideTargetPos, slideOrigPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
         slide.localPosition = 
             Vector3.Lerp(slide.localPosition, slideTargetPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
-
-       // if (Input.GetMouseButtonDown(0))
-       //     Shoot();
+        #endregion
 
         CheckIfCanShoot();
     }

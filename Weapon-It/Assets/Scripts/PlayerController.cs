@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
-        RotatePlayer();
+        NewRotatePlayer();
+        //RotatePlayer();
         HandleTargetDetection();
     }
 
@@ -51,6 +52,28 @@ public class PlayerController : MonoBehaviour
 
         // Lerp position
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * movementSpeed);
+    }
+
+    Vector3 lerpTargetVar, targetLookAt;
+    void NewRotatePlayer()
+    {
+        CalculatePosDelta();
+
+        // Check the angle of the forward to the current rot
+        angleDiffFromForward = Vector3.Angle(transform.forward, Vector3.forward);
+
+        // Check if there's a target on sight
+        if (currentTarget.transform != null)
+        {
+            lerpTargetVar = currentTarget.transform.position;
+        }
+        else
+        {
+            lerpTargetVar = transform.position + Vector3.forward * 20;
+        }
+
+        targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 15);
+        transform.LookAt(targetLookAt);
     }
 
     Vector3 targetRotation = Vector3.zero;
@@ -71,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
             // Rotate towards target.
             targetRotation = Vector3.Lerp(targetRotation, -Vector3.up * angleDiffTowardTarget.x  
-                + Vector3.right * angleDiffTowardTarget.y, Time.deltaTime * 15);
+                + Vector3.right * angleDiffTowardTarget.y * 1.5f, Time.deltaTime * 15);
         }
         else
         {
