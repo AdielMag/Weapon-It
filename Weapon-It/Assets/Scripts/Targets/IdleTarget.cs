@@ -8,7 +8,7 @@ public class IdleTarget : Target
     public override int lifePoints() { return health; }
 
     float movingSpeed = 3;
-    public override float speed() { return movingSpeed; }
+    public override float forwardMovSpeed() { return movingSpeed; }
 
 
     Rigidbody rb;
@@ -20,6 +20,6 @@ public class IdleTarget : Target
 
     private void FixedUpdate()
     {
-        rb.velocity = -Vector3.forward * speed() * 5;
+        rb.velocity = -Vector3.forward * forwardMovSpeed() * 5;
     }
 }

@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
     public int currentLevel;
+    float levelMaxTime, levelStartTime;
 
+    public Slider levelTimeIndicator;
+
+    [Space]
     // Array of level gameobejcts that will store the levels prefabs
     public GameObject[] levelsPrefabs;
 
@@ -21,9 +26,15 @@ public class LevelController : MonoBehaviour
         SpawnAllLevels();
     }
 
+    private void Update()
+    {
+        if (startedLevel)
+            levelTimeIndicator.value = (levelMaxTime - Time.time - levelStartTime) /levelMaxTime ;
+    }
+
     public void SpawnAllLevels()
     {
-        Vector3 levelStartPos = levelsParent.transform.position = Vector3.forward * 80;
+        Vector3 levelStartPos = levelsParent.transform.position = Vector3.forward * 150;
 
         foreach (GameObject level in levelsPrefabs)
             Instantiate(level, levelsParent.transform).SetActive(false);
@@ -42,8 +53,31 @@ public class LevelController : MonoBehaviour
             return;
         }
 
+        levelStartTime = Time.time;
+        levelMaxTime = levelTime(levelNum);
+
         levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
         levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
+
+        startedLevel = true;
+    }
+
+    float levelTime(int levelNum)
+    {
+        // Get the level last obejct
+        Transform lastObject =
+            levelsParent.transform.GetChild(levelNum - 1).
+            GetChild(levelsParent.transform.GetChild(levelNum - 1).childCount -1);
+
+        // time = distance / speed
+
+        float time =
+            Vector3.Distance(transform.position, lastObject.position)
+            /
+            13
+            ;
+
+        return time;
     }
 
     public void ResetLevel() { }

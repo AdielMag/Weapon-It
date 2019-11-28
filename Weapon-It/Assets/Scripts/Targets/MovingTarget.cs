@@ -10,11 +10,12 @@ public class MovingTarget : Target
     int health = 1;
     public override int lifePoints() { return health; }
 
-    float movingSpeed = 3;
-    public override float speed() { return movingSpeed; }
+    float zMovingSpeed = 3;
+    public override float forwardMovSpeed() { return zMovingSpeed; }
 
     // Used to control which direction to move (on x,y axis).
     Vector2 movementDirection;
+    public override Vector2 sidesMoveDir() { return movementDirection; }
 
     Rigidbody rb;
 
@@ -61,7 +62,7 @@ public class MovingTarget : Target
             ChangeDir();
         }
 
-        rb.velocity = -Vector3.forward * speed() * 5 + (Vector3)movementDirection * speed();
+        rb.velocity = -Vector3.forward * forwardMovSpeed() * 5 + (Vector3)movementDirection * forwardMovSpeed();
     }
 
     void ChangeDir()

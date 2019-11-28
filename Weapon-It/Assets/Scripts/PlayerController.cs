@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     public float movementSpeed = 3;
+    public int movementRotationForce = 15;
     public float yOffset; // Offset weapon Y location.
     public float gameWidth;
     public float heightMultiplier; // Multiply input.y precentage.
@@ -65,11 +66,15 @@ public class PlayerController : MonoBehaviour
         // Check if there's a target on sight
         if (currentTarget.transform != null)
         {
-            lerpTargetVar = currentTarget.transform.position;
+            lerpTargetVar = targetFuturePos();
         }
         else
         {
-            lerpTargetVar = transform.position + Vector3.forward * 20;
+            // Set target for lerp with fixed forward and wth posDelta variables
+            lerpTargetVar = transform.position
+                + Vector3.forward * 20
+                + posDelta.y * Vector3.up * movementRotationForce
+                + posDelta.x * Vector3.right * movementRotationForce;
         }
 
         targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 10);
@@ -98,6 +103,8 @@ public class PlayerController : MonoBehaviour
         // Check if there isn't a target
         if (currentTarget.transform == null)
         {
+            // If there isn't -  try and box cast with larger 
+            // (check for target that arent straight forward)
             Physics.BoxCast(transform.position, rayHalfExtents, Vector3.forward,
                 out currentTarget, Quaternion.identity, weaponRange, targetLayerMask);
         }
@@ -107,7 +114,7 @@ public class PlayerController : MonoBehaviour
         {
             // Check if can shoot
             if (currentWeapon.canAttack())
-                currentWeapon.Attack(projectileForward());
+                currentWeapon.Attack(transform.forward);
 
             // Set target Indicator location.
             tarIndiactor.SetLocation(currentTarget.transform.position);
@@ -121,10 +128,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Calculate projectile forward
-    Vector3 projectileForward()
+    // Calculate target future position
+    float distanceFromTarget,travelTime;
+    Vector3 targetFuturePos()
     {
-        return transform.forward;
+        // Get Distance
+        distanceFromTarget = Vector3.Distance(
+            transform.position,
+            currentTarget.transform.position);
+
+        // Calculae travel time
+        travelTime = distanceFromTarget / 60;
+
+        /* 
+         * FuturePosition = 
+         * currentTargetPosition +
+         * targetVelocity(movmentDirection and force) *
+         * travelTime
+        */
+
+        Vector3 targetPos =
+            currentTarget.transform.position +
+            currentTarget.transform.GetComponent<Rigidbody>().velocity *
+            travelTime;
+
+        return targetPos;
     }
 
     // Called by the Gun script 

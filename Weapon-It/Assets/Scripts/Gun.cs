@@ -70,6 +70,10 @@ public class Gun : Weapon
             Quaternion.Euler(muzzle.forward))
             .GetComponent<Rigidbody>().AddForce(
             projectileForward * 60, ForceMode.VelocityChange);
+        // BE CAREFUL AND DONT CHANGE FORWARD MULTIPLIER!
+        // If you change this one - you will need to chage the one in 
+        //'PController.projectileForward' formula!
+
 
         #region Recoil
         // Set X rot recoil.
@@ -108,7 +112,8 @@ public class Gun : Weapon
     }
 
 
-    // Detect Collision with target - used from here beacuse the collider is on this obj.
+    // Detect Collision with target 
+    // - used from here beacuse the collider is on this obj -.
     // (Check 'PlayerController' for more information)
     private void OnTriggerEnter(Collider other)
     {

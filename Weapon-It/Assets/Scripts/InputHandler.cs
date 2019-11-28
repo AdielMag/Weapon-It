@@ -34,7 +34,7 @@ public class InputHandler : MonoBehaviour
         // TEMPORARY - Clamp the movement.y to prevent the weapon from getting too high.
         // Replace it later with a logarithmic function that moves the weapon less when getting too high
 
-        inputPrecentage.y = Mathf.Clamp(inputPrecentage.y, .1f, .4f);
+        inputPrecentage.y = Mathf.Clamp(inputPrecentage.y, .05f, .5f);
 #endif
     }
 }
