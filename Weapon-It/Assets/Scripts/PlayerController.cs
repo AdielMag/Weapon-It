@@ -35,8 +35,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
-        NewRotatePlayer();
-        //RotatePlayer();
+        RotatePlayer();
         HandleTargetDetection();
     }
 
@@ -55,7 +54,8 @@ public class PlayerController : MonoBehaviour
     }
 
     Vector3 lerpTargetVar, targetLookAt;
-    void NewRotatePlayer()
+    float angleDiffFromForward;
+    void RotatePlayer()
     {
         CalculatePosDelta();
 
@@ -72,46 +72,13 @@ public class PlayerController : MonoBehaviour
             lerpTargetVar = transform.position + Vector3.forward * 20;
         }
 
-        targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 15);
+        targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 10);
         transform.LookAt(targetLookAt);
     }
 
-    Vector3 targetRotation = Vector3.zero;
-    float angleDiffFromForward;
-    void RotatePlayer()
-    {
-        CalculatePosDelta();
-
-        // Check the angle of the forward to the current rot
-        angleDiffFromForward = Vector3.Angle(transform.forward, Vector3.forward);
-
-        // Check if there's a target on sight
-        if (currentTarget.transform != null)
-        {
-            // Get the X and Y diffrence between player pos and target pos
-            Vector3 angleDiffTowardTarget = new Vector3(transform.position.x - currentTarget.transform.position.x
-                ,transform.position.y - currentTarget.transform.position.y) * 3;
-
-            // Rotate towards target.
-            targetRotation = Vector3.Lerp(targetRotation, -Vector3.up * angleDiffTowardTarget.x  
-                + Vector3.right * angleDiffTowardTarget.y * 1.5f, Time.deltaTime * 15);
-        }
-        else
-        {
-            // Multiply the vector by the axis(once for X second for Y) and the delta (the diffrence from last pos)
-            targetRotation += (Vector3.up * posDelta.x - Vector3.right * posDelta.y * 1.5f) * 16;
-
-            // Lerp the location to zero - so it return to the regular 
-            // rotation (which is the forward -not coded as forward, made in the scene- in this case).
-            targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, Time.deltaTime * 15);
-
-        }
-
-        transform.rotation = Quaternion.Euler(targetRotation);
-    }
-
     Vector2 lastPos, currentPos,posDelta;
-    void CalculatePosDelta()                // Calculates the diffrence from this pos to last frame pos.
+    // Calculates the diffrence from this pos to last frame pos.
+    void CalculatePosDelta()                
     {
         currentPos = transform.position;
 
@@ -140,7 +107,7 @@ public class PlayerController : MonoBehaviour
         {
             // Check if can shoot
             if (currentWeapon.canAttack())
-                currentWeapon.Attack();
+                currentWeapon.Attack(projectileForward());
 
             // Set target Indicator location.
             tarIndiactor.SetLocation(currentTarget.transform.position);
@@ -153,4 +120,18 @@ public class PlayerController : MonoBehaviour
             tarIndiactor.onTarget = false;
         }
     }
+
+    // Calculate projectile forward
+    Vector3 projectileForward()
+    {
+        return transform.forward;
+    }
+
+    // Called by the Gun script 
+    // (Because the collider is on him - for diffrent type of colliders for diffrent weapons)
+    public void CollisionDetected()
+    {
+        Debug.Log("Dead");
+    }
+
 }

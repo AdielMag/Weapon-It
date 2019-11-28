@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Weapon :MonoBehaviour
 {
-    public virtual void Attack()
-    {
-    }
+    public virtual void Attack() { }
+    public virtual void Attack(Vector3 projectileForward) { }
 
     public virtual bool canAttack()
     {

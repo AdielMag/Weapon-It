@@ -11,21 +11,24 @@ public class Gun : Weapon
     public Transform slide;
     Vector3 slideOrigPos;
 
+    public Transform muzzle;
     public Transform shellExit;
+
+    ObjectPooler objPool;
 
     private void Start()
     {
+        objPool = ObjectPooler.instance;
+
         slideOrigPos = slide.localPosition;
 
         // Set the weapons correct pos and rot.
         targetPos = transform.localPosition;
         slideTargetPos = slideOrigPos;
-
     }
 
     private void FixedUpdate()
     {
-
         // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
         #region Lerping
         targetRot = 
@@ -51,9 +54,24 @@ public class Gun : Weapon
     Vector3 targetRot;
     Vector3 targetPos;
     Vector3 slideTargetPos;
-    public void Shoot()
+    public void Shoot( Vector3 projectileForward)
     {
+        // Spawn Muzzle
+        objPool.SpawnFromPool(
+            "Simple_Muzzle",
+            muzzle.transform.position,
+            Quaternion.Euler(muzzle.forward));
 
+        // Spawn Bullet and add projectileForward. 
+        // ProjectileForward being calculated in 'PlayerController'.
+        objPool.SpawnFromPool(
+            "Simple_Bullet",
+            muzzle.transform.position,
+            Quaternion.Euler(muzzle.forward))
+            .GetComponent<Rigidbody>().AddForce(
+            projectileForward * 60, ForceMode.VelocityChange);
+
+        #region Recoil
         // Set X rot recoil.
         targetRot -= transform.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
 
@@ -71,6 +89,8 @@ public class Gun : Weapon
         slideTargetPos -=
             Vector3.forward * (Random.Range(recoilForce * .85f, recoilForce) / (recoilForce * 2.5f));
 
+        #endregion
+
         canShoot = false;
     }
 
@@ -87,12 +107,21 @@ public class Gun : Weapon
         }
     }
 
-    // Used to ovverirde the Weapon stuff :)
-    public override void Attack()
+
+    // Detect Collision with target - used from here beacuse the collider is on this obj.
+    // (Check 'PlayerController' for more information)
+    private void OnTriggerEnter(Collider other)
     {
-        Shoot();
+        transform.parent.GetComponent<PlayerController>().CollisionDetected();
     }
 
+    // Used to override the Weapon stuff :)
+    public override void Attack(Vector3 projectileForward)
+    {
+        //base.Attack(projectileForward);
+        Shoot(projectileForward);
+
+    }
     public override bool canAttack()
     {
         return canShoot;
