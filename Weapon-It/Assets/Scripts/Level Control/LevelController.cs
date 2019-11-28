@@ -8,7 +8,7 @@ public class LevelController : MonoBehaviour
     public int currentLevel;
     float levelMaxTime, levelStartTime;
 
-    public Slider levelTimeIndicator;
+    public Slider levelProgressIndicator;
 
     [Space]
     // Array of level gameobejcts that will store the levels prefabs
@@ -17,19 +17,25 @@ public class LevelController : MonoBehaviour
     // Spawned level parent - used to call them when needed.
     GameObject levelsParent;
 
+    GameManager gMan;
+
     private void Awake()
     {
         levelsParent = new GameObject("Levels Parent");
+    }
 
-        // TEMPORARY! NEED TO THIS FROM MANAGER
-        Debug.LogWarning("TEMPORARY!");
-        SpawnAllLevels();
+    private void Start()
+    {
+        gMan = GameManager.instance;
     }
 
     private void Update()
     {
-        if (startedLevel)
-            levelTimeIndicator.value = (levelMaxTime - Time.time - levelStartTime) /levelMaxTime ;
+        // Update level progress indicator
+        // 1 - (maxTime -(time - startTime)) / maxTime.
+        if (gMan.levelInProgress)
+            levelProgressIndicator.value =
+               1 - ((levelMaxTime - (Time.time - levelStartTime)) /levelMaxTime) ;
     }
 
     public void SpawnAllLevels()
@@ -59,7 +65,7 @@ public class LevelController : MonoBehaviour
         levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
         levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
 
-        startedLevel = true;
+        gMan.levelInProgress = true;
     }
 
     float levelTime(int levelNum)
@@ -79,6 +85,9 @@ public class LevelController : MonoBehaviour
 
         return time;
     }
+
+    public void LostLevel()
+    { }
 
     public void ResetLevel() { }
     public void HideAllTargets() { }

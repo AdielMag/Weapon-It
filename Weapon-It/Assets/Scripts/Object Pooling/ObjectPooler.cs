@@ -28,14 +28,7 @@ public class ObjectPooler : MonoBehaviour
     }
     #endregion
 
-    private void Start()
-    {
-        // TEMPORARY! NEED TO THIS FROM MANAGER
-        Debug.LogWarning("TEMPORARY!");
-        StartLevel();
-    }
-
-    public void StartLevel()
+    public void InstantiatePools()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 

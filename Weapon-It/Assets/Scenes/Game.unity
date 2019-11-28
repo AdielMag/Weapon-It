@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 0
-  levelTimeIndicator: {fileID: 1828820971}
+  levelProgressIndicator: {fileID: 1828820971}
   levelsPrefabs:
   - {fileID: 8074278532002807130, guid: d1fedb542160c954ca8b844676b41dd4, type: 3}
   - {fileID: 8074278532002807130, guid: 8fd38d097484d7c4a9b8340e7afa4b47, type: 3}
@@ -989,6 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8bfc6b72daf9347ae1280f126b0aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelInProgress: 0
 --- !u!1 &1112252777
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,7 +2085,7 @@ GameObject:
   - component: {fileID: 1828820970}
   - component: {fileID: 1828820971}
   m_Layer: 5
-  m_Name: Level Completion Indicator
+  m_Name: Level Progress Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

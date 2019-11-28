@@ -12,5 +12,19 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    
+    [HideInInspector]
+    // Used to check if level is currently running
+    public bool levelInProgress;
+
+    ObjectPooler objPooler;
+    LevelController levelCon;
+
+    private void Start()
+    {
+        objPooler = ObjectPooler.instance;
+        levelCon = GetComponentInChildren<LevelController>();
+
+        objPooler.InstantiatePools();
+        levelCon.SpawnAllLevels();
+    }
 }
