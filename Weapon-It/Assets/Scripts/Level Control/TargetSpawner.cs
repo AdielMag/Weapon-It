@@ -12,17 +12,20 @@ public class TargetSpawner : MonoBehaviour
 
     public void SpawnObj()
     {
+        GameObject spawnedObject;
         switch (type)
         {
-            case TargetType.Regular:
-                ObjectPooler.instance.SpawnFromPool
+            case TargetType.Moving:
+                spawnedObject = ObjectPooler.instance.SpawnFromPool
+                    ("Moving_Target", transform.position, Quaternion.identity);
+                spawnedObject.GetComponent<MovingTarget>().axis = axis;
+                break;
+            default:
+                spawnedObject = ObjectPooler.instance.SpawnFromPool
                     ("Regular_Target", transform.position, Quaternion.identity);
                 break;
-            case TargetType.Moving:
-                ObjectPooler.instance.SpawnFromPool
-                    ("Moving_Target", transform.position, Quaternion.identity)
-                    .GetComponent<MovingTarget>().axis = axis;
-                break;
         }
+
+        GameManager.instance.levelCon.currentLevelTargets.Add(spawnedObject.GetComponent<Target>());
     }
 }

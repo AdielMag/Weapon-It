@@ -105,19 +105,10 @@ public class Gun : Weapon
     {
         slidePosDiffrence = (slideOrigPos.z - slide.transform.localPosition.z) * 10;
         // Check if the transform rotation is back to normal - so can shoot again.
-        if (!canShoot && slidePosDiffrence < .01f)
+        if (!canShoot && slidePosDiffrence < .002f)
         {
             canShoot = true;
         }
-    }
-
-
-    // Detect Collision with target 
-    // - used from here beacuse the collider is on this obj -.
-    // (Check 'PlayerController' for more information)
-    private void OnTriggerEnter(Collider other)
-    {
-        transform.parent.GetComponent<PlayerController>().CollisionDetected();
     }
 
     // Used to override the Weapon stuff :)

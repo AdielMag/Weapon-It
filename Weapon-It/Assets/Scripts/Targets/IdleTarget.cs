@@ -10,7 +10,6 @@ public class IdleTarget : Target
     float movingSpeed = 3;
     public override float forwardMovSpeed() { return movingSpeed; }
 
-
     Rigidbody rb;
 
     private void Start()

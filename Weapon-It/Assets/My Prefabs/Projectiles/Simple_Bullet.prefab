@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4695893403733595776}
   - component: {fileID: 4897993618505019104}
   - component: {fileID: 4897674248181639016}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4816,7 +4816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4698774559234291796}
   - component: {fileID: 4642831221455511828}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4952,7 +4952,7 @@ GameObject:
   - component: {fileID: 4695917732226081126}
   - component: {fileID: 4897987018855052570}
   - component: {fileID: 4899857348235863052}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SparkTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9775,7 +9775,7 @@ GameObject:
   - component: {fileID: 3257342307761629100}
   - component: {fileID: -2459403111196772606}
   - component: {fileID: 7112854753112359634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Simple_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14632,6 +14632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerSeconds: 5
+  projectileDamage: 1
 --- !u!136 &7112854753112359634
 CapsuleCollider:
   m_ObjectHideFlags: 0

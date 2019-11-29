@@ -22,11 +22,13 @@ public class PlayerController : MonoBehaviour
 
     RaycastHit currentTarget;   // Current target to aim and shoot at.
 
+    GameManager gMan;
     InputHandler inputH;
     Weapon currentWeapon;
 
     void Start()
     {
+        gMan = GameManager.instance;
         inputH = InputHandler.instance;
         currentWeapon = transform.GetChild(0).GetComponent<Weapon>();
 
@@ -137,29 +139,29 @@ public class PlayerController : MonoBehaviour
             transform.position,
             currentTarget.transform.position);
 
-        // Calculae travel time
-        travelTime = distanceFromTarget / 60;
+        // If the target is close - set the bullet speed super fast (to get current pos)
+        if (distanceFromTarget < 40)
+
+            travelTime = distanceFromTarget / 600;
+        else
+            // Calculae travel time
+            travelTime = distanceFromTarget / 60;
+
 
         /* 
          * FuturePosition = 
+         * Y offset
          * currentTargetPosition +
          * targetVelocity(movmentDirection and force) *
          * travelTime
         */
 
         Vector3 targetPos =
+            Vector3.up * -1 +
             currentTarget.transform.position +
             currentTarget.transform.GetComponent<Rigidbody>().velocity *
             travelTime;
 
         return targetPos;
     }
-
-    // Called by the Gun script 
-    // (Because the collider is on him - for diffrent type of colliders for diffrent weapons)
-    public void CollisionDetected()
-    {
-        Debug.Log("Dead");
-    }
-
 }

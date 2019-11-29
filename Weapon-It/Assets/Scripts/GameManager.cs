@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     public bool levelInProgress;
 
     ObjectPooler objPooler;
-    LevelController levelCon;
+    [HideInInspector]
+    public LevelController levelCon;
 
     private void Start()
     {

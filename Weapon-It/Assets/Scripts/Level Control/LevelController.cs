@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
-    public int currentLevel;
     float levelMaxTime, levelStartTime;
 
     public Slider levelProgressIndicator;
@@ -16,6 +15,9 @@ public class LevelController : MonoBehaviour
 
     // Spawned level parent - used to call them when needed.
     GameObject levelsParent;
+
+    // Used to control active targets (Count them, disable them)
+    public List<Target> currentLevelTargets = new List<Target>();
 
     GameManager gMan;
 
@@ -87,7 +89,17 @@ public class LevelController : MonoBehaviour
     }
 
     public void LostLevel()
-    { }
+    {
+        gMan.levelInProgress = false;
+
+        //Disable all target
+        for(int i = 0; i< currentLevelTargets.Count; i++)
+        {
+            currentLevelTargets[i].TargetDestroyed();
+        }
+
+        currentLevelTargets.Clear();
+    }
 
     public void ResetLevel() { }
     public void HideAllTargets() { }
