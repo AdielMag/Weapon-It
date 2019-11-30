@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour
     public TargetIndiactor tarIndiactor;
     void HandleTargetDetection()
     {
-        Physics.BoxCast(transform.position, rayHalfExtents / 2, Vector3.forward,
+        Vector3 originPoint = transform.position;
+        Physics.BoxCast(originPoint, rayHalfExtents / 2, Vector3.forward,
             out currentTarget, Quaternion.identity, weaponRange, targetLayerMask);
 
         // Check if there isn't a target
@@ -107,7 +108,7 @@ public class PlayerController : MonoBehaviour
         {
             // If there isn't -  try and box cast with larger 
             // (check for target that arent straight forward)
-            Physics.BoxCast(transform.position, rayHalfExtents, Vector3.forward,
+            Physics.BoxCast(originPoint, rayHalfExtents, Vector3.forward,
                 out currentTarget, Quaternion.identity, weaponRange, targetLayerMask);
         }
         
@@ -125,7 +126,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             // Set target Indicator location.
-            tarIndiactor.SetLocation(transform.position + transform.forward * weaponRange);
+            tarIndiactor.SetLocation(originPoint + transform.forward * weaponRange);
             tarIndiactor.onTarget = false;
         }
     }

@@ -110,7 +110,7 @@ public class Gun : Weapon
             canShoot = true;
         }
     }
-
+    
     // Used to override the Weapon stuff :)
     public override void Attack(Vector3 projectileForward)
     {
