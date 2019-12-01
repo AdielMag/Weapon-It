@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IdleTarget : Target
 {
-    int health = 1;
+    int health = 1000;
     public override int lifePoints() { return health; }
 
     float movingSpeed = 3;

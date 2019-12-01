@@ -16,41 +16,52 @@ public class PlayerController : MonoBehaviour
     public int movementRotationForce = 15;
     public float yOffset; // Offset weapon Y location.
     public float gameWidth;
-    public float heightMultiplier; // Multiply input.y precentage.
+    public float targetIndicatorYMultiplier = 20; // Multiply input.y precentage.
 
-    float weaponRange;
-
-    RaycastHit currentTarget;   // Current target to aim and shoot at.
 
     GameManager gMan;
+    WeaponController weaponCon;
+    Animator anim;
     InputHandler inputH;
-    Weapon currentWeapon;
 
     void Start()
     {
         gMan = GameManager.instance;
+        weaponCon = GetComponent<WeaponController>();
+        anim = GetComponent<Animator>();
         inputH = InputHandler.instance;
-        currentWeapon = transform.GetChild(0).GetComponent<Weapon>();
 
-        weaponRange = currentWeapon.weaponRange();
+
+        // Set the look from the start 
+        // (if not will lerp from Vector3.zero and will look weird)
+        targetLookAt = transform.position
+                + Vector3.forward * 20
+                + posDelta.y * Vector3.up * movementRotationForce
+                + posDelta.x * Vector3.right * movementRotationForce;
     }
 
     void Update()
     {
         MovePlayer();
         RotatePlayer();
-        HandleTargetDetection();
+
+        HandleAnimations();
     }
 
+    void HandleAnimations()
+    {
+        anim.SetFloat("Horizontal", posDelta.x * 5);
+        anim.SetBool("Aim",weaponCon.TargetDetected);
+    }
 
     Vector2 targetPos;
     void MovePlayer()
     {
         // Use input precentage to set width location.
-        targetPos.x = Mathf.Lerp(-gameWidth, gameWidth, inputH.inputPrecentage.x); 
+        targetPos.x = Mathf.Lerp(-gameWidth, gameWidth, inputH.inputPrecentage.x);
 
         // Multiply precentage by the multiplier and add offset.
-        targetPos.y = yOffset + inputH.inputPrecentage.y * heightMultiplier;
+        targetPos.y = yOffset;
 
         // Lerp position
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * movementSpeed);
@@ -66,9 +77,9 @@ public class PlayerController : MonoBehaviour
         angleDiffFromForward = Vector3.Angle(transform.forward, Vector3.forward);
 
         // Check if there's a target on sight
-        if (currentTarget.transform != null)
+        if (weaponCon.TargetDetected)
         {
-            lerpTargetVar = targetFuturePos();
+            lerpTargetVar = weaponCon.targetFuturePos();
         }
         else
         {
@@ -80,6 +91,7 @@ public class PlayerController : MonoBehaviour
         }
 
         targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 10);
+        targetLookAt.y = 0;     // Dont want the player yo rotate in the Y axis
         transform.LookAt(targetLookAt);
     }
 
@@ -94,75 +106,22 @@ public class PlayerController : MonoBehaviour
         lastPos = currentPos;
     }
 
-    Vector3 rayHalfExtents = new Vector3(1.6f, 1.6f, .2f);
-    public LayerMask targetLayerMask;
-    public TargetIndiactor tarIndiactor;
-    void HandleTargetDetection()
+    public void ShotRecoil()
     {
-        Vector3 originPoint = transform.position;
-        Physics.BoxCast(originPoint, rayHalfExtents / 2, Vector3.forward,
-            out currentTarget, Quaternion.identity, weaponRange, targetLayerMask);
+        /*
+        // Set X rot recoil.
+        targetRot -= transform.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
 
-        // Check if there isn't a target
-        if (currentTarget.transform == null)
-        {
-            // If there isn't -  try and box cast with larger 
-            // (check for target that arent straight forward)
-            Physics.BoxCast(originPoint, rayHalfExtents, Vector3.forward,
-                out currentTarget, Quaternion.identity, weaponRange, targetLayerMask);
-        }
-        
-        // Check again after second boxcast
-        if (currentTarget.transform != null)
-        {
-            // Check if can shoot
-            if (currentWeapon.canAttack())
-                currentWeapon.Attack(transform.forward);
+        // Set Y rot Recoil.
+        targetRot -= transform.up * Random.Range(-recoilForce, recoilForce) / 7f;
 
-            // Set target Indicator location.
-            tarIndiactor.SetLocation(currentTarget.transform.position);
-            tarIndiactor.onTarget = true;
-        }
-        else
-        {
-            // Set target Indicator location.
-            tarIndiactor.SetLocation(originPoint + transform.forward * weaponRange);
-            tarIndiactor.onTarget = false;
-        }
-    }
-
-    // Calculate target future position
-    float distanceFromTarget,travelTime;
-    Vector3 targetFuturePos()
-    {
-        // Get Distance
-        distanceFromTarget = Vector3.Distance(
-            transform.position,
-            currentTarget.transform.position);
-
-        // If the target is close - set the bullet speed super fast (to get current pos)
-        if (distanceFromTarget < 40)
-
-            travelTime = distanceFromTarget / 600;
-        else
-            // Calculae travel time
-            travelTime = distanceFromTarget / 60;
+        // Set Z rot Recoil.
+        targetRot -= transform.forward * Random.Range(-recoilForce, recoilForce) / 5;
 
 
-        /* 
-         * FuturePosition = 
-         * Y offset
-         * currentTargetPosition +
-         * targetVelocity(movmentDirection and force) *
-         * travelTime
+        //Set pos recoil.
+        targetPos -= transform.parent.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) / 5f;
         */
-
-        Vector3 targetPos =
-            Vector3.up * -1 +
-            currentTarget.transform.position +
-            currentTarget.transform.GetComponent<Rigidbody>().velocity *
-            travelTime;
-
-        return targetPos;
     }
+
 }

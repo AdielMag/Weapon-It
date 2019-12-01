@@ -8,6 +8,9 @@ public class Gun : Weapon
     public float recoilRcoveryMultiplier = 5;
     public float recoilForce = 10;
 
+    Vector3 gunOrigRot;
+    Vector3 gunOrigPos;
+
     public Transform slide;
     Vector3 slideOrigPos;
 
@@ -20,6 +23,9 @@ public class Gun : Weapon
     {
         objPool = ObjectPooler.instance;
 
+        gunOrigPos = transform.localPosition;
+        gunOrigRot = transform.localEulerAngles;
+
         slideOrigPos = slide.localPosition;
 
         // Set the weapons correct pos and rot.
@@ -29,16 +35,17 @@ public class Gun : Weapon
 
     private void FixedUpdate()
     {
+        return;
         // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
         #region Lerping
         targetRot = 
-            Vector3.Lerp(targetRot, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
+            Vector3.Lerp(targetRot, gunOrigRot, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localRotation =
             Quaternion.Lerp(transform.localRotation,
             Quaternion.Euler(targetRot), Time.deltaTime * recoilRcoveryMultiplier * 4);
 
         targetPos = 
-            Vector3.Lerp(targetPos, Vector3.zero, Time.deltaTime * recoilRcoveryMultiplier);
+            Vector3.Lerp(targetPos, gunOrigPos, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localPosition = 
             Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * recoilRcoveryMultiplier);
 
@@ -74,26 +81,11 @@ public class Gun : Weapon
         // If you change this one - you will need to chage the one in 
         //'PController.projectileForward' formula!
 
-
-        #region Recoil
-        // Set X rot recoil.
-        targetRot -= transform.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
-
-        // Set Y rot Recoil.
-        targetRot -= transform.up * Random.Range(-recoilForce, recoilForce) / 7f;
-
-        // Set Z rot Recoil.
-        targetRot -= transform.forward * Random.Range(-recoilForce, recoilForce) / 5;
-
-
-        //Set pos recoil.
-        targetPos -= transform.parent.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) / 5f;
+        PlayerCon().ShotRecoil();
 
         // Set slide pos recoil.
         slideTargetPos -=
             Vector3.forward * (Random.Range(recoilForce * .85f, recoilForce) / (recoilForce * 2.5f));
-
-        #endregion
 
         canShoot = false;
     }
@@ -118,13 +110,7 @@ public class Gun : Weapon
         Shoot(projectileForward);
 
     }
-    public override bool canAttack()
-    {
-        return canShoot;
-    }
+    public override bool CanAttack => canShoot;
 
-    public override float weaponRange ()
-    {
-        return gunRange;
-    }
+    public override float WeaponRange => gunRange;
 }
