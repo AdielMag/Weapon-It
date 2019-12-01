@@ -13,6 +13,8 @@ public class WeaponController : MonoBehaviour
     public float WeaponRange { get; private set; }
     public Weapon CurrentWeapon { get; private set; }
 
+    float gunRecoilRcoveryMultiplier;
+
     PlayerController pCon;
     Animator anim;
 
@@ -27,11 +29,41 @@ public class WeaponController : MonoBehaviour
         CurrentWeapon.GetComponent<Gun>().pCon = pCon;
         // Get range
         WeaponRange = CurrentWeapon.WeaponRange;
+
+        gunRecoilRcoveryMultiplier = 
+            CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
+
+        rightHandIK = shoulder.GetChild(0);
+        leftHandIK = shoulder.GetChild(1);
+
+        // Set gun orig pos and rot
+        gunOrigLocalRot = shoulder.localRotation.eulerAngles;
+        gunOrigLocalPos = shoulder.localPosition;
+
+        targetPos = gunOrigLocalPos;
+        targetRot = gunOrigLocalRot;
     }
 
     private void Update()
     {
         HandleTargetDetection();
+
+
+        // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
+        targetRot =
+            Vector3.Lerp(targetRot, gunOrigLocalRot, Time.deltaTime * gunRecoilRcoveryMultiplier);
+        shoulder.localRotation =
+            Quaternion.Lerp(shoulder.localRotation,
+            Quaternion.Euler(targetRot), Time.deltaTime * gunRecoilRcoveryMultiplier * 4);
+
+        targetPos =
+            Vector3.Lerp(targetPos, gunOrigLocalPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+        shoulder.localPosition =
+            Vector3.Lerp(shoulder.localPosition, targetPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+
+        // Inverse kinamtics works weird
+        // if(TargetDetected)
+        //    shoulder.LookAt(targetFuturePos());
     }
 
     Vector3 rayHalfExtents = new Vector3(4f, 4f, .2f);
@@ -112,9 +144,25 @@ public class WeaponController : MonoBehaviour
         return targetPos;
     }
 
+    Vector3 gunOrigLocalRot, gunOrigLocalPos;
+    Vector3 targetRot, targetPos;
+    public void ShotRecoil(float recoilForce)
+    {
+        // Set X rot recoil.
+        targetRot -= shoulder.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
+        // Set Y rot Recoil.
+        targetRot -= shoulder.up * Random.Range(-recoilForce, recoilForce) / 3f;
+        // Set Z rot Recoil.
+        targetRot -= shoulder.forward * Random.Range(-recoilForce, recoilForce) / 3;
+
+        // Set pos recoil.
+         targetPos -= transform.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) /3f;  
+    }
+
     [Header("IK")]
-    public Transform rightHandIK;
-    public Transform leftHandIK;
+    public Transform shoulder;
+    Transform rightHandIK;
+    Transform leftHandIK;
 
     float targetAimIK = 1;
     private void OnAnimatorIK(int layerIndex)
@@ -133,5 +181,7 @@ public class WeaponController : MonoBehaviour
 
         anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIK.position);
         anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIK.rotation);
+        
+
     }
 }

@@ -12,9 +12,19 @@ public class Projectile : MonoBehaviour, IPooledObject
 
     float spawnTime;
 
+    Rigidbody rigidbody;
+
+    private void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
     public void OnObjectSpawn()
     {
         spawnTime = Time.time;
+
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
     }
 
     private void Update()

@@ -35,9 +35,9 @@ public class Gun : Weapon
 
     private void FixedUpdate()
     {
-        return;
+
         // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
-        #region Lerping
+        /*
         targetRot = 
             Vector3.Lerp(targetRot, gunOrigRot, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localRotation =
@@ -48,12 +48,11 @@ public class Gun : Weapon
             Vector3.Lerp(targetPos, gunOrigPos, Time.deltaTime * recoilRcoveryMultiplier);
         transform.localPosition = 
             Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * recoilRcoveryMultiplier);
-
+            */
         slideTargetPos = 
             Vector3.Lerp(slideTargetPos, slideOrigPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
         slide.localPosition = 
             Vector3.Lerp(slide.localPosition, slideTargetPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
-        #endregion
 
         CheckIfCanShoot();
     }
@@ -81,7 +80,7 @@ public class Gun : Weapon
         // If you change this one - you will need to chage the one in 
         //'PController.projectileForward' formula!
 
-        PlayerCon().ShotRecoil();
+        PlayerCon().weaponCon.ShotRecoil(recoilForce);
 
         // Set slide pos recoil.
         slideTargetPos -=
@@ -110,6 +109,7 @@ public class Gun : Weapon
         Shoot(projectileForward);
 
     }
+
     public override bool CanAttack => canShoot;
 
     public override float WeaponRange => gunRange;

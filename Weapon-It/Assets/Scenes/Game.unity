@@ -211,7 +211,7 @@ PrefabInstance:
     - target: {fileID: 5229048019730821886, guid: 545e1f3d4f79e78488e183426a961322,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 9.77
       objectReference: {fileID: 0}
     - target: {fileID: 5229048019730821886, guid: 545e1f3d4f79e78488e183426a961322,
         type: 3}
@@ -2555,13 +2555,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508099951}
-  m_LocalRotation: {x: 0.5667916, y: -0.08178965, z: 0.81260544, w: -0.10830615}
-  m_LocalPosition: {x: -0.35, y: -2.53, z: 0.75}
+  m_LocalRotation: {x: 0.5803159, y: -0.0061249696, z: 0.8099581, w: -0.08463902}
+  m_LocalPosition: {x: -0.36, y: -2.52, z: 0.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1696863370}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0.582, y: 69.871, z: 195.59}
+  m_LocalEulerAnglesHint: {x: -5.0670004, y: 70.872, z: 188.325}
 --- !u!1001 &541634979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2913,7 +2913,7 @@ MonoBehaviour:
   - tag: Simple_Bullet
     prefab: {fileID: 4701597351723877086, guid: a794443937bd1e341961f785e96d69d7,
       type: 3}
-    size: 30
+    size: 60
     parent: {fileID: 0}
   - tag: Simple_Muzzle
     prefab: {fileID: 7620496766998534558, guid: fd0daf3489ea3a4449afa8325441e34b,
@@ -3738,8 +3738,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
   gunRange: 50
-  recoilRcoveryMultiplier: 9
-  recoilForce: 12
+  recoilRcoveryMultiplier: 4
+  recoilForce: 2
   slide: {fileID: 1413935988}
   muzzle: {fileID: 703589208}
   shellExit: {fileID: 0}
@@ -3781,6 +3781,7 @@ MonoBehaviour:
   yOffset: 0.5
   gameWidth: 9
   targetIndicatorYMultiplier: 20
+  weaponCon: {fileID: 0}
 --- !u!4 &1355039353
 Transform:
   m_ObjectHideFlags: 0
@@ -3846,8 +3847,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   tarIndiactor: {fileID: 566434323}
-  rightHandIK: {fileID: 156980857}
-  leftHandIK: {fileID: 508099952}
+  shoulder: {fileID: 1696863370}
 --- !u!4 &1413935988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 488514, guid: 8be86b86610077a47be3a9a99fc8f89e,
@@ -4149,7 +4149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696863370}
   m_Layer: 0
-  m_Name: ShoulderAim
+  m_Name: Shoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

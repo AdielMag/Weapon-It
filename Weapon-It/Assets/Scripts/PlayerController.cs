@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
 
 
     GameManager gMan;
-    WeaponController weaponCon;
+    [HideInInspector]
+    public WeaponController weaponCon;
     Animator anim;
     InputHandler inputH;
 
@@ -105,23 +106,4 @@ public class PlayerController : MonoBehaviour
 
         lastPos = currentPos;
     }
-
-    public void ShotRecoil()
-    {
-        /*
-        // Set X rot recoil.
-        targetRot -= transform.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
-
-        // Set Y rot Recoil.
-        targetRot -= transform.up * Random.Range(-recoilForce, recoilForce) / 7f;
-
-        // Set Z rot Recoil.
-        targetRot -= transform.forward * Random.Range(-recoilForce, recoilForce) / 5;
-
-
-        //Set pos recoil.
-        targetPos -= transform.parent.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) / 5f;
-        */
-    }
-
 }

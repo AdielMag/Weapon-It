@@ -4848,8 +4848,9 @@ GameObject:
   - component: {fileID: 7623193303903003176}
   - component: {fileID: 7711768935313664514}
   - component: {fileID: 7712410306011050638}
+  - component: {fileID: 7134071327843832127}
   m_Layer: 0
-  m_Name: Simple_Muzzle
+  m_Name: Simple_MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9677,6 +9678,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &7134071327843832127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7620496766998534558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3d2e7c4f2f61e458b4922d63fa0a0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 1
 --- !u!1 &7622101671838577760
 GameObject:
   m_ObjectHideFlags: 0
