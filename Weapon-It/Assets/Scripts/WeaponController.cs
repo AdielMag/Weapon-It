@@ -5,14 +5,14 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public Transform weaponSlot;
-
     public bool TargetDetected { get; private set; }
-
-    RaycastHit currentTarget;   // Current target to aim and shoot at.
+    // IK aim offset (not 100% accurate - need to add some angle offset)
+    public Vector2 aimAngleOffset;
 
     public float WeaponRange { get; private set; }
     public Weapon CurrentWeapon { get; private set; }
 
+    RaycastHit currentTarget;   // Current target to aim and shoot at.
     float gunRecoilRcoveryMultiplier;
 
     PlayerController pCon;
@@ -48,7 +48,6 @@ public class WeaponController : MonoBehaviour
     {
         HandleTargetDetection();
 
-
         // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
         targetRot =
             Vector3.Lerp(targetRot, gunOrigLocalRot, Time.deltaTime * gunRecoilRcoveryMultiplier);
@@ -62,8 +61,13 @@ public class WeaponController : MonoBehaviour
             Vector3.Lerp(shoulder.localPosition, targetPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
 
         // Inverse kinamtics works weird
-        // if(TargetDetected)
-        //    shoulder.LookAt(targetFuturePos());
+        if (TargetDetected)
+        {
+            shoulder.LookAt(targetFuturePos());
+            shoulder.eulerAngles +=
+                transform.right * aimAngleOffset.y +
+                transform.up * aimAngleOffset.x; 
+        }
     }
 
     Vector3 rayHalfExtents = new Vector3(4f, 4f, .2f);
@@ -91,7 +95,7 @@ public class WeaponController : MonoBehaviour
 
             // Check if can shoot
             if (CurrentWeapon.CanAttack)
-                CurrentWeapon.Attack(transform.forward);
+                CurrentWeapon.Attack(CurrentWeapon.transform.forward);
 
             // Set target Indicator location.
             tarIndiactor.SetLocation(currentTarget.transform.position);
@@ -126,7 +130,6 @@ public class WeaponController : MonoBehaviour
             // Calculae travel time
             travelTime = distanceFromTarget / 60;
 
-
         /* 
          * FuturePosition = 
          * Y offset
@@ -136,7 +139,6 @@ public class WeaponController : MonoBehaviour
         */
 
         Vector3 targetPos =
-            Vector3.up * -2 +
             currentTarget.transform.position +
             currentTarget.transform.GetComponent<Rigidbody>().velocity *
             travelTime;
@@ -164,6 +166,8 @@ public class WeaponController : MonoBehaviour
     Transform rightHandIK;
     Transform leftHandIK;
 
+    Vector3 lookAtTarget;
+
     float targetAimIK = 1;
     private void OnAnimatorIK(int layerIndex)
     {
@@ -181,7 +185,14 @@ public class WeaponController : MonoBehaviour
 
         anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIK.position);
         anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIK.rotation);
-        
 
+        anim.SetLookAtWeight(1);
+        lookAtTarget = Vector3.Lerp(lookAtTarget, 
+            TargetDetected ? 
+            currentTarget.transform.position - Vector3.up * 4 :
+            transform.position + transform.forward * 20,
+            Time.deltaTime * 5);
+
+        anim.SetLookAtPosition(lookAtTarget);
     }
 }

@@ -107,7 +107,6 @@ public class Gun : Weapon
     {
         //base.Attack(projectileForward);
         Shoot(projectileForward);
-
     }
 
     public override bool CanAttack => canShoot;
