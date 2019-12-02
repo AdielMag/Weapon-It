@@ -15,6 +15,7 @@ public class Gun : Weapon
     Vector3 slideOrigPos;
 
     public Transform muzzle;
+    public Transform leftHandIdleIK;
     public Transform shellExit;
 
     ObjectPooler objPool;

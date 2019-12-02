@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         inputH = InputHandler.instance;
 
-
         // Set the look from the start 
         // (if not will lerp from Vector3.zero and will look weird)
         targetLookAt = transform.position

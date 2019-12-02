@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public Transform weaponSlot;
+
     public bool TargetDetected { get; private set; }
     // IK aim offset (not 100% accurate - need to add some angle offset)
     public Vector2 aimAngleOffset;
@@ -35,6 +36,9 @@ public class WeaponController : MonoBehaviour
 
         rightHandIK = shoulder.GetChild(0);
         leftHandIK = shoulder.GetChild(1);
+
+        // Set leftHandIdleIK from currentWeapon
+        leftHandIdleIK = CurrentWeapon.GetComponent<Gun>().leftHandIdleIK;
 
         // Set gun orig pos and rot
         gunOrigLocalRot = shoulder.localRotation.eulerAngles;
@@ -165,6 +169,7 @@ public class WeaponController : MonoBehaviour
     public Transform shoulder;
     Transform rightHandIK;
     Transform leftHandIK;
+    Transform leftHandIdleIK;
 
     Vector3 lookAtTarget;
 
@@ -180,12 +185,24 @@ public class WeaponController : MonoBehaviour
         anim.SetIKPosition(AvatarIKGoal.RightHand, rightHandIK.position);
         anim.SetIKRotation(AvatarIKGoal.RightHand, rightHandIK.rotation);
 
-        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, targetAimIK);
-        anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, targetAimIK);
+        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+        anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
 
-        anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIK.position);
-        anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIK.rotation);
+        if (layerIndex == 1)
+        {
+            if (TargetDetected)
+            {
+                anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIK.position);
+                anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIK.rotation);
+            }
+            else
+            {
+                anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIdleIK.position);
+                anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIdleIK.rotation);
+            }
+        }
 
+        // LookAt target lerping
         anim.SetLookAtWeight(1);
         lookAtTarget = Vector3.Lerp(lookAtTarget, 
             TargetDetected ? 
