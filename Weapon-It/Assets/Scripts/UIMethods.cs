@@ -18,7 +18,7 @@ public class UIMethods : MonoBehaviour
 
     public void UpdateLevelsButtons(int highestLevel)
     {
-        
+
 
         for (int i = 0; i < levelsButtonParent.childCount; i++)
         {

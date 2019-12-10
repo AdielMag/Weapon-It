@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -36,5 +35,8 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateLevelsButtons(DataManager.gamePlayData.playerHighestLevel);
     }
 
-    
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
