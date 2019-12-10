@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
+    int currentLevel;
+
     float levelMaxTime, levelStartTime;
 
     public Slider levelProgressIndicator;
@@ -18,6 +20,7 @@ public class LevelController : MonoBehaviour
 
     // Used to control active targets (Count them, disable them)
     public List<Target> currentLevelTargets = new List<Target>();
+    public int activeLevelObjects;
 
     GameManager gMan;
 
@@ -34,10 +37,9 @@ public class LevelController : MonoBehaviour
     private void Update()
     {
         // Update level progress indicator
-        // 1 - (maxTime -(time - startTime)) / maxTime.
-        if (gMan.levelInProgress)
-            levelProgressIndicator.value =
-               1 - ((levelMaxTime - (Time.time - levelStartTime)) /levelMaxTime) ;
+        // 1 - (maxTime -(time - startTime)) / maxTime
+        levelProgressIndicator.value =
+            1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
     }
 
     public void SpawnAllLevels()
@@ -61,13 +63,15 @@ public class LevelController : MonoBehaviour
             return;
         }
 
+        activeLevelObjects = 0;
+
         levelStartTime = Time.time;
         levelMaxTime = levelTime(levelNum);
 
         levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
         levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
 
-        gMan.levelInProgress = true;
+        currentLevel = levelNum;    // Set current level 
     }
 
     float levelTime(int levelNum)
@@ -88,19 +92,52 @@ public class LevelController : MonoBehaviour
         return time;
     }
 
-    public void LostLevel()
+    public void LevelFinished()
     {
-        gMan.levelInProgress = false;
+        HideAllTargets();
 
-        //Disable all target
-        for(int i = 0; i< currentLevelTargets.Count; i++)
+        if (currentLevel >= gMan.DataManager.gamePlayData.playerHighestLevel)
         {
-            currentLevelTargets[i].TargetDestroyed();
+            gMan.DataManager.gamePlayData.playerHighestLevel = currentLevel;
+            gMan.DataManager.SaveData();
+
+
+            // PrototypeUI - TEMPORARY
+            gMan.uiManager.UpdateLevelsButtons(currentLevel);
         }
 
+        gMan.uiManager.levelCompleted.SetActive(true);
+
+        levelStartTime = -100;
+    }
+
+    public void LostLevel()
+    {
+        HideAllTargets();
+        gMan.uiManager.lostIndicator.SetActive(true);
+    }
+
+    public void ResetLevel()
+    {
+
+    }
+
+    public void HideAllTargets()
+    {        
+        //Disable all target
+        for (int i = 0; i < currentLevelTargets.Count; i++)
+        {
+            currentLevelTargets[i].gameObject.SetActive(false);
+        }
         currentLevelTargets.Clear();
     }
 
-    public void ResetLevel() { }
-    public void HideAllTargets() { }
+    // Called when a target is destroyed - to check if won the level
+    public void TargetDestroyed()
+    {
+        activeLevelObjects--;
+
+        if (activeLevelObjects < 1)
+            LevelFinished();
+    }
 }

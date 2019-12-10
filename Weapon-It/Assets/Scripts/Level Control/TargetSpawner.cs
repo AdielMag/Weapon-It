@@ -26,6 +26,7 @@ public class TargetSpawner : MonoBehaviour
                 break;
         }
 
-        GameManager.instance.levelCon.currentLevelTargets.Add(spawnedObject.GetComponent<Target>());
+        GameManager.instance.LevelCon.currentLevelTargets.Add(spawnedObject.GetComponent<Target>());
+        GameManager.instance.LevelCon.activeLevelObjects++;
     }
 }

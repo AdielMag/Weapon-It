@@ -23,6 +23,7 @@ public class Target : MonoBehaviour
 
     public virtual void TargetDestroyed()
     {
+        GameManager.instance.LevelCon.TargetDestroyed();
         gameObject.SetActive(false);
     }
 }

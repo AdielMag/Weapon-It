@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleAnimations()
     {
-        anim.SetFloat("Horizontal", posDelta.x * 5);
+        anim.SetFloat("Horizontal", posDelta.x * 8);
         anim.SetBool("Aim",weaponCon.TargetDetected);
     }
 
@@ -104,5 +104,11 @@ public class PlayerController : MonoBehaviour
         posDelta = currentPos - lastPos;
 
         lastPos = currentPos;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Target")
+            gMan.LevelCon.LostLevel();
     }
 }

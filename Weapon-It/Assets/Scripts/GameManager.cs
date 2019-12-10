@@ -8,24 +8,33 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private void Awake()
     {
+        if (instance && instance != this)
+            Destroy(this);
+
         instance = this;
+
+        DontDestroyOnLoad(this);
     }
     #endregion
 
-    [HideInInspector]
-    // Used to check if level is currently running
-    public bool levelInProgress;
-
     ObjectPooler objPooler;
-    [HideInInspector]
-    public LevelController levelCon;
+
+    public UIMethods uiManager;
+    public LevelController LevelCon { get; private set; }
+    public JsonDataManager DataManager { get; private set; }
 
     private void Start()
     {
         objPooler = ObjectPooler.instance;
-        levelCon = GetComponentInChildren<LevelController>();
+        LevelCon = GetComponentInChildren<LevelController>();
+        DataManager = GetComponentInChildren<JsonDataManager>();
+
 
         objPooler.InstantiatePools();
-        levelCon.SpawnAllLevels();
+        LevelCon.SpawnAllLevels();
+        DataManager.LoadData();
+        uiManager.UpdateLevelsButtons(DataManager.gamePlayData.playerHighestLevel);
     }
+
+    
 }
