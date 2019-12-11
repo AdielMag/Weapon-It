@@ -1705,6 +1705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelCompleted: {fileID: 0}
   lostIndicator: {fileID: 0}
+  gMan: {fileID: 0}
 --- !u!1 &1391775257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2282,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802297100}
   m_CullTransparentMesh: 0
+--- !u!4 &1810012706 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1810012706, guid: 445424860308f334fb7eb24142e0eaf0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1965017980}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1828820969
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,6 +2633,11 @@ PrefabInstance:
       propertyPath: tarIndiactor
       value: 
       objectReference: {fileID: 566434323}
+    - target: {fileID: 104860895694708385, guid: 445424860308f334fb7eb24142e0eaf0,
+        type: 3}
+      propertyPath: weaponSlot
+      value: 
+      objectReference: {fileID: 1810012706}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 445424860308f334fb7eb24142e0eaf0, type: 3}
 --- !u!1 &1989187686

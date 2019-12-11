@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    public Transform weaponSlot;
-
     public bool TargetDetected { get; private set; }
     // IK aim offset (not 100% accurate - need to add some angle offset)
     public Vector2 aimAngleOffset;
 
     public float WeaponRange { get; private set; }
-    public Weapon CurrentWeapon { get; private set; }
+    public Weapon CurrentWeapon { get; set; }
+    public GameObject weapos;
 
     RaycastHit currentTarget;   // Current target to aim and shoot at.
     float gunRecoilRcoveryMultiplier;
@@ -24,8 +23,6 @@ public class WeaponController : MonoBehaviour
         pCon = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
 
-        // Get currentWeapon
-        CurrentWeapon = weaponSlot.GetChild(0).GetComponent<Weapon>();
         // Set player controler in the gun script
         CurrentWeapon.GetComponent<Gun>().pCon = pCon;
         // Get range

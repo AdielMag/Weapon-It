@@ -19,16 +19,15 @@ public class PlayerController : MonoBehaviour
     public float targetIndicatorYMultiplier = 20; // Multiply input.y precentage.
 
 
+    public WeaponController WeaponCon { get; private set; }
     GameManager gMan;
-    [HideInInspector]
-    public WeaponController weaponCon;
     Animator anim;
     InputHandler inputH;
 
     void Start()
     {
         gMan = GameManager.instance;
-        weaponCon = GetComponent<WeaponController>();
+        WeaponCon = GetComponent<WeaponController>();
         anim = GetComponent<Animator>();
         inputH = InputHandler.instance;
 
@@ -38,6 +37,8 @@ public class PlayerController : MonoBehaviour
                 + Vector3.forward * 20
                 + posDelta.y * Vector3.up * movementRotationForce
                 + posDelta.x * Vector3.right * movementRotationForce;
+
+        SetPlayerItems();
     }
 
     void Update()
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
     void HandleAnimations()
     {
         anim.SetFloat("Horizontal", posDelta.x * 8);
-        anim.SetBool("Aim",weaponCon.TargetDetected);
+        anim.SetBool("Aim",WeaponCon.TargetDetected);
     }
 
     Vector2 targetPos;
@@ -77,9 +78,9 @@ public class PlayerController : MonoBehaviour
         angleDiffFromForward = Vector3.Angle(transform.forward, Vector3.forward);
 
         // Check if there's a target on sight
-        if (weaponCon.TargetDetected)
+        if (WeaponCon.TargetDetected)
         {
-            lerpTargetVar = weaponCon.targetFuturePos();
+            lerpTargetVar = WeaponCon.targetFuturePos();
         }
         else
         {
@@ -113,20 +114,44 @@ public class PlayerController : MonoBehaviour
     }
 
     // Player items handler!
-    [Space]
+    [Header("Store items parents")]
     public Transform weaponsItemsParent;
     public Transform charactersItemsParent;
 
     // Set player character
-    void SetPlayerCharacter()
+    void SetPlayerItems()
     {
+        StartCoroutine (SetPlayerCharacter());
+       // SetPlayerWeapon();
+    }
+
+    IEnumerator SetPlayerCharacter()
+    {        
         // Get the equipped character
-        GameObject playerCharacter = 
+        GameObject playerCharacterPrefab =
             charactersItemsParent.GetChild(gMan.DataManager.storeData.EquippedCharacter).gameObject;
 
-        Instantiate(playerCharacter, transform);
+        Instantiate(playerCharacterPrefab, transform);
 
-        // Get weaponSlot transform
+        // Used to let the animator sync with the bones or whatever... - stupid unity bug
+        yield return new WaitForEndOfFrame();
+
+        anim.Rebind();
+
+        SetPlayerWeapon();
     }
-    // Set player weapon
+    void        SetPlayerWeapon()
+    {
+        // Get character hand transform for instantiating the weapons.
+        Transform characterRightHand = anim.GetBoneTransform(HumanBodyBones.RightHand);
+
+        // Get equipped weapon
+        GameObject playerWeaponPrefab =
+            weaponsItemsParent.GetChild(gMan.DataManager.storeData.EquippedWeapon).gameObject;
+
+        GameObject currentWeapon =  Instantiate(playerWeaponPrefab, characterRightHand);
+
+        WeaponCon.CurrentWeapon = currentWeapon.GetComponent<Weapon>();
+        WeaponCon.weapos = currentWeapon;
+    }
 }

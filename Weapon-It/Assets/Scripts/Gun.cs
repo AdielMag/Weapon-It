@@ -81,7 +81,7 @@ public class Gun : Weapon
         // If you change this one - you will need to chage the one in 
         //'PController.projectileForward' formula!
 
-        PlayerCon().weaponCon.ShotRecoil(recoilForce);
+        PlayerCon().WeaponCon.ShotRecoil(recoilForce);
 
         // Set slide pos recoil.
         slideTargetPos -=
