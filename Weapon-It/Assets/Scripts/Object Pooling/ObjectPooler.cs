@@ -28,6 +28,11 @@ public class ObjectPooler : MonoBehaviour
     }
     #endregion
 
+    private void Start()
+    {
+        InstantiatePools();
+    }
+
     public void InstantiatePools()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();

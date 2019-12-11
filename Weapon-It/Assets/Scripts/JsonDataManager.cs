@@ -7,6 +7,8 @@ public class JsonDataManager : MonoBehaviour
     {
         storeDataPath = Path.Combine(Application.persistentDataPath, "StoreData.json");
         gameplayDataPath = Path.Combine(Application.persistentDataPath, "GameplayData.json");
+
+        LoadData();
     }
 
     string storeDataPath, gameplayDataPath;

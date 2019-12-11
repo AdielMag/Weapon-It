@@ -9,7 +9,8 @@ public class LevelController : MonoBehaviour
 
     float levelMaxTime, levelStartTime;
 
-    public Slider levelProgressIndicator;
+    //public Slider levelProgressIndicator;
+    public LevelProgressIndicator progressIndicator;
 
     [Space]
     // Array of level gameobejcts that will store the levels prefabs
@@ -24,26 +25,19 @@ public class LevelController : MonoBehaviour
 
     GameManager gMan;
 
-    private void Awake()
-    {
-        levelsParent = new GameObject("Levels Parent");
-    }
-
     private void Start()
     {
         gMan = GameManager.instance;
-    }
 
-    private void Update()
-    {
-        // Update level progress indicator
-        // 1 - (maxTime -(time - startTime)) / maxTime
-        levelProgressIndicator.value =
-            1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
+        gMan.LevelCon = this;
+
+        SpawnAllLevels();
     }
 
     public void SpawnAllLevels()
     {
+        levelsParent = new GameObject("Levels Parent");
+
         Vector3 levelStartPos = levelsParent.transform.position = Vector3.forward * 150;
 
         foreach (GameObject level in levelsPrefabs)
@@ -67,6 +61,9 @@ public class LevelController : MonoBehaviour
 
         levelStartTime = Time.time;
         levelMaxTime = levelTime(levelNum);
+
+        // Set the indicator times
+        progressIndicator.SetLevelTimes(levelStartTime, levelMaxTime);
 
         levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
         levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
@@ -103,18 +100,26 @@ public class LevelController : MonoBehaviour
 
 
             // PrototypeUI - TEMPORARY
-            gMan.uiManager.UpdateLevelsButtons(currentLevel);
+            gMan.UIManager.UpdateLevelsButtons(currentLevel);
         }
 
-        gMan.uiManager.levelCompleted.SetActive(true);
+        gMan.UIManager.levelCompleted.SetActive(true);
 
         levelStartTime = -100;
+
+        // Set the indicator times
+        progressIndicator.SetLevelTimes(levelStartTime, levelMaxTime);
     }
 
     public void LostLevel()
     {
         HideAllTargets();
-        gMan.uiManager.lostIndicator.SetActive(true);
+        gMan.UIManager.lostIndicator.SetActive(true);
+
+        levelStartTime = -100;
+
+        // Set the indicator times
+        progressIndicator.SetLevelTimes(levelStartTime, levelMaxTime);
     }
 
     public void ResetLevel()

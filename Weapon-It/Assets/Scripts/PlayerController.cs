@@ -111,4 +111,22 @@ public class PlayerController : MonoBehaviour
         if (other.transform.tag == "Target")
             gMan.LevelCon.LostLevel();
     }
+
+    // Player items handler!
+    [Space]
+    public Transform weaponsItemsParent;
+    public Transform charactersItemsParent;
+
+    // Set player character
+    void SetPlayerCharacter()
+    {
+        // Get the equipped character
+        GameObject playerCharacter = 
+            charactersItemsParent.GetChild(gMan.DataManager.storeData.EquippedCharacter).gameObject;
+
+        Instantiate(playerCharacter, transform);
+
+        // Get weaponSlot transform
+    }
+    // Set player weapon
 }

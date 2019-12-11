@@ -3,36 +3,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region Singelton
-    public static GameManager instance;
+    // Singelton + set data manager.
+    public static GameManager instance;   
     private void Awake()
     {
         if (instance && instance != this)
-            Destroy(this);
+            Destroy(instance.gameObject);
 
         instance = this;
 
         DontDestroyOnLoad(this);
+
+        DataManager = GetComponent<JsonDataManager>();
     }
-    #endregion
 
     ObjectPooler objPooler;
 
-    public UIMethods uiManager;
-    public LevelController LevelCon { get; private set; }
+    public UIMethods UIManager { get; set; }
+    public LevelController LevelCon { get; set; }
     public JsonDataManager DataManager { get; private set; }
 
     private void Start()
     {
         objPooler = ObjectPooler.instance;
-        LevelCon = GetComponentInChildren<LevelController>();
-        DataManager = GetComponentInChildren<JsonDataManager>();
-
-
-        objPooler.InstantiatePools();
-        LevelCon.SpawnAllLevels();
-        DataManager.LoadData();
-        uiManager.UpdateLevelsButtons(DataManager.gamePlayData.playerHighestLevel);
     }
 
     public void LoadScene(string sceneName)

@@ -8,6 +8,8 @@ public class UIMethods : MonoBehaviour
     [HideInInspector]
     public GameObject levelCompleted, lostIndicator;
 
+    public GameManager gMan;
+
     private void Awake()
     {
         levelsButtonParent = transform.GetChild(0);
@@ -16,10 +18,17 @@ public class UIMethods : MonoBehaviour
         lostIndicator = transform.GetChild(2).gameObject;
     }
 
+    private void Start()
+    {
+        gMan = GameManager.instance;
+
+        gMan.UIManager = this;
+
+        UpdateLevelsButtons(gMan.DataManager.gamePlayData.playerHighestLevel);
+    }
+
     public void UpdateLevelsButtons(int highestLevel)
     {
-
-
         for (int i = 0; i < levelsButtonParent.childCount; i++)
         {
             if (i <= highestLevel)
@@ -29,6 +38,5 @@ public class UIMethods : MonoBehaviour
         }
 
     }
-
 
 }
