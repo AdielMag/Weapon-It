@@ -10,40 +10,12 @@ public class WeaponController : MonoBehaviour
 
     public float WeaponRange { get; private set; }
     public Weapon CurrentWeapon { get; set; }
-    public GameObject weapos;
 
     RaycastHit currentTarget;   // Current target to aim and shoot at.
     float gunRecoilRcoveryMultiplier;
 
     PlayerController pCon;
     Animator anim;
-
-    private void Start()
-    {
-        pCon = GetComponent<PlayerController>();
-        anim = GetComponent<Animator>();
-
-        // Set player controler in the gun script
-        CurrentWeapon.GetComponent<Gun>().pCon = pCon;
-        // Get range
-        WeaponRange = CurrentWeapon.WeaponRange;
-
-        gunRecoilRcoveryMultiplier = 
-            CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
-
-        rightHandIK = shoulder.GetChild(0);
-        leftHandIK = shoulder.GetChild(1);
-
-        // Set leftHandIdleIK from currentWeapon
-        leftHandIdleIK = CurrentWeapon.GetComponent<Gun>().leftHandIdleIK;
-
-        // Set gun orig pos and rot
-        gunOrigLocalRot = shoulder.localRotation.eulerAngles;
-        gunOrigLocalPos = shoulder.localPosition;
-
-        targetPos = gunOrigLocalPos;
-        targetRot = gunOrigLocalRot;
-    }
 
     private void Update()
     {
@@ -69,6 +41,37 @@ public class WeaponController : MonoBehaviour
                 transform.right * aimAngleOffset.y +
                 transform.up * aimAngleOffset.x; 
         }
+    }
+
+    // Called after the weapon was instantiated
+    bool initiallized;
+    public void Init()
+    {
+        pCon = GetComponent<PlayerController>();
+        anim = GetComponent<Animator>();
+
+        // Set player controler in the gun script
+        CurrentWeapon.GetComponent<Gun>().pCon = pCon;
+        // Get range
+        WeaponRange = CurrentWeapon.WeaponRange;
+
+        gunRecoilRcoveryMultiplier =
+            CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
+
+        rightHandIK = shoulder.GetChild(0);
+        leftHandIK = shoulder.GetChild(1);
+
+        // Set leftHandIdleIK from currentWeapon
+        leftHandIdleIK = CurrentWeapon.GetComponent<Gun>().leftHandIdleIK;
+
+        // Set gun orig pos and rot
+        gunOrigLocalRot = shoulder.localRotation.eulerAngles;
+        gunOrigLocalPos = shoulder.localPosition;
+
+        targetPos = gunOrigLocalPos;
+        targetRot = gunOrigLocalRot;
+
+        initiallized = true;
     }
 
     Vector3 rayHalfExtents = new Vector3(4f, 4f, .2f);
@@ -173,6 +176,9 @@ public class WeaponController : MonoBehaviour
     float targetAimIK = 1;
     private void OnAnimatorIK(int layerIndex)
     {
+        if (!initiallized)
+            return;
+
         targetAimIK = Mathf.Lerp
             (targetAimIK, TargetDetected ? 1 : 0, Time.deltaTime * 5);
 

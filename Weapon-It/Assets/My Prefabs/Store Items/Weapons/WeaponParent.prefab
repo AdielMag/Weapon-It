@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &291140212028741579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9005437484001820243}
+  m_Layer: 11
+  m_Name: LeftHandIK
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9005437484001820243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291140212028741579}
+  m_LocalRotation: {x: 0.6496469, y: 0.13137676, z: 0.698162, w: 0.27068228}
+  m_LocalPosition: {x: -0.098, y: 0.024, z: 0.188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2777804115435111645}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 9.686001, y: 82.926, z: 146.18001}
 --- !u!1 &645147301499486240
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &887829147750316570
 Transform:
   m_ObjectHideFlags: 0
@@ -773,7 +803,6 @@ GameObject:
   - component: {fileID: 2777804115435111645}
   - component: {fileID: 7831300772557852190}
   - component: {fileID: 5058489273181241094}
-  - component: {fileID: 8814405584113074951}
   - component: {fileID: 5711020124743481130}
   m_Layer: 11
   m_Name: SM_Wep_PistolSwat_01
@@ -781,7 +810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2777804115435111645
 Transform:
   m_ObjectHideFlags: 0
@@ -797,6 +826,7 @@ Transform:
   - {fileID: 7008179094235062989}
   - {fileID: 8005079414137745475}
   - {fileID: 2095357225157803206}
+  - {fileID: 9005437484001820243}
   m_Father: {fileID: 4836388011942013248}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: -90, z: 90}
@@ -845,19 +875,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8814405584113074951
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6449762208807292691}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.2, z: 0.3}
-  m_Center: {x: 0.0000000018626451, y: -0.01192579, z: 0.06525035}
 --- !u!114 &5711020124743481130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,7 +893,7 @@ MonoBehaviour:
   recoilForce: 14
   slide: {fileID: 7008179094235062989}
   muzzle: {fileID: 2095357225157803206}
-  leftHandIdleIK: {fileID: 0}
+  leftHandIdleIK: {fileID: 9005437484001820243}
   shellExit: {fileID: 0}
   canShoot: 0
 --- !u!1 &6884851945030121969

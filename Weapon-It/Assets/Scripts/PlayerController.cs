@@ -122,7 +122,6 @@ public class PlayerController : MonoBehaviour
     void SetPlayerItems()
     {
         StartCoroutine (SetPlayerCharacter());
-       // SetPlayerWeapon();
     }
 
     IEnumerator SetPlayerCharacter()
@@ -131,7 +130,14 @@ public class PlayerController : MonoBehaviour
         GameObject playerCharacterPrefab =
             charactersItemsParent.GetChild(gMan.DataManager.storeData.EquippedCharacter).gameObject;
 
-        Instantiate(playerCharacterPrefab, transform);
+        Transform currentCharacter = Instantiate(playerCharacterPrefab, transform).transform;
+        currentCharacter.gameObject.SetActive(true); // Set it active
+
+        // Set pos and rot to 0 
+        // Not doing it inside the instantiate because i want to change rot before pos 
+        // (else it will change the pos)
+        currentCharacter.rotation = Quaternion.Euler(Vector3.zero);
+        currentCharacter.localPosition = Vector3.zero;
 
         // Used to let the animator sync with the bones or whatever... - stupid unity bug
         yield return new WaitForEndOfFrame();
@@ -140,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         SetPlayerWeapon();
     }
-    void        SetPlayerWeapon()
+    void SetPlayerWeapon()
     {
         // Get character hand transform for instantiating the weapons.
         Transform characterRightHand = anim.GetBoneTransform(HumanBodyBones.RightHand);
@@ -149,9 +155,13 @@ public class PlayerController : MonoBehaviour
         GameObject playerWeaponPrefab =
             weaponsItemsParent.GetChild(gMan.DataManager.storeData.EquippedWeapon).gameObject;
 
-        GameObject currentWeapon =  Instantiate(playerWeaponPrefab, characterRightHand);
+        GameObject currentWeapon = Instantiate(playerWeaponPrefab, characterRightHand);
+        currentWeapon.SetActive(true); // Set it active
+
+        currentWeapon.transform.localScale = Vector3.one * 100;
 
         WeaponCon.CurrentWeapon = currentWeapon.GetComponent<Weapon>();
-        WeaponCon.weapos = currentWeapon;
+
+        WeaponCon.Init();
     }
 }
