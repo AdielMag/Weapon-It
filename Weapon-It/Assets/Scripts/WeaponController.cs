@@ -51,14 +51,8 @@ public class WeaponController : MonoBehaviour
         gunRecoilRcoveryMultiplier =
             CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
 
-        // Instantiate IK parent (Used for looking at the target)
-        GameObject ikParent = new GameObject("IK Parent");
-        ikParent.transform.SetParent(transform);
-        ikParent.transform.localPosition = Vector3.zero;
-        ikParent.transform.localScale = Vector3.one;
-
         // Instantiate and set shoulder ik
-        shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, ikParent.transform);
+        shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, transform);
 
         rightHandIK = shoulder.GetChild(0);
         leftHandIK = shoulder.GetChild(1);
@@ -202,9 +196,9 @@ public class WeaponController : MonoBehaviour
             
             // Lerp thorugh pos and rot
             leftHandCurrentPos =
-            Vector3.Lerp(leftHandCurrentPos, targetLHIKTransform.position, Time.deltaTime * 45);
+            Vector3.Lerp(leftHandCurrentPos, targetLHIKTransform.position, Time.deltaTime * 35);
             leftHandCurrentRot =
-            Quaternion.Lerp(leftHandCurrentRot, targetLHIKTransform.rotation, Time.deltaTime * 45);
+            Quaternion.Lerp(leftHandCurrentRot, targetLHIKTransform.rotation, Time.deltaTime * 35);
 
             // Set the pos and rot
             anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandCurrentPos);

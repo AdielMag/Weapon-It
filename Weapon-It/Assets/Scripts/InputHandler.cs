@@ -35,6 +35,10 @@ public class InputHandler : MonoBehaviour
         // Replace it later with a logarithmic function that moves the weapon less when getting too high
 
         inputPrecentage.y = Mathf.Clamp(inputPrecentage.y, .05f, .5f);
+#else
+        inputPrecentage = new Vector2(
+            x: Input.GetTouch(0).position.x / screenWidth,
+            y: Input.GetTouch(0).position.y / screenHeight);
 #endif
     }
 }
