@@ -16,7 +16,7 @@ public class InputHandler : MonoBehaviour
     int screenWidth;
     int screenHeight;
 
-    public Vector2 inputPrecentage;
+    public Vector2 inputPrecentage = new Vector2(.5f, .5f);
 
     void Start()
     {
