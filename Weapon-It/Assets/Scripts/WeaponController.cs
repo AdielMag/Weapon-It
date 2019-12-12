@@ -21,25 +21,16 @@ public class WeaponController : MonoBehaviour
     {
         HandleTargetDetection();
 
-        if (!initiallized)
-            return;
-
-        // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
-        targetRot =
-            Vector3.Lerp(targetRot, gunOrigLocalRot, Time.deltaTime * gunRecoilRcoveryMultiplier);
-        shoulder.localRotation =
-            Quaternion.Lerp(shoulder.localRotation,
-            Quaternion.Euler(targetRot), Time.deltaTime * gunRecoilRcoveryMultiplier * 4);
-
         targetPos =
             Vector3.Lerp(targetPos, gunOrigLocalPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
         shoulder.localPosition =
             Vector3.Lerp(shoulder.localPosition, targetPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
 
-        // Inverse kinamtics works weird
+        // Inverse kinematic offset
         if (TargetDetected)
         {
-            shoulder.LookAt(targetFuturePos());
+            currentTargetPos = Vector3.Lerp(currentTargetPos, targetFuturePos(), Time.deltaTime * 9);
+            shoulder.LookAt(currentTargetPos);
             shoulder.eulerAngles +=
                 transform.right * aimAngleOffset.y +
                 transform.up * aimAngleOffset.x; 
@@ -47,7 +38,6 @@ public class WeaponController : MonoBehaviour
     }
 
     // Called after the weapon was instantiated
-    bool initiallized;
     public void Init()
     {
         pCon = GetComponent<PlayerController>();
@@ -71,13 +61,11 @@ public class WeaponController : MonoBehaviour
         leftHandIdleIK = CurrentWeapon.GetComponent<Gun>().leftHandIdleIK;
 
         // Set gun orig pos and rot
-        gunOrigLocalRot = shoulder.localRotation.eulerAngles;
         gunOrigLocalPos = shoulder.localPosition;
 
         targetPos = gunOrigLocalPos;
-        targetRot = gunOrigLocalRot;
 
-        initiallized = true;
+        enabled = true;
     }
 
     Vector3 rayHalfExtents = new Vector3(4f, 4f, .2f);
@@ -103,8 +91,8 @@ public class WeaponController : MonoBehaviour
         {
             TargetDetected = true;
 
-            // Check if can shoot
-            if (CurrentWeapon.CanAttack)
+            // Check if can attack (+ if IK is in position)
+            if (CurrentWeapon.CanAttack && targetAimIK > .98f)
                 CurrentWeapon.Attack(CurrentWeapon.transform.forward);
 
             // Set target Indicator location.
@@ -156,17 +144,10 @@ public class WeaponController : MonoBehaviour
         return targetPos;
     }
 
-    Vector3 gunOrigLocalRot, gunOrigLocalPos;
-    Vector3 targetRot, targetPos;
+    Vector3 gunOrigLocalPos;
+    Vector3 targetPos;
     public void ShotRecoil(float recoilForce)
     {
-        // Set X rot recoil.
-        targetRot -= shoulder.right * Random.Range(recoilForce * .7f, recoilForce) * 2;
-        // Set Y rot Recoil.
-        targetRot -= shoulder.up * Random.Range(-recoilForce, recoilForce) / 3f;
-        // Set Z rot Recoil.
-        targetRot -= shoulder.forward * Random.Range(-recoilForce, recoilForce) / 3;
-
         // Set pos recoil.
          targetPos -= transform.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) /3f;  
     }
@@ -178,13 +159,15 @@ public class WeaponController : MonoBehaviour
     Transform leftHandIK;
     Transform leftHandIdleIK;
 
+    Vector3 leftHandCurrentPos;
+    Quaternion leftHandCurrentRot;
+
+    Vector3 currentTargetPos; // Used to lerp the shoulder look at in update.
     Vector3 lookAtTarget;
 
     float targetAimIK = 1;
     private void OnAnimatorIK(int layerIndex)
     {
-        if (!initiallized)
-            return;
 
         targetAimIK = Mathf.Lerp
             (targetAimIK, TargetDetected ? 1 : 0, Time.deltaTime * 5);
@@ -200,16 +183,26 @@ public class WeaponController : MonoBehaviour
 
         if (layerIndex == 1)
         {
+            // Set the target transform for the left hand ik
+            Transform targetLHIKTransform;
             if (TargetDetected)
             {
-                anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIK.position);
-                anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIK.rotation);
+                targetLHIKTransform = leftHandIK;
             }
             else
             {
-                anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandIdleIK.position);
-                anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandIdleIK.rotation);
+                targetLHIKTransform = leftHandIdleIK;
             }
+            
+            // Lerp thorugh pos and rot
+            leftHandCurrentPos =
+            Vector3.Lerp(leftHandCurrentPos, targetLHIKTransform.position, Time.deltaTime * 45);
+            leftHandCurrentRot =
+            Quaternion.Lerp(leftHandCurrentRot, targetLHIKTransform.rotation, Time.deltaTime * 45);
+
+            // Set the pos and rot
+            anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandCurrentPos);
+            anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandCurrentRot);
         }
 
         // LookAt target lerping

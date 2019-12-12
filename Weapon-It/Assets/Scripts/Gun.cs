@@ -95,8 +95,6 @@ public class Gun : Weapon
     float slidePosDiffrence;
     void CheckIfCanShoot()
     {
-       // canShoot = false;
-       // return;
         slidePosDiffrence = (slideOrigPos.z - slide.transform.localPosition.z) * 10;
         // Check if the transform rotation is back to normal - so can shoot again.
         if (!canShoot && slidePosDiffrence < .002f)
