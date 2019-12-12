@@ -51,9 +51,10 @@ public class PlayerController : MonoBehaviour
 
     void HandleAnimations()
     {
-        anim.SetFloat("Horizontal", posDelta.x * 8);
+        anim.SetFloat("Horizontal", posDelta.x * 7);
         anim.SetBool("Aim",WeaponCon.TargetDetected);
-        anim.SetBool("Moving", posDelta.normalized.magnitude > .01f);
+
+        anim.SetBool("Moving", posDelta.magnitude > 0.01f);
     }
 
     Vector2 targetPos;

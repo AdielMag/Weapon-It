@@ -51,8 +51,14 @@ public class WeaponController : MonoBehaviour
         gunRecoilRcoveryMultiplier =
             CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
 
+        // Instantiate IK parent (Used for looking at the target)
+        GameObject ikParent = new GameObject("IK Parent");
+        ikParent.transform.SetParent(transform);
+        ikParent.transform.localPosition = Vector3.zero;
+        ikParent.transform.localScale = Vector3.one;
+
         // Instantiate and set shoulder ik
-        shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, transform);
+        shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, ikParent.transform);
 
         rightHandIK = shoulder.GetChild(0);
         leftHandIK = shoulder.GetChild(1);

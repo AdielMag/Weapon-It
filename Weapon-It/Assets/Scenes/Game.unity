@@ -2904,6 +2904,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4864420502329942196, guid: 445424860308f334fb7eb24142e0eaf0,
+        type: 3}
+      propertyPath: movementRotationForce
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4864420502329942192, guid: 445424860308f334fb7eb24142e0eaf0,
         type: 3}
       propertyPath: tarIndiactor
