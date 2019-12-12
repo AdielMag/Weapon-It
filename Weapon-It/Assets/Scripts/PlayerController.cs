@@ -158,8 +158,6 @@ public class PlayerController : MonoBehaviour
         GameObject currentWeapon = Instantiate(playerWeaponPrefab, characterRightHand);
         currentWeapon.SetActive(true); // Set it active
 
-        currentWeapon.transform.localScale = Vector3.one * 100;
-
         WeaponCon.CurrentWeapon = currentWeapon.GetComponent<Weapon>();
 
         WeaponCon.Init();

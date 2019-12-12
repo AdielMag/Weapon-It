@@ -21,6 +21,9 @@ public class WeaponController : MonoBehaviour
     {
         HandleTargetDetection();
 
+        if (!initiallized)
+            return;
+
         // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
         targetRot =
             Vector3.Lerp(targetRot, gunOrigLocalRot, Time.deltaTime * gunRecoilRcoveryMultiplier);
@@ -57,6 +60,9 @@ public class WeaponController : MonoBehaviour
 
         gunRecoilRcoveryMultiplier =
             CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
+
+        // Instantiate and set shoulder ik
+        shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, transform);
 
         rightHandIK = shoulder.GetChild(0);
         leftHandIK = shoulder.GetChild(1);
@@ -165,8 +171,9 @@ public class WeaponController : MonoBehaviour
          targetPos -= transform.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) /3f;  
     }
 
-    [Header("IK")]
-    public Transform shoulder;
+
+    // -------- IK --------
+    Transform shoulder;
     Transform rightHandIK;
     Transform leftHandIK;
     Transform leftHandIdleIK;
