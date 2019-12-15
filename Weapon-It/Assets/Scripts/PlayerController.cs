@@ -49,10 +49,22 @@ public class PlayerController : MonoBehaviour
 
     void HandleAnimations()
     {
-        anim.SetFloat("Horizontal", inputH.rawTouchPosDelta.x);
+        CalculateHorizontalPosDelta();
+        anim.SetFloat("Horizontal", horicontalPosDelta.x * 9);
         anim.SetBool("Aim",WeaponCon.TargetDetected);
 
-        anim.SetBool("Moving", inputH.rawTouchPosDelta.magnitude > 0.01f);
+        anim.SetBool("Moving", horicontalPosDelta.magnitude > 0.01f);
+    }
+
+    Vector2 lastPos, currentPos, horicontalPosDelta;
+    // Calculates the diffrence from this pos to last frame pos.
+    void CalculateHorizontalPosDelta()
+    {
+        currentPos = transform.position;
+
+        horicontalPosDelta = currentPos - lastPos;
+
+        lastPos = currentPos;
     }
 
     Vector2 targetPos;
