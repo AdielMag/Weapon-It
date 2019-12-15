@@ -29,7 +29,6 @@ public class InputHandler : MonoBehaviour
     private void Update()
     {
         CalculateTouchDelta();
-
 #if UNITY_EDITOR
         // Divide the position by the screen height to get precentage based location.
 
@@ -44,19 +43,6 @@ public class InputHandler : MonoBehaviour
             targetPosDelta = Vector2.zero;
         }
         rawTouchPosDelta = targetPosDelta;
-
-#else
-        if (Input.touchCount != 0)
-        {
-            if (!CanGetTouchInput())
-                return;
-        }
-        else{
-            startedOnUi = false;
-        targetPosDelta = Vector2.zero;
-        }
-
-        rawTouchPosDelta = targetPosDelta;
 #endif
     }
 
@@ -65,21 +51,44 @@ public class InputHandler : MonoBehaviour
     void CalculateTouchDelta()
     {
 #if UNITY_EDITOR
-
         currentTouchPos = Input.mousePosition / ScreenWidth;
         currentTouchPos.y = 0;
 
-        targetPosDelta = currentTouchPos - lastTouchPos;
+        targetPosDelta = (currentTouchPos - lastTouchPos) * 13;
 
         lastTouchPos = currentTouchPos;
-#else
-        targetPosDelta = Input.GetTouch(0).deltaPosition;
-#endif
 
-        targetPosDelta *= 13;
+        if (Input.GetMouseButton(0))
+        {
+            if (!CanGetTouchInput())
+                targetPosDelta = Vector2.zero;
+        }
+        else
+        {
+            startedOnUi = false;
+            targetPosDelta = Vector2.zero;
+        }
+#else
+        if (Input.touchCount != 0)
+        {
+            if (CanGetTouchInput())
+            {
+                targetPosDelta = Input.GetTouch(0).deltaPosition / 55;
+                targetPosDelta.y = 0;
+            }
+            else
+                targetPosDelta = Vector2.zero;
+        }
+        else
+        {
+            startedOnUi = false;
+            targetPosDelta = Vector2.zero;
+        }
+#endif
+        rawTouchPosDelta = targetPosDelta;
     }
 
-    private bool startedOnUi; // Used to check if the touch started on the ui
+    public bool startedOnUi; // Used to check if the touch started on the ui
     bool CanGetTouchInput()
     {
 #if UNITY_EDITOR
