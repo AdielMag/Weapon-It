@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
         // (if not will lerp from Vector3.zero and will look weird)
         targetLookAt = transform.position
                 + Vector3.forward * 20
-                + posDelta.y * Vector3.up * movementRotationForce
-                + posDelta.x * Vector3.right * movementRotationForce;
+                + inputH.rawTouchPosDelta.y * Vector3.up * movementRotationForce
+                + inputH.rawTouchPosDelta.x * Vector3.right * movementRotationForce;
 
         SetPlayerItems();
     }
@@ -49,17 +49,20 @@ public class PlayerController : MonoBehaviour
 
     void HandleAnimations()
     {
-        anim.SetFloat("Horizontal", posDelta.x * 7);
+        anim.SetFloat("Horizontal", inputH.rawTouchPosDelta.x);
         anim.SetBool("Aim",WeaponCon.TargetDetected);
 
-        anim.SetBool("Moving", posDelta.magnitude > 0.01f);
+        anim.SetBool("Moving", inputH.rawTouchPosDelta.magnitude > 0.01f);
     }
 
     Vector2 targetPos;
     void MovePlayer()
     {
         // Use input precentage to set width location.
-        targetPos.x = Mathf.Lerp(-gameWidth, gameWidth, inputH.inputPrecentage.x);
+        //targetPos.x = Mathf.Lerp(-gameWidth, gameWidth, inputH.inputPrecentage.x);
+
+        targetPos.x += inputH.rawTouchPosDelta.x;
+        targetPos.x = Mathf.Clamp(targetPos.x, -gameWidth, gameWidth);
 
         // Multiply precentage by the multiplier and add offset.
         targetPos.y = yOffset;
@@ -72,8 +75,6 @@ public class PlayerController : MonoBehaviour
     float angleDiffFromForward;
     void RotatePlayer()
     {
-        CalculatePosDelta();
-
         // Check the angle of the forward to the current rot
         angleDiffFromForward = Vector3.Angle(transform.forward, Vector3.forward);
 
@@ -87,24 +88,13 @@ public class PlayerController : MonoBehaviour
             // Set target for lerp with fixed forward and wth posDelta variables
             lerpTargetVar = transform.position
                 + Vector3.forward * 20
-                + posDelta.y * Vector3.up * movementRotationForce
-                + posDelta.x * Vector3.right * movementRotationForce;
+                + inputH.rawTouchPosDelta.y * Vector3.up * movementRotationForce
+                + inputH.rawTouchPosDelta.x * Vector3.right * movementRotationForce;
         }
 
         targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 10);
         targetLookAt.y = 0;     // Dont want the player yo rotate in the Y axis
         transform.LookAt(targetLookAt);
-    }
-
-    Vector2 lastPos, currentPos,posDelta;
-    // Calculates the diffrence from this pos to last frame pos.
-    void CalculatePosDelta()                
-    {
-        currentPos = transform.position;
-
-        posDelta = currentPos - lastPos;
-
-        lastPos = currentPos;
     }
 
     private void OnTriggerEnter(Collider other)

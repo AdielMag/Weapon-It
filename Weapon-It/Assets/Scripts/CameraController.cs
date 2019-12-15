@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
     // Player
     Transform target;
 
+    float gameWidth;
+
     public float temp;
     Vector3 positionOffset;
 
@@ -27,6 +29,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         target = PlayerController.instance.transform;
+
+        gameWidth = target.GetComponent<PlayerController>().gameWidth;
 
         inputH = InputHandler.instance;
 
@@ -46,7 +50,7 @@ public class CameraController : MonoBehaviour
     Vector3 targetRot;
     private void RotateCamera()
     {
-        targetRot.y = Mathf.Lerp(rotXConstraints, -rotXConstraints, inputH.inputPrecentage.x);
+        targetRot.y = Mathf.Lerp(rotXConstraints, -rotXConstraints, target.position.x / gameWidth);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRot), Time.deltaTime * 3);
     }
