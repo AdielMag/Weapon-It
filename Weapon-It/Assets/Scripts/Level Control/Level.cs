@@ -9,23 +9,30 @@ public class Level : MonoBehaviour
 
     public TargetSpawner[] spawners;
 
-    /*
-    private void Awake()
-    {
-        GetAllSpawners();
-    }
-    */
-
     public void GetAllSpawners()
     {
         spawners = new TargetSpawner[transform.childCount];
 
         for (int i = 0; i < spawners.Length; i++)
         {
-            spawners[i] = transform.GetChild(i).GetComponent<TargetSpawner>();
+            if (transform.GetChild(i).GetComponent<IdleTarget>())
+                SetSpawner(i, TargetSpawner.TargetType.Regular);
+
+            else if (transform.GetChild(i).GetComponent<MovingTarget>())
+                SetSpawner(i, TargetSpawner.TargetType.Moving);
         }
 
         Debug.Log("Got them all");
+    }
+
+    void SetSpawner(int spawnerNum, TargetSpawner.TargetType type)
+    {
+        GameObject newObj = new GameObject("Target Spawner " + spawnerNum);
+        newObj.transform.SetParent(transform);
+        newObj.transform.position = transform.GetChild(spawnerNum).position;
+        newObj.AddComponent<TargetSpawner>().type = type;
+
+        spawners[spawnerNum] = newObj.GetComponent<TargetSpawner>();
     }
 
     public void SpawnLevel()
