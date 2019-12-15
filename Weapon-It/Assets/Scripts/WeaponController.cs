@@ -70,7 +70,7 @@ public class WeaponController : MonoBehaviour
 
     Vector3 rayHalfExtents = new Vector3(4f, 4f, .2f);
     public LayerMask targetLayerMask;
-    public TargetIndiactor tarIndiactor;
+    public TargetIndiactor targetIndicator;
     void HandleTargetDetection()
     {
         Vector3 originPoint = transform.position + Vector3.up * 6;
@@ -96,8 +96,8 @@ public class WeaponController : MonoBehaviour
                 CurrentWeapon.Attack(CurrentWeapon.transform.forward);
 
             // Set target Indicator location.
-            tarIndiactor.SetLocation(currentTarget.transform.position);
-            tarIndiactor.onTarget = true;
+            targetIndicator.SetLocation(currentTarget.transform.position);
+            targetIndicator.onTarget = true;
         }
         else
         {
@@ -105,9 +105,9 @@ public class WeaponController : MonoBehaviour
 
             // Set target Indicator location.
             Vector3 targetIndiactorPos =
-                originPoint + transform.forward * WeaponRange;
-            tarIndiactor.SetLocation(targetIndiactorPos);
-            tarIndiactor.onTarget = false;
+                originPoint + Vector3.forward * WeaponRange;
+            targetIndicator.SetLocation(targetIndiactorPos);
+            targetIndicator.onTarget = false;
         }
     }
 

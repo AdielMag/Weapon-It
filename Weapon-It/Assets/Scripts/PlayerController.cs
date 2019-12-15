@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
     public int movementRotationForce = 15;
     public float yOffset; // Offset weapon Y location.
     public float gameWidth;
-    public float targetIndicatorYMultiplier = 20; // Multiply input.y precentage.
-
 
     public WeaponController WeaponCon { get; private set; }
     GameManager gMan;

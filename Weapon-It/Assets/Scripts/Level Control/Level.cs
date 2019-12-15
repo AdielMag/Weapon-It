@@ -16,7 +16,7 @@ public class Level : MonoBehaviour
     }
     */
 
-    private void GetAllSpawners()
+    public void GetAllSpawners()
     {
         spawners = new TargetSpawner[transform.childCount];
 
