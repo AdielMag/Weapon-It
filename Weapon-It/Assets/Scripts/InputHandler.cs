@@ -47,7 +47,7 @@ public class InputHandler : MonoBehaviour
     }
 
     Vector2 lastTouchPos, currentTouchPos, targetPosDelta;
-    // Calculates the diffrence from this pos to last frame pos.
+    // Calculates the mouse and touch delta (Diff from last frame pos)
     void CalculateTouchDelta()
     {
 #if UNITY_EDITOR

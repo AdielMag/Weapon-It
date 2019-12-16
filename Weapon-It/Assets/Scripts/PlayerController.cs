@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     }
 
     Vector2 lastPos, currentPos, horicontalPosDelta;
-    // Calculates the diffrence from this pos to last frame pos.
+    // Calculates the diffrence from this pos to last frame pos - Used for horizontal animation
     void CalculateHorizontalPosDelta()
     {
         currentPos = transform.position;

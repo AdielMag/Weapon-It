@@ -82,9 +82,7 @@ public class LevelController : MonoBehaviour
 
         float time =
             Vector3.Distance(transform.position, lastObject.position)
-            /
-            13
-            ;
+            / 14.6f;
 
         return time;
     }

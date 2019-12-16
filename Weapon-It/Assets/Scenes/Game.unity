@@ -1381,22 +1381,22 @@ MonoBehaviour:
   - tag: Regular_Target
     prefab: {fileID: 5229048019730821882, guid: 545e1f3d4f79e78488e183426a961322,
       type: 3}
-    size: 20
+    size: 60
     parent: {fileID: 0}
   - tag: Moving_Target
     prefab: {fileID: 5229048019730821882, guid: 8dd6b8af6c37b5e41a6b79e6b16cb867,
       type: 3}
-    size: 20
+    size: 60
     parent: {fileID: 0}
   - tag: Simple_Bullet
     prefab: {fileID: 4701597351723877086, guid: a794443937bd1e341961f785e96d69d7,
       type: 3}
-    size: 60
+    size: 100
     parent: {fileID: 0}
   - tag: Simple_Muzzle
     prefab: {fileID: 7620496766998534558, guid: fd0daf3489ea3a4449afa8325441e34b,
       type: 3}
-    size: 30
+    size: 100
     parent: {fileID: 0}
 --- !u!4 &1194411968
 Transform:

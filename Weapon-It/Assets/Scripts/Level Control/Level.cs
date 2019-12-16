@@ -16,21 +16,40 @@ public class Level : MonoBehaviour
         for (int i = 0; i < spawners.Length; i++)
         {
             if (transform.GetChild(i).GetComponent<IdleTarget>())
-                SetSpawner(i, TargetSpawner.TargetType.Regular);
+                SetSpawner(i);
 
             else if (transform.GetChild(i).GetComponent<MovingTarget>())
-                SetSpawner(i, TargetSpawner.TargetType.Moving);
+                SetSpawner(i, transform.GetChild(i).GetComponent<MovingTarget>().axis);
         }
 
         Debug.Log("Got them all");
     }
 
-    void SetSpawner(int spawnerNum, TargetSpawner.TargetType type)
+    void SetSpawner(int spawnerNum)
     {
-        GameObject newObj = new GameObject("Target Spawner " + spawnerNum);
-        newObj.transform.SetParent(transform);
-        newObj.transform.position = transform.GetChild(spawnerNum).position;
-        newObj.AddComponent<TargetSpawner>().type = type;
+        Transform newObj = transform.GetChild(spawnerNum);
+
+        if (newObj.GetComponent<TargetSpawner>())
+            newObj.gameObject.GetComponent<TargetSpawner>().type =
+                TargetSpawner.TargetType.Regular;
+        else
+            newObj.gameObject.AddComponent<TargetSpawner>().type =
+                TargetSpawner.TargetType.Regular;
+
+        spawners[spawnerNum] = newObj.GetComponent<TargetSpawner>();
+    }
+    void SetSpawner(int spawnerNum, MovingTarget.Axis axis)
+    {
+        Transform newObj = transform.GetChild(spawnerNum);
+
+        if (newObj.GetComponent<TargetSpawner>())
+            newObj.gameObject.GetComponent<TargetSpawner>().type =
+                TargetSpawner.TargetType.Moving;
+        else
+            newObj.gameObject.AddComponent<TargetSpawner>().type =
+                TargetSpawner.TargetType.Moving;
+
+        newObj.GetComponent<TargetSpawner>().axis = axis;
 
         spawners[spawnerNum] = newObj.GetComponent<TargetSpawner>();
     }
