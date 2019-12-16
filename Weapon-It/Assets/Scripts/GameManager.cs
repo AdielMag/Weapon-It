@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     ObjectPooler objPooler;
 
+    public bool currentlyPlaying;
+
     public UIMethods UIManager { get; set; }
     public LevelController LevelCon { get; set; }
     public JsonDataManager DataManager { get; private set; }

@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    public int playerLife;
+
+    [Header("Gameplay variables")]
     public float movementSpeed = 3;
     public int movementRotationForce = 15;
     public float yOffset; // Offset weapon Y location.
@@ -104,7 +107,7 @@ public class PlayerController : MonoBehaviour
                 + inputH.rawTouchPosDelta.x * Vector3.right * movementRotationForce;
         }
 
-        targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 10);
+        targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 5);
         targetLookAt.y = 0;     // Dont want the player yo rotate in the Y axis
         transform.LookAt(targetLookAt);
     }

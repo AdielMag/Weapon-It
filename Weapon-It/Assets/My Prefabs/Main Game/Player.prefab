@@ -44,8 +44,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4864420502329942203}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 16c4b6c36252ce14e8083291c9e774fd, type: 3}
-  m_Controller: {fileID: 9100000, guid: b79e1395b6ab5b94c996062aca5704d1, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 4cf8e35218228c74e87ae151b5dc4516, type: 3}
+  m_Controller: {fileID: 9100000, guid: 45b4c1b6c5f9c4e48b30c4bcaa9fca4b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -66,7 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77ff1228f39d647838b53f9ae07552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputPrecentage: {x: 0, y: 0}
+  rawTouchPosDelta: {x: 0, y: 0}
+  startedOnUi: 0
 --- !u!114 &4864420502329942196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,11 +80,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1415a7bb725e5749aefb0a72e42a0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLife: 0
   movementSpeed: 4
-  movementRotationForce: 15
+  movementRotationForce: 25
   yOffset: 0.5
   gameWidth: 9
-  targetIndicatorYMultiplier: 20
   weaponsItemsParent: {fileID: 4836388011942013248, guid: 721ee9548f9a2524b8dc239e69c40edb,
     type: 3}
   charactersItemsParent: {fileID: 7924152353522783781, guid: 65ba881a4947c8c43ad0ff836ec08f78,
@@ -95,7 +96,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4864420502329942203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84e8ac232236d044aa7659cb2f9d22a0, type: 3}
   m_Name: 
@@ -104,7 +105,7 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  tarIndiactor: {fileID: 0}
+  targetIndicator: {fileID: 0}
 --- !u!136 &4824884351999984644
 CapsuleCollider:
   m_ObjectHideFlags: 0

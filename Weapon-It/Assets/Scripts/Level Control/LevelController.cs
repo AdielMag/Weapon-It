@@ -7,7 +7,7 @@ public class LevelController : MonoBehaviour
 {
     int currentLevel;
 
-    float levelMaxTime, levelStartTime;
+    float levelMaxTime, levelStartTime, remainingTimePrecentage;
 
     //public Slider levelProgressIndicator;
     public LevelProgressIndicator progressIndicator;
@@ -32,6 +32,20 @@ public class LevelController : MonoBehaviour
         gMan.LevelCon = this;
 
         SpawnAllLevels();
+    }
+
+    private void Update()
+    {
+        if (!gMan.currentlyPlaying)
+            return;
+
+        if (remainingTimePrecentage > 1) // Level time ran out
+            LostLevel();
+        else
+        {
+            progressIndicator.targetValue = remainingTimePrecentage =
+                1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
+        }
     }
 
     public void SpawnAllLevels()
@@ -62,13 +76,12 @@ public class LevelController : MonoBehaviour
         levelStartTime = Time.time;
         levelMaxTime = levelTime(levelNum);
 
-        // Set the indicator times
-        progressIndicator.SetLevelTimes(levelStartTime, levelMaxTime);
-
         levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
         levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
 
         currentLevel = levelNum;    // Set current level 
+
+        gMan.currentlyPlaying = true;
     }
 
     float levelTime(int levelNum)
@@ -105,8 +118,7 @@ public class LevelController : MonoBehaviour
 
         levelStartTime = -100;
 
-        // Set the indicator times
-        progressIndicator.SetLevelTimes(levelStartTime, levelMaxTime);
+        gMan.currentlyPlaying = false;
     }
 
     public void LostLevel()
@@ -116,13 +128,7 @@ public class LevelController : MonoBehaviour
 
         levelStartTime = -100;
 
-        // Set the indicator times
-        progressIndicator.SetLevelTimes(levelStartTime, levelMaxTime);
-    }
-
-    public void ResetLevel()
-    {
-
+        gMan.currentlyPlaying = false;
     }
 
     public void HideAllTargets()

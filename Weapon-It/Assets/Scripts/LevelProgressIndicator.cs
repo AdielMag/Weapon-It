@@ -7,7 +7,7 @@ public class LevelProgressIndicator : MonoBehaviour
 {
     Slider slider;
 
-    float levelMaxTime, levelStartTime;
+    public float targetValue;
 
     private void Start()
     {
@@ -15,16 +15,8 @@ public class LevelProgressIndicator : MonoBehaviour
     }
     
     private void Update()
-    {   
-        // Update level progress indicator
-        // 1 - (maxTime -(time - startTime)) / maxTime
-        slider.value =
-            1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
-    }
-
-    public void SetLevelTimes(float startTime, float maxTime)
     {
-        levelStartTime = startTime;
-        levelMaxTime = maxTime;
+        slider.value = targetValue;
+        //    1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
     }
 }
