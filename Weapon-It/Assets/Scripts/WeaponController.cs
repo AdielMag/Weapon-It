@@ -21,15 +21,22 @@ public class WeaponController : MonoBehaviour
     {
         HandleTargetDetection();
 
-        targetPos =
-            Vector3.Lerp(targetPos, gunOrigLocalPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+        shoulderTargetPos =
+            Vector3.Lerp(shoulderTargetPos, shoulderOrigLocalPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
         shoulder.localPosition =
-            Vector3.Lerp(shoulder.localPosition, targetPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+            Vector3.Lerp(shoulder.localPosition, shoulderTargetPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+
+        rHandTargetRot =
+            Vector3.Lerp(rHandTargetRot, rHandOrigLocalRot, Time.deltaTime * gunRecoilRcoveryMultiplier * 2);
+        rightHandIK.localEulerAngles =
+            Vector3.Lerp(rightHandIK.localEulerAngles, rHandTargetRot, Time.deltaTime * gunRecoilRcoveryMultiplier * 3);
 
         // Inverse kinematic offset
         if (TargetDetected)
         {
-            currentTargetPos = Vector3.Lerp(currentTargetPos, targetFuturePos(), Time.deltaTime * 9);
+            currentTargetPos = 
+                Vector3.Lerp(currentTargetPos,
+                targetFuturePos(), Time.deltaTime * 9);
             shoulder.LookAt(currentTargetPos);
             shoulder.eulerAngles +=
                 transform.right * aimAngleOffset.y +
@@ -55,15 +62,18 @@ public class WeaponController : MonoBehaviour
         shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, transform);
 
         rightHandIK = shoulder.GetChild(0);
-        leftHandIK = shoulder.GetChild(1);
+        leftHandIK = shoulder.GetChild(0).GetChild(0);
 
         // Set leftHandIdleIK from currentWeapon
         leftHandIdleIK = CurrentWeapon.GetComponent<Gun>().leftHandIdleIK;
 
-        // Set gun orig pos and rot
-        gunOrigLocalPos = shoulder.localPosition;
+        // Set shoulder orig pos 
+        shoulderOrigLocalPos = shoulder.localPosition;
+        shoulderTargetPos = shoulderOrigLocalPos;
 
-        targetPos = gunOrigLocalPos;
+        // Set right hand orig pos
+        rHandOrigLocalRot = rightHandIK.localEulerAngles;
+        rHandTargetRot = rHandOrigLocalRot;
 
         enabled = true;
     }
@@ -144,12 +154,18 @@ public class WeaponController : MonoBehaviour
         return targetPos;
     }
 
-    Vector3 gunOrigLocalPos;
-    Vector3 targetPos;
+    Vector3 shoulderOrigLocalPos, rHandOrigLocalRot;
+    Vector3 shoulderTargetPos, rHandTargetRot;
+
     public void ShotRecoil(float recoilForce)
     {
-        // Set pos recoil.
-         targetPos -= transform.forward * Random.Range(recoilForce / 2 * .7f, recoilForce / 3) /3f;  
+        // Set shoulder recoil.
+         shoulderTargetPos -= transform.forward * 
+            Random.Range(recoilForce / 2 * .7f, recoilForce / 3) /3f;
+
+        // Set right hand recoil
+        rHandTargetRot -= transform.right *
+            Random.Range(recoilForce * .7f, recoilForce ) * 15;
     }
 
 
