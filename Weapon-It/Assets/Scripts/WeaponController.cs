@@ -83,7 +83,7 @@ public class WeaponController : MonoBehaviour
     public TargetIndiactor targetIndicator;
     void HandleTargetDetection()
     {
-        Vector3 originPoint = transform.position + Vector3.up * 6;
+        Vector3 originPoint = transform.position.x * Vector3.right + Vector3.up * 5;
         Physics.BoxCast(originPoint, rayHalfExtents / 2, Vector3.forward,
             out currentTarget, Quaternion.identity, WeaponRange, targetLayerMask);
 

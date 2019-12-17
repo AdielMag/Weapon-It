@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour, IPooledObject
     {
         if (other.transform.tag == "Target")
         {
-            other.GetComponent<Target>().TakeDamage(projectileDamage);
+            other.GetComponent<Enemy>().TakeDamage(projectileDamage);
 
             Explode();
         }

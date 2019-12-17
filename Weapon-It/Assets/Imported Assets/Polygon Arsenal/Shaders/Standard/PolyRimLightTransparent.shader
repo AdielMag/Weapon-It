@@ -1,4 +1,4 @@
-Shader "PolygonArsenal/PolyRimLightTransparent"
+Shader "Doozy/DRimLightTransparent"
  {
      Properties 
      {

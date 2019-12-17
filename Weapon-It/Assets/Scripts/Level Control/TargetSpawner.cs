@@ -8,7 +8,7 @@ public class TargetSpawner : MonoBehaviour
     public enum TargetType { Regular , Moving }
     public TargetType type;
     [Header("If Moving")]
-    public MovingTarget.Axis axis;
+    public MovingEnemy.Axis axis;
 
     public void SpawnObj()
     {
@@ -18,7 +18,7 @@ public class TargetSpawner : MonoBehaviour
             case TargetType.Moving:
                 spawnedObject = ObjectPooler.instance.SpawnFromPool
                     ("Moving_Target", transform.position, Quaternion.identity);
-                spawnedObject.GetComponent<MovingTarget>().axis = axis;
+                spawnedObject.GetComponent<MovingEnemy>().axis = axis;
                 break;
             default:
                 spawnedObject = ObjectPooler.instance.SpawnFromPool
@@ -26,7 +26,7 @@ public class TargetSpawner : MonoBehaviour
                 break;
         }
 
-        GameManager.instance.LevelCon.currentLevelTargets.Add(spawnedObject.GetComponent<Target>());
+        GameManager.instance.LevelCon.currentLevelTargets.Add(spawnedObject.GetComponent<Enemy>());
         GameManager.instance.LevelCon.activeLevelObjects++;
     }
 }

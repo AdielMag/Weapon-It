@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ public class LevelController : MonoBehaviour
     float levelMaxTime, levelStartTime, remainingTimePrecentage;
 
     //public Slider levelProgressIndicator;
-    public LevelProgressIndicator progressIndicator;
+    public Slider progressIndicator;
 
     [Space]
     // Array of level gameobejcts that will store the levels prefabs
@@ -20,8 +19,11 @@ public class LevelController : MonoBehaviour
     GameObject levelsParent;
 
     // Used to control active targets (Count them, disable them)
-    public List<Target> currentLevelTargets = new List<Target>();
+    public List<Enemy> currentLevelTargets = new List<Enemy>();
     public int activeLevelObjects;
+
+    [Space]
+    public Fortress fortress;
 
     GameManager gMan;
 
@@ -40,10 +42,11 @@ public class LevelController : MonoBehaviour
             return;
 
         if (remainingTimePrecentage > 1) // Level time ran out
-            LostLevel();
+            LevelFinished();
+
         else
         {
-            progressIndicator.targetValue = remainingTimePrecentage =
+            progressIndicator.value = remainingTimePrecentage =
                 1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
         }
     }
@@ -74,7 +77,9 @@ public class LevelController : MonoBehaviour
         activeLevelObjects = 0;
 
         levelStartTime = Time.time;
-        levelMaxTime = levelTime(levelNum);
+        levelMaxTime = levelTime(levelNum)
+            // + Level time offset that was set in the level prefab
+            + levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().timeOffset;
 
         levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
         levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
@@ -95,7 +100,7 @@ public class LevelController : MonoBehaviour
 
         float time =
             Vector3.Distance(transform.position, lastObject.position)
-            / 14.6f;
+            / 17;
 
         return time;
     }

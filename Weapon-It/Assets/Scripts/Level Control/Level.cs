@@ -5,7 +5,7 @@ using UnityEngine;
 //[ExecuteInEditMode]
 public class Level : MonoBehaviour
 {
-    // Get all spawners
+    public int timeOffset;
 
     public TargetSpawner[] spawners;
 
@@ -15,11 +15,11 @@ public class Level : MonoBehaviour
 
         for (int i = 0; i < spawners.Length; i++)
         {
-            if (transform.GetChild(i).GetComponent<IdleTarget>())
+            if (transform.GetChild(i).GetComponent<SimpleEnemy>())
                 SetSpawner(i);
 
-            else if (transform.GetChild(i).GetComponent<MovingTarget>())
-                SetSpawner(i, transform.GetChild(i).GetComponent<MovingTarget>().axis);
+            else if (transform.GetChild(i).GetComponent<MovingEnemy>())
+                SetSpawner(i, transform.GetChild(i).GetComponent<MovingEnemy>().axis);
         }
 
         Debug.Log("Got them all");
@@ -38,7 +38,7 @@ public class Level : MonoBehaviour
 
         spawners[spawnerNum] = newObj.GetComponent<TargetSpawner>();
     }
-    void SetSpawner(int spawnerNum, MovingTarget.Axis axis)
+    void SetSpawner(int spawnerNum, MovingEnemy.Axis axis)
     {
         Transform newObj = transform.GetChild(spawnerNum);
 

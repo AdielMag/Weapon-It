@@ -1,4 +1,4 @@
-Shader "PolygonArsenal/PolyRimLightSolid"
+Shader "Doozy/DRimLightSolid"
  {
      Properties 
      {

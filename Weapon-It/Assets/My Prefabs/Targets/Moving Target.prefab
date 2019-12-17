@@ -106,8 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: 0
-  health: 1
-  movingSpeed: 5
+  stopDistance: 5
 --- !u!54 &5229048019730821885
 Rigidbody:
   m_ObjectHideFlags: 0

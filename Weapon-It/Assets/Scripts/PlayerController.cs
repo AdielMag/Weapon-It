@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [Header("Gameplay variables")]
     public float movementSpeed = 3;
     public int movementRotationForce = 15;
-    public float yOffset; // Offset weapon Y location.
     public float gameWidth;
 
     public WeaponController WeaponCon { get; private set; }
@@ -70,7 +69,7 @@ public class PlayerController : MonoBehaviour
         lastPos = currentPos;
     }
 
-    Vector2 targetPos;
+    Vector3 targetPos;
     void MovePlayer()
     {
         // Use input precentage to set width location.
@@ -80,7 +79,9 @@ public class PlayerController : MonoBehaviour
         targetPos.x = Mathf.Clamp(targetPos.x, -gameWidth, gameWidth);
 
         // Multiply precentage by the multiplier and add offset.
-        targetPos.y = yOffset;
+        targetPos.y = transform.position.y;
+        targetPos.z = transform.position.z;
+
 
         // Lerp position
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * movementSpeed);
@@ -108,14 +109,8 @@ public class PlayerController : MonoBehaviour
         }
 
         targetLookAt = Vector3.Lerp(targetLookAt, lerpTargetVar, Time.deltaTime * 5);
-        targetLookAt.y = 0;     // Dont want the player yo rotate in the Y axis
+        targetLookAt.y = transform.position.y;     // Dont want the player yo rotate in the Y axis
         transform.LookAt(targetLookAt);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "Target")
-            gMan.LevelCon.LostLevel();
     }
 
     // Player items handler!
