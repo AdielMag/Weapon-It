@@ -1,22 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIMethods : MonoBehaviour
 {
-    Transform levelsButtonParent;
-    [HideInInspector]
-    public GameObject levelCompleted, lostIndicator;
+    public GameObject levelWonWindow, levelLostWindow;
 
-    public GameManager gMan;
-
-    private void Awake()
-    {
-        levelsButtonParent = transform.GetChild(0);
-
-        levelCompleted = transform.GetChild(1).gameObject;
-        lostIndicator = transform.GetChild(2).gameObject;
-    }
+    GameManager gMan;
 
     private void Start()
     {
@@ -24,19 +12,7 @@ public class UIMethods : MonoBehaviour
 
         gMan.UIManager = this;
 
-        UpdateLevelsButtons(gMan.DataManager.gamePlayData.playerHighestLevel);
     }
 
-    public void UpdateLevelsButtons(int highestLevel)
-    {
-        for (int i = 0; i < levelsButtonParent.childCount; i++)
-        {
-            if (i <= highestLevel)
-                levelsButtonParent.GetChild(i).gameObject.SetActive(true);
-            else
-                levelsButtonParent.GetChild(i).gameObject.SetActive(false);
-        }
-
-    }
 
 }

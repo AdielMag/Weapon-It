@@ -113,13 +113,9 @@ public class LevelController : MonoBehaviour
         {
             gMan.DataManager.gamePlayData.playerHighestLevel = currentLevel;
             gMan.DataManager.SaveData();
-
-
-            // PrototypeUI - TEMPORARY
-            gMan.UIManager.UpdateLevelsButtons(currentLevel);
         }
 
-        gMan.UIManager.levelCompleted.SetActive(true);
+        gMan.UIManager.levelWonWindow.SetActive(true);
 
         levelStartTime = -100;
 
@@ -129,7 +125,7 @@ public class LevelController : MonoBehaviour
     public void LostLevel()
     {
         HideAllTargets();
-        gMan.UIManager.lostIndicator.SetActive(true);
+        gMan.UIManager.levelLostWindow.SetActive(true);
 
         levelStartTime = -100;
 
