@@ -24,16 +24,16 @@ public class Fortress : MonoBehaviour
 
     void FortressDestroyed()
     {
-        gMan.LevelCon.LostLevel();
+        levelCon.LostLevel();
     }
 
     public Slider indiactor;
 
-    GameManager gMan;
+    LevelController levelCon;
 
     private void Start()
     {
-        gMan = GameManager.instance;
+        levelCon = LevelController.instance;
 
         life = maxLife;
     }

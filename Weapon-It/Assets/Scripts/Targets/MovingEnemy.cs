@@ -21,16 +21,16 @@ public class MovingEnemy : Enemy
     public override Vector2 sidesMoveDir() { return movementDirection; }
 
     #region Set gMan
-    public override GameManager GMan => targetGman;
+    public override LevelController LevelCon => targetLevelCon;
 
-    GameManager targetGman;
+    LevelController targetLevelCon;
     #endregion
 
     Rigidbody rb;
 
     private void Start()
     {
-        targetGman = GameManager.instance;
+        targetLevelCon = LevelController.instance;
         rb = GetComponent<Rigidbody>();
 
 

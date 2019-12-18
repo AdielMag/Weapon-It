@@ -2,7 +2,7 @@
 
 public class Enemy : MonoBehaviour
 {
-    public virtual GameManager GMan { get; set;}
+    public virtual LevelController LevelCon { get; set;}
 
     int targetHealth;
     public virtual int lifePoints() { return 0; }
@@ -23,12 +23,12 @@ public class Enemy : MonoBehaviour
 
     public void DealDamage(int damage)
     {
-        GMan.LevelCon.fortress.TakeDamage(damage);
+        LevelCon.fortress.TakeDamage(damage);
     }
 
     public virtual void TargetDestroyed()
     {
-        GMan.LevelCon.TargetDestroyed();
+        LevelCon.TargetDestroyed();
         gameObject.SetActive(false);
     }
 }

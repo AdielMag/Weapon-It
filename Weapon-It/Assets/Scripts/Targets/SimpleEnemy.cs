@@ -14,9 +14,9 @@ public class SimpleEnemy : Enemy
     public override float forwardMovSpeed() { return movingSpeed; }
 
     #region Set gMan
-    public override GameManager GMan => targetGman;
+    public override LevelController LevelCon => targetLevelCon;
 
-    GameManager targetGman;
+    LevelController targetLevelCon;
     #endregion
 
     Rigidbody rb;

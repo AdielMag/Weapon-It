@@ -4,12 +4,15 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
+    public bool currentlyPlaying;
+
     int currentLevel;
 
     float levelMaxTime, levelStartTime, remainingTimePrecentage;
 
-    //public Slider levelProgressIndicator;
-    public Slider progressIndicator;
+    public InGameUIManager uIManager;
+
+    CircleSlider timeLeftSlider;
 
     [Space]
     // Array of level gameobejcts that will store the levels prefabs
@@ -31,14 +34,13 @@ public class LevelController : MonoBehaviour
     {
         gMan = GameManager.instance;
 
-        gMan.LevelCon = this;
-
+        timeLeftSlider = uIManager.timeLeft;
         SpawnAllLevels();
     }
 
     private void Update()
     {
-        if (!gMan.currentlyPlaying)
+        if (!currentlyPlaying)
             return;
 
         if (remainingTimePrecentage > 1) // Level time ran out
@@ -46,7 +48,7 @@ public class LevelController : MonoBehaviour
 
         else
         {
-            progressIndicator.value = remainingTimePrecentage =
+            timeLeftSlider.value = remainingTimePrecentage =
                 1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
         }
     }
@@ -86,7 +88,7 @@ public class LevelController : MonoBehaviour
 
         currentLevel = levelNum;    // Set current level 
 
-        gMan.currentlyPlaying = true;
+        currentlyPlaying = true;
     }
 
     float levelTime(int levelNum)
@@ -115,21 +117,21 @@ public class LevelController : MonoBehaviour
             gMan.DataManager.SaveData();
         }
 
-        gMan.UIManager.levelWonWindow.SetActive(true);
+        uIManager.levelWonWindow.SetActive(true);
 
         levelStartTime = -100;
 
-        gMan.currentlyPlaying = false;
+        currentlyPlaying = false;
     }
 
     public void LostLevel()
     {
         HideAllTargets();
-        gMan.UIManager.levelLostWindow.SetActive(true);
+        uIManager.levelLostWindow.SetActive(true);
 
         levelStartTime = -100;
 
-        gMan.currentlyPlaying = false;
+        currentlyPlaying = false;
     }
 
     public void HideAllTargets()
@@ -149,5 +151,14 @@ public class LevelController : MonoBehaviour
 
         if (activeLevelObjects < 1)
             LevelFinished();
+    }
+
+    public static LevelController instance;
+    private void Awake()
+    {
+        if (instance && instance != this)
+            Destroy(instance.gameObject);
+
+        instance = this;
     }
 }
