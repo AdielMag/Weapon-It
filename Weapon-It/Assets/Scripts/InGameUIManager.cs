@@ -28,6 +28,10 @@ public class InGameUIManager : MonoBehaviour
     {
         timeLeft.value = 1;
         fortressHealth.value = 1;
+
+        levelWonWindow.SetActive(false);
+        levelLostWindow.SetActive(false);
+        pauseWindow.SetActive(false);
     }
 
     public void PauseLevel()
@@ -44,5 +48,27 @@ public class InGameUIManager : MonoBehaviour
 
         pauseButton.SetActive(true);
         pauseWindow.SetActive(false);
+    }
+
+    public void LevelCompleted()
+    {
+        pauseButton.SetActive(false);
+
+        levelWonWindow.SetActive(true);
+    }
+
+    public void LevelLost()
+    {
+        pauseButton.SetActive(false);
+
+        levelLostWindow.SetActive(true);
+    }
+
+    public void NextLevel()
+    {
+        levelCon.currentLevel++;
+        levelCon.StartLevel(levelCon.currentLevel);
+
+        ResetUI();
     }
 }

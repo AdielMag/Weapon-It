@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Horizontal", horicontalPosDelta.x * 9);
         anim.SetBool("Aim",WeaponCon.TargetDetected);
 
-        anim.SetBool("Moving", horicontalPosDelta.magnitude > 0.01f);
+        anim.SetBool("Moving", horicontalPosDelta.magnitude > 0.003f);
     }
 
     Vector2 lastPos, currentPos, horicontalPosDelta;

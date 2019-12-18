@@ -6,7 +6,7 @@ public class LevelController : MonoBehaviour
 {
     public bool currentlyPlaying;
 
-    int currentLevel;
+    public int currentLevel;
 
     float levelMaxTime, levelStartTime, remainingTimePrecentage;
 
@@ -43,14 +43,17 @@ public class LevelController : MonoBehaviour
         if (!currentlyPlaying)
             return;
 
-        if (remainingTimePrecentage > 1) // Level time ran out
+        remainingTimePrecentage =
+                1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
+
+        if (remainingTimePrecentage < 1) // Level time didn't ran out
+        {
+            timeLeftSlider.value = remainingTimePrecentage;
+        }
+
+        else 
             LevelFinished();
 
-        else
-        {
-            timeLeftSlider.value = remainingTimePrecentage =
-                1 - ((levelMaxTime - (Time.time - levelStartTime)) / levelMaxTime);
-        }
     }
 
     public void SpawnAllLevels()
@@ -116,8 +119,8 @@ public class LevelController : MonoBehaviour
             gMan.DataManager.gamePlayData.playerHighestLevel = currentLevel;
             gMan.DataManager.SaveData();
         }
-
-        uIManager.levelWonWindow.SetActive(true);
+        
+        uIManager.LevelCompleted();
 
         levelStartTime = -100;
 
@@ -127,7 +130,7 @@ public class LevelController : MonoBehaviour
     public void LostLevel()
     {
         HideAllTargets();
-        uIManager.levelLostWindow.SetActive(true);
+        uIManager.LevelLost();
 
         levelStartTime = -100;
 
