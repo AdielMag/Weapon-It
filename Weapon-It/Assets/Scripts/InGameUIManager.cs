@@ -71,4 +71,11 @@ public class InGameUIManager : MonoBehaviour
 
         ResetUI();
     }
+
+    public void RestartLevel()
+    {
+        levelCon.StartLevel(levelCon.currentLevel);
+
+        ResetUI();
+    }
 }

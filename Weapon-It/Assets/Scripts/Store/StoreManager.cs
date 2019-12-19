@@ -10,6 +10,9 @@ public class StoreManager : MonoBehaviour
     // Add the window objects for each type.
     public GameObject weaponsWindow;
     public GameObject charactersWindow;
+
+    public GameObject buyOrEquipButton;
+
     // Declare all your item types.
     public enum ItemTypes { Weapon, Character }
 
@@ -108,27 +111,17 @@ public class StoreManager : MonoBehaviour
     // Used at the start to determine which window is open
     void CheckWhichWindowIsOpen()
     {
-        // Need to add all windows!
-        if (weaponsWindow.activeSelf)
-            currentWindow = weaponsWindow.transform;
-        else if (charactersWindow.activeSelf)
-            currentWindow = charactersWindow.transform;
-
-        // If no one is active.
-        else
-        {
-            // Activate the first window (in this case - 'Weapons')
-            weaponsWindow.SetActive(true);
-            currentWindow = weaponsWindow.transform;
-        }
+        OpenWindow("Character");
 
         GetCurrentItemNum();
+
     }
 
     public void OpenWindow(string windowTypeName)
     {
         // Disable openedWindow
-        currentWindow.gameObject.SetActive(false);
+        if(currentWindow)
+            currentWindow.gameObject.SetActive(false);
 
         // Open wanted window - need to check for each item type.
         if (windowTypeName == ItemTypes.Weapon.ToString())
@@ -145,6 +138,10 @@ public class StoreManager : MonoBehaviour
         }
         else
             Debug.LogWarning("Misspelled the type name! check button string.");
+
+        StoreItem currentItem =
+            currentWindow.transform.GetChild(currentItemNum).GetComponent<StoreItem>();
+        UpdateBuyOrEquipButton(currentItem.bought);
     }
     // Check the current window for active obejcts
     void GetCurrentItemNum()
@@ -181,6 +178,10 @@ public class StoreManager : MonoBehaviour
         currentWindow.GetChild(currentItemNum).gameObject.SetActive(false);
         currentItemNum++;
         currentWindow.GetChild(currentItemNum).gameObject.SetActive(true);
+
+        StoreItem currentItem =
+            currentWindow.transform.GetChild(currentItemNum).GetComponent<StoreItem>();
+        UpdateBuyOrEquipButton(currentItem.bought);
     }
     public void PreviousItem()
     {
@@ -191,6 +192,10 @@ public class StoreManager : MonoBehaviour
         currentWindow.GetChild(currentItemNum).gameObject.SetActive(false);
         currentItemNum--;
         currentWindow.GetChild(currentItemNum).gameObject.SetActive(true);
+
+        StoreItem currentItem =
+            currentWindow.transform.GetChild(currentItemNum).GetComponent<StoreItem>();
+        UpdateBuyOrEquipButton(currentItem.bought);
     }
 
     public void BuyOrEquipWeapon()
@@ -242,7 +247,23 @@ public class StoreManager : MonoBehaviour
             // Add to item num to store data
         }
 
+        UpdateBuyOrEquipButton(currentItem.bought);
+
         SaveStoreData();
+    }
+
+    void UpdateBuyOrEquipButton(bool equipedd)
+    {
+        if (equipedd)
+        {
+            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(true);
+            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else
+        {
+            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(true);
+            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 
     public void ExitStore()
