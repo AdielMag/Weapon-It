@@ -30,4 +30,12 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+
+    // The level con gets it when the level starts do know which level to start.
+    public int CurrentLevel { get; set; }
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene("Game");
+    }
 }

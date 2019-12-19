@@ -36,6 +36,8 @@ public class LevelController : MonoBehaviour
 
         timeLeftSlider = uIManager.timeLeft;
         SpawnAllLevels();
+
+        StartLevel(gMan.CurrentLevel);
     }
 
     private void Update()
