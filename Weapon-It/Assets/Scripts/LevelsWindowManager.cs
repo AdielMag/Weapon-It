@@ -12,7 +12,7 @@ public class LevelsWindowManager : MonoBehaviour
         gMan = GameManager.instance;
         maxLevel = gMan.DataManager.gamePlayData.playerHighestLevel;
 
-        levelPrefab = transform.GetChild(2).GetChild(0).gameObject;
+        levelPrefab = transform.GetChild(3).GetChild(0).gameObject;
 
         UpdateLevelsButtons();
     }
@@ -22,7 +22,7 @@ public class LevelsWindowManager : MonoBehaviour
     {
         for (int i = 1; i <= 20; i++)
         {
-            GameObject newLevelButton = Instantiate(levelPrefab, transform.GetChild(2));
+            GameObject newLevelButton = Instantiate(levelPrefab, levelPrefab.transform.parent);
             newLevelButton.transform.GetChild(1).GetComponent<Text>().text = i.ToString();
 
             if (i > maxLevel)
@@ -45,9 +45,6 @@ public class LevelsWindowManager : MonoBehaviour
 
     void SetButtonAction(Button button, int levelNum)
     {
-        gMan.CurrentLevel = levelNum;
-
-        button.onClick.AddListener(gMan.LoadLevel);
-
+        button.onClick.AddListener(delegate { gMan.LoadLevel(levelNum); });
     }
 }

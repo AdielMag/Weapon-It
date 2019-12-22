@@ -25,13 +25,11 @@ public class ObjectPooler : MonoBehaviour
         }
         else if (instance != this)
             Destroy(gameObject);
+
+        InstantiatePools();
     }
     #endregion
 
-    private void Start()
-    {
-        InstantiatePools();
-    }
 
     public void InstantiatePools()
     {

@@ -23,6 +23,8 @@ public class SimpleEnemy : Enemy
 
     private void Start()
     {
+        targetLevelCon = LevelController.instance;
+
         rb = GetComponent<Rigidbody>();
     }
 

@@ -37,7 +37,8 @@ public class LevelController : MonoBehaviour
         timeLeftSlider = uIManager.timeLeft;
         SpawnAllLevels();
 
-        StartLevel(gMan.CurrentLevel);
+        currentLevel = gMan.CurrentLevel;
+        StartLevel(currentLevel);
     }
 
     private void Update()
@@ -70,7 +71,7 @@ public class LevelController : MonoBehaviour
 
     public void StartLevel(int levelNum)
     {
-        if(levelNum <= 0)
+        if (levelNum <= 0)
         {
             Debug.LogWarning("Level num too low - change it!");
             return;
