@@ -34,6 +34,7 @@ public class JsonDataManager : MonoBehaviour
         else
         {
             Debug.Log("Gameplay data dosent exist - creating file");
+            gamePlayData.playerHighestLevel = 1;
             File.WriteAllText(gameplayDataPath, JsonUtility.ToJson(gamePlayData));
         }
     }
