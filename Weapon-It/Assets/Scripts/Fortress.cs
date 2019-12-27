@@ -24,7 +24,7 @@ public class Fortress : MonoBehaviour
 
     void FortressDestroyed()
     {
-        levelCon.LostLevel();
+        levelCon.LevelLost();
     }
 
     public Slider indiactor;

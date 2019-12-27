@@ -70,6 +70,8 @@ public class InGameUIManager : MonoBehaviour
         levelCon.StartLevel(levelCon.currentLevel);
 
         ResetUI();
+
+        pauseButton.SetActive(true);
     }
 
     public void RestartLevel()

@@ -9770,10 +9770,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4698644997929898742}
   - component: {fileID: 4865184317403620966}
+  - component: {fileID: -2459403111196772606}
   - component: {fileID: 4899073668269420752}
   - component: {fileID: 4660491965010971412}
   - component: {fileID: 3257342307761629100}
-  - component: {fileID: -2459403111196772606}
   - component: {fileID: 7112854753112359634}
   m_Layer: 10
   m_Name: Simple_Bullet
@@ -14524,6 +14524,20 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-2459403111196772606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4701597351723877086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863ce43e3fb58424483b933fe55cc0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerSeconds: 5
+  projectileDamage: 1
 --- !u!199 &4899073668269420752
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -14600,8 +14614,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabSound: {fileID: 1297775994297274, guid: 07ce6accd60d3304d9e4d7213ff2fc14,
     type: 3}
-  destroyWhenDone: 1
-  soundPrefabIsChild: 0
+  destroyWhenDone: 0
+  soundPrefabIsChild: 1
   pitchRandomMultiplier: 1.1
 --- !u!54 &3257342307761629100
 Rigidbody:
@@ -14619,20 +14633,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-2459403111196772606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4701597351723877086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 863ce43e3fb58424483b933fe55cc0ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerSeconds: 5
-  projectileDamage: 1
 --- !u!136 &7112854753112359634
 CapsuleCollider:
   m_ObjectHideFlags: 0

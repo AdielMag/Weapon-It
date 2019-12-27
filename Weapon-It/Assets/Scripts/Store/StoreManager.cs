@@ -119,21 +119,21 @@ public class StoreManager : MonoBehaviour
 
     public void OpenWindow(string windowTypeName)
     {
-        // Disable openedWindow
-        if(currentWindow)
-            currentWindow.gameObject.SetActive(false);
-
         // Open wanted window - need to check for each item type.
         if (windowTypeName == ItemTypes.Weapon.ToString())
         {
             currentWindow = weaponsWindow.transform;
             weaponsWindow.SetActive(true);
+            charactersWindow.SetActive(false);
+
             GetCurrentItemNum();
         }
         else if (windowTypeName == ItemTypes.Character.ToString())
         {
             currentWindow = charactersWindow.transform;
             charactersWindow.SetActive(true);
+            weaponsWindow.SetActive(false);
+
             GetCurrentItemNum();
         }
         else

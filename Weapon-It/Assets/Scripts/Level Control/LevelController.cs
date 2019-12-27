@@ -55,7 +55,7 @@ public class LevelController : MonoBehaviour
         }
 
         else 
-            LevelFinished();
+            LevelWon();
 
     }
 
@@ -113,13 +113,13 @@ public class LevelController : MonoBehaviour
         return time;
     }
 
-    public void LevelFinished()
+    public void LevelWon()
     {
         HideAllTargets();
 
-        if (currentLevel >= gMan.DataManager.gamePlayData.playerHighestLevel)
+        if (currentLevel + 1 >= gMan.DataManager.gamePlayData.playerHighestLevel)
         {
-            gMan.DataManager.gamePlayData.playerHighestLevel = currentLevel;
+            gMan.DataManager.gamePlayData.playerHighestLevel = currentLevel + 1;
             gMan.DataManager.SaveData();
         }
         
@@ -130,7 +130,7 @@ public class LevelController : MonoBehaviour
         currentlyPlaying = false;
     }
 
-    public void LostLevel()
+    public void LevelLost()
     {
         HideAllTargets();
         uIManager.LevelLost();
@@ -156,7 +156,7 @@ public class LevelController : MonoBehaviour
         activeLevelObjects--;
 
         if (activeLevelObjects < 1)
-            LevelFinished();
+            LevelWon();
     }
 
     public static LevelController instance;
