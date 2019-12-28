@@ -51,8 +51,8 @@ public class InputHandler : MonoBehaviour
     void CalculateTouchDelta()
     {
 #if UNITY_EDITOR
-        currentTouchPos = Input.mousePosition / ScreenWidth;
-        currentTouchPos.y = 0;
+        currentTouchPos.x = Input.mousePosition.x / ScreenWidth;
+        currentTouchPos.y = Input.mousePosition.y / ScreenWidth;
 
         targetPosDelta = (currentTouchPos - lastTouchPos) * 13;
 
