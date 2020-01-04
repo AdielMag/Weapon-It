@@ -9,10 +9,10 @@ public class WeaponController : MonoBehaviour
     public Vector2 aimAngleOffset;
 
     public float WeaponRange { get; private set; }
-    public Weapon CurrentWeapon { get; set; }
+    public Weapon currentWeapon;
 
     RaycastHit currentTarget;   // Current target to aim and shoot at.
-    float gunRecoilRcoveryMultiplier;
+    float gunFireRate;
 
     PlayerController pCon;
     Animator anim;
@@ -22,14 +22,14 @@ public class WeaponController : MonoBehaviour
         HandleTargetDetection();
 
         shoulderTargetPos =
-            Vector3.Lerp(shoulderTargetPos, shoulderOrigLocalPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+            Vector3.Lerp(shoulderTargetPos, shoulderOrigLocalPos, Time.deltaTime * gunFireRate);
         shoulder.localPosition =
-            Vector3.Lerp(shoulder.localPosition, shoulderTargetPos, Time.deltaTime * gunRecoilRcoveryMultiplier);
+            Vector3.Lerp(shoulder.localPosition, shoulderTargetPos, Time.deltaTime * gunFireRate);
 
         rHandTargetRot =
-            Vector3.Lerp(rHandTargetRot, rHandOrigLocalRot, Time.deltaTime * gunRecoilRcoveryMultiplier * 2);
+            Vector3.Lerp(rHandTargetRot, rHandOrigLocalRot, Time.deltaTime * gunFireRate * 2);
         rightHandIK.localEulerAngles =
-            Vector3.Lerp(rightHandIK.localEulerAngles, rHandTargetRot, Time.deltaTime * gunRecoilRcoveryMultiplier * 3);
+            Vector3.Lerp(rightHandIK.localEulerAngles, rHandTargetRot, Time.deltaTime * gunFireRate * 3);
 
         // Inverse kinematic offset
         if (TargetDetected)
@@ -51,21 +51,21 @@ public class WeaponController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         // Set player controler in the gun script
-        CurrentWeapon.GetComponent<Gun>().pCon = pCon;
+        currentWeapon.GetComponent<Gun>().pCon = pCon;
         // Get range
-        WeaponRange = CurrentWeapon.WeaponRange;
+        WeaponRange = currentWeapon.WeaponRange;
 
-        gunRecoilRcoveryMultiplier =
-            CurrentWeapon.GetComponent<Gun>().recoilRcoveryMultiplier;
+        gunFireRate =
+            currentWeapon.GetComponent<Gun>().recoilLerpMultiplier;
 
         // Instantiate and set shoulder ik
-        shoulder = Instantiate(CurrentWeapon.GetComponent<Gun>().shoulderIK, transform);
+        shoulder = Instantiate(currentWeapon.GetComponent<Gun>().shoulderIK, transform);
 
         rightHandIK = shoulder.GetChild(0);
         leftHandIK = shoulder.GetChild(0).GetChild(0);
 
         // Set leftHandIdleIK from currentWeapon
-        leftHandIdleIK = CurrentWeapon.GetComponent<Gun>().leftHandIdleIK;
+        leftHandIdleIK = currentWeapon.GetComponent<Gun>().leftHandIdleIK;
 
         // Set shoulder orig pos 
         shoulderOrigLocalPos = shoulder.localPosition;
@@ -102,8 +102,8 @@ public class WeaponController : MonoBehaviour
             TargetDetected = true;
 
             // Check if can attack (+ if IK is in position)
-            if (CurrentWeapon.CanAttack && targetAimIK > .98f)
-                CurrentWeapon.Attack(CurrentWeapon.transform.forward);
+            if (currentWeapon.CanAttack && targetAimIK > .98f)
+                currentWeapon.Attack(currentWeapon.transform.forward);
 
             // Set target Indicator location.
             targetIndicator.SetLocation(currentTarget.transform.position);

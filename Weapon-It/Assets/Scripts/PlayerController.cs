@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
         GameObject currentWeapon = Instantiate(playerWeaponPrefab, characterRightHand);
         currentWeapon.SetActive(true); // Set it active
 
-        WeaponCon.CurrentWeapon = currentWeapon.GetComponent<Weapon>();
+        WeaponCon.currentWeapon = currentWeapon.GetComponent<Weapon>();
 
         WeaponCon.Init();
     }

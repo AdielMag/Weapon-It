@@ -304,15 +304,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
-  gunRange: 60
-  recoilRcoveryMultiplier: 6
-  recoilForce: 3
+  damage: 1
+  gunRange: 70
+  fireRate: 1.7
+  recoilLerpMultiplier: 14
+  recoilForce: 5
   slide: {fileID: 6944030191429307844}
   muzzle: {fileID: 8928292139647265460}
-  leftHandIdleIK: {fileID: 3478432732867981138}
   shellExit: {fileID: 0}
   canShoot: 0
   shoulderIK: {fileID: 1566833068276118150}
+  leftHandIdleIK: {fileID: 3478432732867981138}
 --- !u!1 &2128983938229609008
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,15 +405,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
-  gunRange: 40
-  recoilRcoveryMultiplier: 10
-  recoilForce: 3
+  damage: 1
+  gunRange: 60
+  fireRate: 2.8
+  recoilLerpMultiplier: 20
+  recoilForce: 2
   slide: {fileID: 3309874365833308202}
   muzzle: {fileID: 3110936400306746180}
-  leftHandIdleIK: {fileID: 4586548687806640792}
   shellExit: {fileID: 0}
   canShoot: 0
   shoulderIK: {fileID: 8646499531352405541}
+  leftHandIdleIK: {fileID: 4586548687806640792}
 --- !u!114 &1891567844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,15 +445,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
-  gunRange: 60
-  recoilRcoveryMultiplier: 6
+  damage: 1
+  gunRange: 80
+  fireRate: 1.5
+  recoilLerpMultiplier: 12
   recoilForce: 3
   slide: {fileID: 3355967333674348130}
   muzzle: {fileID: 1133266307012875710}
-  leftHandIdleIK: {fileID: 1139643972448885071}
   shellExit: {fileID: 0}
   canShoot: 0
   shoulderIK: {fileID: 7326871120035980042}
+  leftHandIdleIK: {fileID: 1139643972448885071}
 --- !u!1 &3727230334321702682
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,13 +570,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3984526437672236061}
-  m_LocalRotation: {x: 0.45422232, y: 0.20724921, z: 0.6567615, w: -0.5651497}
-  m_LocalPosition: {x: 0.012132905, y: -0.091988, z: 0.3375761}
+  m_LocalRotation: {x: 0.5469574, y: 0.21035899, z: 0.6969783, w: -0.41328937}
+  m_LocalPosition: {x: -0.038, y: -0.144, z: 0.279}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7520445603874055483}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 8.748, y: 46.685, z: 165.57901}
+  m_LocalEulerAnglesHint: {x: -48.188004, y: 61.982002, z: 211.263}
 --- !u!1 &3997213426741899296
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,15 +666,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
-  gunRange: 70
-  recoilRcoveryMultiplier: 8
-  recoilForce: 2
+  damage: 1
+  gunRange: 90
+  fireRate: 2.7
+  recoilLerpMultiplier: 20
+  recoilForce: 3
   slide: {fileID: 4165541451318405214}
   muzzle: {fileID: 2034932717479057751}
-  leftHandIdleIK: {fileID: 5974810394880463630}
   shellExit: {fileID: 0}
   canShoot: 0
   shoulderIK: {fileID: 1219725138725248743}
+  leftHandIdleIK: {fileID: 5974810394880463630}
 --- !u!1 &4271127811448271409
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,15 +767,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
+  damage: 1
   gunRange: 120
-  recoilRcoveryMultiplier: 4
-  recoilForce: 3
+  fireRate: 1.3
+  recoilLerpMultiplier: 10
+  recoilForce: 2
   slide: {fileID: 4721735654651764994}
   muzzle: {fileID: 5691054939397808138}
-  leftHandIdleIK: {fileID: 2948463523563419476}
   shellExit: {fileID: 0}
   canShoot: 0
   shoulderIK: {fileID: 7686623533011686569}
+  leftHandIdleIK: {fileID: 2948463523563419476}
 --- !u!1 &5002124265456334075
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,13 +953,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6269702411118906351}
-  m_LocalRotation: {x: -0.54862595, y: 0.05124407, z: -0.8315584, w: 0.06996019}
-  m_LocalPosition: {x: -0.0574, y: 0.0008, z: 0.3098}
+  m_LocalRotation: {x: 0.52400583, y: -0.031595845, z: 0.8026168, w: 0.28324166}
+  m_LocalPosition: {x: -0.064, y: -0.008, z: 0.266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8043697618183173902}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -180.485, y: 246.87201, z: 369.938}
+  m_LocalEulerAnglesHint: {x: 20.338001, y: 61.401005, z: 153.283}
 --- !u!1 &6311267619849127394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,15 +1146,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
-  gunRange: 120
-  recoilRcoveryMultiplier: 3
-  recoilForce: 2
+  damage: 1
+  gunRange: 130
+  fireRate: 0.9
+  recoilLerpMultiplier: 8
+  recoilForce: 3.5
   slide: {fileID: 8043697618183257006}
   muzzle: {fileID: 7944770577562058137}
-  leftHandIdleIK: {fileID: 249427589664945040}
   shellExit: {fileID: 0}
   canShoot: 0
   shoulderIK: {fileID: 6033560123913862194}
+  leftHandIdleIK: {fileID: 249427589664945040}
 --- !u!1 &8203737224901487742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,19 +1243,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.45912024
+      value: 0.43779227
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.44847476
+      value: -0.47325125
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.54814255
+      value: 0.6247376
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.5363011
+      value: -0.44053856
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_RootOrder
@@ -1251,15 +1263,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 180.046
+      value: 168.136
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -100.145996
+      value: -99.928986
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 88.711
+      value: 80.357994
       objectReference: {fileID: 0}
     - target: {fileID: 4510483257539040, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
       propertyPath: m_LocalScale.x
@@ -1628,15 +1640,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 445782, guid: f7397c12ba664d24989c07eba4e79ecb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.059
+      value: 0.062
       objectReference: {fileID: 0}
     - target: {fileID: 445782, guid: f7397c12ba664d24989c07eba4e79ecb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.042
+      value: 0.036
       objectReference: {fileID: 0}
     - target: {fileID: 445782, guid: f7397c12ba664d24989c07eba4e79ecb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.025
+      value: -0.062
       objectReference: {fileID: 0}
     - target: {fileID: 445782, guid: f7397c12ba664d24989c07eba4e79ecb, type: 3}
       propertyPath: m_LocalRotation.x

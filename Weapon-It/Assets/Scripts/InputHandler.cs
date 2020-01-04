@@ -36,10 +36,13 @@ public class InputHandler : MonoBehaviour
         {
             if (!CanGetTouchInput())
                 return;
+
+            startedOnGame = true;
         }
         else
         {
             startedOnUi = false;
+            startedOnGame = false;
             targetPosDelta = Vector2.zero;
         }
         rawTouchPosDelta = targetPosDelta;
@@ -88,9 +91,14 @@ public class InputHandler : MonoBehaviour
         rawTouchPosDelta = targetPosDelta;
     }
 
-    public bool startedOnUi; // Used to check if the touch started on the ui
+    public bool startedOnUi, startedOnGame; // Used to check if the touch started on the ui
     bool CanGetTouchInput()
     {
+        // If the first touch was ok - dont check for current input 
+        //(I want to check only when starting to touch)
+        if (startedOnGame)
+            return true;
+
 #if UNITY_EDITOR
         if (EventSystem.current.IsPointerOverGameObject() || startedOnUi)
         {

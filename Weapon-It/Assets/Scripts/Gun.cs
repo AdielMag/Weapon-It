@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Gun : Weapon
 {
-    public float gunRange = 30;
-    public float recoilRcoveryMultiplier = 5;
-    public float recoilForce = 10;
+    [Header("Gun Parameters")]
+    public int damage = 1;
+    [Range(60,150)]
+    public float gunRange = 60;
+    public float fireRate;
+    [Range(8, 30)]
+    public float recoilLerpMultiplier = 8;
+    public float recoilForce = 3;
 
-    Vector3 gunOrigRot;
-    Vector3 gunOrigPos;
-
+    [Header("Gun Objects - Editor")]
     public Transform slide;
     Vector3 slideOrigPos;
 
     public Transform muzzle;
-    public Transform leftHandIdleIK;
     public Transform shellExit;
 
     ObjectPooler objPool;
@@ -24,8 +26,9 @@ public class Gun : Weapon
     {
         objPool = ObjectPooler.instance;
 
-        gunOrigPos = transform.localPosition;
-        gunOrigRot = transform.localEulerAngles;
+        fireRate = -0.316f + 0.149333f * recoilLerpMultiplier;
+
+        fireRate = (float)System.Math.Round((double)fireRate, 1);
 
         slideOrigPos = slide.localPosition;
 
@@ -36,26 +39,13 @@ public class Gun : Weapon
 
     private void FixedUpdate()
     {
-
-        // Lerp thorugh local Rot\Pos and slide Pos towards zero (to the regualr pos)
-        /*
-        targetRot = 
-            Vector3.Lerp(targetRot, gunOrigRot, Time.deltaTime * recoilRcoveryMultiplier);
-        transform.localRotation =
-            Quaternion.Lerp(transform.localRotation,
-            Quaternion.Euler(targetRot), Time.deltaTime * recoilRcoveryMultiplier * 4);
-
-        targetPos = 
-            Vector3.Lerp(targetPos, gunOrigPos, Time.deltaTime * recoilRcoveryMultiplier);
-        transform.localPosition = 
-            Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * recoilRcoveryMultiplier);
-            */
         slideTargetPos = 
-            Vector3.Lerp(slideTargetPos, slideOrigPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
+            Vector3.Lerp(slideTargetPos, slideOrigPos, Time.deltaTime * recoilLerpMultiplier);
         slide.localPosition = 
-            Vector3.Lerp(slide.localPosition, slideTargetPos, Time.deltaTime * recoilRcoveryMultiplier * 3);
+            Vector3.Lerp(slide.localPosition, slideTargetPos, Time.deltaTime * recoilLerpMultiplier);
 
         CheckIfCanShoot();
+        //CalculateFireRate();
     }
 
     Vector3 targetRot;
@@ -85,9 +75,14 @@ public class Gun : Weapon
 
         // Set slide pos recoil.
         slideTargetPos -=
-            Vector3.forward * (Random.Range(recoilForce * .85f, recoilForce) / (recoilForce * 2.5f));
+            Vector3.forward * recoilForce / 10;
 
         canShoot = false;
+
+        if(tempFireRate == 0)
+            timeOfStartShoot = Time.time;
+
+        tempFireRate++;
     }
 
     [HideInInspector]
@@ -106,8 +101,23 @@ public class Gun : Weapon
     // IK objects used for this gun
     [Header("IK objects for this gun")]
     public Transform shoulderIK;
+    public Transform leftHandIdleIK;
+
+    float timeOfStartShoot;
+    float tempFireRate;
+    public void CalculateFireRate()
+    {
+        if (timeOfStartShoot + 10 < Time.time)
+        {
+            Debug.Log(tempFireRate);
+
+            tempFireRate = 0;
+        }
+    }
 
     // Used to override the Weapon stuff :)
+    public override int Damage() => damage;
+
     public override void Attack(Vector3 projectileForward)
     {
         //base.Attack(projectileForward);

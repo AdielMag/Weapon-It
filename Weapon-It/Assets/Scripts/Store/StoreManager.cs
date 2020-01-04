@@ -11,6 +11,9 @@ public class StoreManager : MonoBehaviour
     public GameObject weaponsWindow;
     public GameObject charactersWindow;
 
+    public GameObject mainStoreUI, upgradesUI;
+
+    public GameObject upgradesButton;
     public GameObject buyOrEquipButton;
 
     // Declare all your item types.
@@ -111,13 +114,13 @@ public class StoreManager : MonoBehaviour
     // Used at the start to determine which window is open
     void CheckWhichWindowIsOpen()
     {
-        OpenWindow("Character");
+        OpenItemWindow("Character");
 
         GetCurrentItemNum();
 
     }
 
-    public void OpenWindow(string windowTypeName)
+    public void OpenItemWindow(string windowTypeName)
     {
         // Open wanted window - need to check for each item type.
         if (windowTypeName == ItemTypes.Weapon.ToString())
@@ -126,6 +129,8 @@ public class StoreManager : MonoBehaviour
             weaponsWindow.SetActive(true);
             charactersWindow.SetActive(false);
 
+            upgradesButton.SetActive(true);
+
             GetCurrentItemNum();
         }
         else if (windowTypeName == ItemTypes.Character.ToString())
@@ -133,6 +138,8 @@ public class StoreManager : MonoBehaviour
             currentWindow = charactersWindow.transform;
             charactersWindow.SetActive(true);
             weaponsWindow.SetActive(false);
+
+            upgradesButton.SetActive(false);
 
             GetCurrentItemNum();
         }
@@ -167,6 +174,18 @@ public class StoreManager : MonoBehaviour
                 once = true;
             }
         }
+    }
+
+    public void OpenUpgrades()
+    {
+        upgradesUI.SetActive(true);
+        mainStoreUI.SetActive(false);
+    }
+
+    public void CloseUpgrades()
+    {
+        upgradesUI.SetActive(false);
+        mainStoreUI.SetActive(true);
     }
 
     public void NextItem()

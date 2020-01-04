@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Weapon :MonoBehaviour
 {
+    public virtual int Damage() => 1;
+
     public virtual void Attack() { }
     public virtual void Attack(Vector3 projectileForward) { }
 
+    [HideInInspector]
     public PlayerController pCon;
     public virtual PlayerController PlayerCon() => pCon;
 
