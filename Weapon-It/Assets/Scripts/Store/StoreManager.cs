@@ -111,7 +111,7 @@ public class StoreManager : MonoBehaviour
         uiManager.currentItemNum++;
         uiManager.currentWindow.GetChild(uiManager.currentItemNum).gameObject.SetActive(true);
 
-        StoreItem currentItem =
+        currentItem =
             uiManager.currentWindow.transform.GetChild(uiManager.currentItemNum).GetComponent<StoreItem>();
         uiManager.UpdateBuyOrEquipButton(currentItem.bought);
     }
@@ -139,6 +139,7 @@ public class StoreManager : MonoBehaviour
         coins -= currentItem.cost;
 
         // Check if bought
+        Debug.Log(currentItem);
         if (currentItem.bought)
         {
             // Equip item
@@ -151,8 +152,7 @@ public class StoreManager : MonoBehaviour
                     uiManager.weaponsWindow.transform.GetChild(gMan.DataManager.storeData.EquippedWeapon) 
                         .GetComponent<StoreItem>().equipped = false;
                     // Equip current item
-                    uiManager.weaponsWindow.transform.GetChild(uiManager.currentItemNum)
-                        .GetComponent<StoreItem>().equipped = true;
+                    currentItem.equipped = true;
                     // Set equipped weapon in data manager
                     gMan.DataManager.storeData.EquippedWeapon = uiManager.currentItemNum;
                     break;
@@ -161,8 +161,7 @@ public class StoreManager : MonoBehaviour
                     uiManager.charactersWindow.transform.GetChild(gMan.DataManager.storeData.EquippedCharacter)    
                         .GetComponent<StoreItem>().equipped = false;
                     // Equip current item
-                    uiManager.charactersWindow.transform.GetChild(uiManager.currentItemNum)
-                        .GetComponent<StoreItem>().equipped = true;
+                    currentItem.equipped = true;
                     // Set equipped character in data manager
                     gMan.DataManager.storeData.EquippedCharacter = uiManager.currentItemNum;
                     break;
