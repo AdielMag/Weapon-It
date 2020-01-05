@@ -36,7 +36,7 @@ public class ParameterBar : MonoBehaviour
     {
         for(int i = 0; i< blocksParent.childCount; i++)
         {
-            if (i <= upgradeCount)
+            if (i < upgradeCount)
                 blocksParent.GetChild(i).gameObject.SetActive(true);
             else
                 blocksParent.GetChild(i).gameObject.SetActive(false);

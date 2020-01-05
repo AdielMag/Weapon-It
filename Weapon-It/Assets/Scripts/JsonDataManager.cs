@@ -35,6 +35,13 @@ public class JsonDataManager : MonoBehaviour
             storeData.weaponsRangeUpgradesCount =       new int[6];
             storeData.weaponsFireRateUpgradesCount =    new int[6];
 
+            for (int i = 0; i < storeData.weaponsDamageUpgradesCount.Length; i++)
+                storeData.weaponsDamageUpgradesCount[i] = 1;
+            for (int i = 0; i < storeData.weaponsRangeUpgradesCount.Length; i++)
+                storeData.weaponsRangeUpgradesCount[i] = 1;
+            for (int i = 0; i < storeData.weaponsFireRateUpgradesCount.Length; i++)
+                storeData.weaponsFireRateUpgradesCount[i] = 1;
+
             File.WriteAllText(storeDataPath, JsonUtility.ToJson(storeData));
         }
         if (File.Exists(gameplayDataPath))

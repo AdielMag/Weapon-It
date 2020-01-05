@@ -49,9 +49,9 @@ public class Gun : Weapon
         MinRange = range;
         MinFireRate = fireRate;
 
-        MaxDamage = Mathf.Log(14, damageLogMultilpier) + MinDamage;
-        MaxRange = Mathf.Log( 14, rangeLogMultilpier) + MinRange;
-        MaxFireRate = Mathf.Log(14, fireRateLogMultilpier) + MinFireRate;
+        MaxDamage = Mathf.Log(15, damageLogMultilpier) + MinDamage;
+        MaxRange = Mathf.Log( 15, rangeLogMultilpier) + MinRange;
+        MaxFireRate = Mathf.Log(15, fireRateLogMultilpier) + MinFireRate;
 
         // Check which child num is this weapon in the weapons parent
         // Used to match the one in the json file!!
@@ -63,13 +63,13 @@ public class Gun : Weapon
                 currentGunNum = i;
         }
 
-        damageUpgradeCount =    gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGunNum];
-        rangeUpgradeCount =     gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGunNum];
-        fireRateUpgradeCount =  gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGunNum];
+        damageUpgradeCount = gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGunNum];
+        rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGunNum];
+        fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGunNum];
 
-        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
-        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;
-        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier) + MinFireRate;
+        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier);
+        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier);
+        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier);
     }
 
     private void Start()
