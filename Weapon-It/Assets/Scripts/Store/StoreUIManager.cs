@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class StoreUIManager : MonoBehaviour
 {
+    // Change this if the gun equation changes
+    public float MinDamage => 1;
+    public float MaxDamage => 55;
+
+    public float MinRange => 60;
+    public float MaxRange => 180;
+
+    public float MinFireRate => .9f;
+    public float MaxFireRate => 6;
+
     [HideInInspector]
     public Transform currentWindow;
 
@@ -18,6 +28,13 @@ public class StoreUIManager : MonoBehaviour
     public GameObject upgradesButton;
     public GameObject buyOrEquipButton;
 
+    // Upgrades stuff
+    [Header("Upgrades Varaibles")]
+    public ParameterBar damageBar;
+    public ParameterBar fireRateBar;
+    public ParameterBar rangeBar;
+
+    [HideInInspector]
     public StoreManager sManager;
 
     public void Init()
@@ -25,32 +42,6 @@ public class StoreUIManager : MonoBehaviour
         OpenItemWindow("Character");
 
         GetCurrentItemNum();
-    }
-
-    public void OpenUpgrades()
-    {
-        upgradesUI.SetActive(true);
-        mainStoreUI.SetActive(false);
-    }
-
-    public void CloseUpgrades()
-    {
-        upgradesUI.SetActive(false);
-        mainStoreUI.SetActive(true);
-    }
-
-    public void UpdateBuyOrEquipButton(bool equipedd)
-    {
-        if (equipedd)
-        {
-            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(true);
-            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(false);
-        }
-        else
-        {
-            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(true);
-            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(false);
-        }
     }
 
     public void OpenItemWindow(string windowTypeName)
@@ -83,6 +74,52 @@ public class StoreUIManager : MonoBehaviour
         sManager.currentItem =
             currentWindow.transform.GetChild(currentItemNum).GetComponent<StoreItem>();
         UpdateBuyOrEquipButton(sManager.currentItem.bought);
+    }
+
+    public void UpdateBuyOrEquipButton(bool equipedd)
+    {
+        if (equipedd)
+        {
+            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(true);
+            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else
+        {
+            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(true);
+            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(false);
+        }
+    }
+
+    public void OpenUpgrades()
+    {
+        upgradesUI.SetActive(true);
+        mainStoreUI.SetActive(false);
+
+        UpdateUpgradeMenu();
+    }
+
+    public void CloseUpgrades()
+    {
+        upgradesUI.SetActive(false);
+        mainStoreUI.SetActive(true);
+    }
+
+    void UpdateUpgradeMenu()
+    {
+        Gun currentGun = sManager.currentItem.GetComponent<Gun>();
+
+        UpdateBar(damageBar, MinDamage, MaxDamage, currentGun.damage);
+        UpdateBar(fireRateBar, MinFireRate, MaxFireRate, currentGun.fireRate);
+        UpdateBar(rangeBar, MinRange, MaxRange, currentGun.range);
+    }
+
+    void UpdateBar(ParameterBar bar,float minValue,float maxValue,float currentValue)
+    {
+        bar.minValue = minValue;
+        bar.maxValue = maxValue;
+        bar.value = currentValue;
+
+        bar.UpdateBar();
     }
 
     // Check the current window for active obejcts

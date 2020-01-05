@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 4940183928090928}
   - component: {fileID: 33899794943763854}
   - component: {fileID: 23543548735062024}
+  - component: {fileID: 365224756232194974}
   - component: {fileID: 1308743933970041218}
   m_Layer: 0
   m_Name: SM_Wep_MachinePistol_Gen2_01
@@ -250,6 +251,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &365224756232194974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333114963308854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214f0cd916483974ea37ce5beb365592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgrades: []
 --- !u!114 &1308743933970041218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
   damage: 1
-  gunRange: 60
+  range: 60
   fireRate: 2.8
   recoilLerpMultiplier: 20
   recoilForce: 2

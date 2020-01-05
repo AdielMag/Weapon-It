@@ -5,11 +5,16 @@ using UnityEngine;
 public class Gun : Weapon
 {
     [Header("Gun Parameters")]
-    public int damage = 1;
-    [Range(60,150)]
-    public float gunRange = 60;
+    public float damage = 1;
+    [Range(60, 180)]
+    public float range = 60;
+    [Range(.1f, 6)]
     public float fireRate;
-    [Range(8, 30)]
+
+    [HideInInspector]
+    public int damageUpgradeCount, rangeUpgradeCount, fireRateUpgradeCount;
+
+    [HideInInspector]
     public float recoilLerpMultiplier = 8;
     public float recoilForce = 3;
 
@@ -26,9 +31,7 @@ public class Gun : Weapon
     {
         objPool = ObjectPooler.instance;
 
-        fireRate = -0.316f + 0.149333f * recoilLerpMultiplier;
-
-        fireRate = (float)System.Math.Round((double)fireRate, 1);
+        recoilLerpMultiplier = (fireRate + 0.316f) / 0.149333f;
 
         slideOrigPos = slide.localPosition;
 
@@ -115,9 +118,6 @@ public class Gun : Weapon
         }
     }
 
-    // Used to override the Weapon stuff :)
-    public override int Damage() => damage;
-
     public override void Attack(Vector3 projectileForward)
     {
         //base.Attack(projectileForward);
@@ -126,5 +126,5 @@ public class Gun : Weapon
 
     public override bool CanAttack => canShoot;
 
-    public override float WeaponRange => gunRange;
+    public override float WeaponRange => range;
 }

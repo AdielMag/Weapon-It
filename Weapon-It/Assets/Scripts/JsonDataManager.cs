@@ -25,6 +25,16 @@ public class JsonDataManager : MonoBehaviour
         else
         {
             Debug.Log("Store data dosent exist - creating file");
+
+            // Make new items bought arrays for the first item to be bought 
+            storeData.CharactersBought = new int[1];
+            storeData.WeaponsBought = new int[1];
+
+            //(Change it if the number of total weapons changes)
+            storeData.weaponsDamageUpgradesCount =      new int[6];
+            storeData.weaponsRangeUpgradesCount =       new int[6];
+            storeData.weaponsFireRateUpgradesCount =    new int[6];
+
             File.WriteAllText(storeDataPath, JsonUtility.ToJson(storeData));
         }
         if (File.Exists(gameplayDataPath))
@@ -56,6 +66,10 @@ public class StoreData
 
     public int[] CharactersBought;
     public int EquippedCharacter;
+
+    public int[] weaponsDamageUpgradesCount;
+    public int[] weaponsRangeUpgradesCount;
+    public int[] weaponsFireRateUpgradesCount;
 }
 
 [System.Serializable]

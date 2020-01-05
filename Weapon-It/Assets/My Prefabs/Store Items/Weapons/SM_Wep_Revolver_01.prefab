@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 4510483257539040}
   - component: {fileID: 33261766968656114}
   - component: {fileID: 23872223288961364}
+  - component: {fileID: 8274105171877846193}
   - component: {fileID: 666467348709231888}
   m_Layer: 0
   m_Name: SM_Wep_Revolver_01
@@ -174,6 +175,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8274105171877846193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347048607590356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214f0cd916483974ea37ce5beb365592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgrades: []
 --- !u!114 &666467348709231888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
   damage: 1
-  gunRange: 70
+  range: 60
   fireRate: 1.7
   recoilLerpMultiplier: 14
   recoilForce: 5

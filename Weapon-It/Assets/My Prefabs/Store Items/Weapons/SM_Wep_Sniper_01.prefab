@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 4841849786948284}
   - component: {fileID: 33271109674746548}
   - component: {fileID: 23604134942971642}
+  - component: {fileID: 5711922807193731350}
   - component: {fileID: 1801359095980395337}
   m_Layer: 0
   m_Name: SM_Wep_Sniper_01
@@ -172,6 +173,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5711922807193731350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310268070637946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214f0cd916483974ea37ce5beb365592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgrades: []
 --- !u!114 &1801359095980395337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
   damage: 1
-  gunRange: 120
+  range: 60
   fireRate: 1.3
   recoilLerpMultiplier: 10
   recoilForce: 2

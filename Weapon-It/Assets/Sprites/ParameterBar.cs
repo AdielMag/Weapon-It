@@ -25,13 +25,10 @@ public class ParameterBar : MonoBehaviour
         UpdateBar();
     }
 
-    void HandleValue()
+    public void UpdateBar()
     {
-        value = minValue + (precentage * (maxValue - minValue));
-        value = Mathf.Clamp(value, minValue, maxValue);
-    }
-    void UpdateBar()
-    {
+        UpdatePrecentageViaValue();
+
         for(int i = 0; i< maxBlocksCount; i++)
         {
             if (i <= precentage * maxBlocksCount)
@@ -40,7 +37,18 @@ public class ParameterBar : MonoBehaviour
                 blocksParent.GetChild(i).gameObject.SetActive(false);
         }
 
-        HandleValue();
+        UpdatePrecentageViaValue();
+    }
+
+    void UpdateValueViaPrecentage()
+    {
+        value = minValue + ((maxValue - minValue) * precentage);
+        value = Mathf.Clamp(value, minValue, maxValue);
+    }
+
+    void UpdatePrecentageViaValue()
+    {
+        precentage = (value - minValue) / (maxValue - minValue);
     }
 
     public void Add()

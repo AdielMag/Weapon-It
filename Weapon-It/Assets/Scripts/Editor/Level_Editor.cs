@@ -15,6 +15,4 @@ public class Level_Editor : Editor
         if (GUILayout.Button("Get Target spawners"))
             level.GetAllSpawners();
     }
-
-
 }

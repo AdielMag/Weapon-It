@@ -20,6 +20,8 @@ public class StoreManager : MonoBehaviour
         gMan = GameManager.instance;
 
         LoadStoreData();
+
+        uiManager.sManager = this;
         uiManager.Init();
     }
 
@@ -35,12 +37,8 @@ public class StoreManager : MonoBehaviour
 
         coins = gMan.DataManager.storeData.Coins;
 
-        // Set first item to be bought!
-        uiManager.charactersWindow.transform.GetChild(0).GetComponent<StoreItem>().bought = true;
-        uiManager.weaponsWindow.transform.GetChild(0).GetComponent<StoreItem>().bought = true;
-
         // Check each item in 'Weapons window'
-        for (int i = 0; i< uiManager.weaponsWindow.transform.childCount; i++)     
+        for (int i = 0; i < uiManager.weaponsWindow.transform.childCount; i++)
         {
             // Check each item in data manager
             for (int y = 0; y < gMan.DataManager.storeData.WeaponsBought.Length; y++)
@@ -52,6 +50,14 @@ public class StoreManager : MonoBehaviour
             // Check if the weapon equipped in data manager equals this one
             if (i == gMan.DataManager.storeData.EquippedWeapon)
                 uiManager.weaponsWindow.transform.GetChild(i).GetComponent<StoreItem>().equipped = true;
+
+            // Update gun upgrades parameters
+            Gun gun = uiManager.weaponsWindow.transform.GetChild(i).GetComponent<Gun>();
+            StoreData sData = gMan.DataManager.storeData;
+
+            gun.damageUpgradeCount =    sData.weaponsDamageUpgradesCount[i];
+            gun.rangeUpgradeCount =     sData.weaponsRangeUpgradesCount[i];
+            gun.fireRateUpgradeCount =  sData.weaponsFireRateUpgradesCount[i];
         }
         // Check each item in 'Character window'
         for (int i = 0; i < uiManager.charactersWindow.transform.childCount; i++) 
@@ -95,6 +101,14 @@ public class StoreManager : MonoBehaviour
             {
                 weaponsList.Add(i);         // Add to list
             }
+
+            // Update gun upgrades parameters
+            Gun gun = uiManager.weaponsWindow.transform.GetChild(i).GetComponent<Gun>();
+            StoreData sData = gMan.DataManager.storeData;
+
+            sData.weaponsDamageUpgradesCount[i] =   gun.damageUpgradeCount;
+            sData.weaponsRangeUpgradesCount[i] =    gun.rangeUpgradeCount;
+            sData.weaponsFireRateUpgradesCount[i] = gun.fireRateUpgradeCount;
         }
         gMan.DataManager.storeData.WeaponsBought = weaponsList.ToArray();  // Transform list to array
 
