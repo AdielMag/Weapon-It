@@ -17,18 +17,25 @@ public class ParameterBar : MonoBehaviour
     public int upgradeCount { get; set; }
 
     public Transform blocksParent;
+    public Color origBlockColor;
+
     int maxBlocksCount;
     float valueBlockSize;
 
     [HideInInspector]
     public StoreManager sManager;
 
-    private void Start()
+    private void Awake()
     {
         blocksParent = GetComponentInChildren<GridLayoutGroup>().transform;
 
-        maxBlocksCount = blocksParent.childCount;
+        origBlockColor = blocksParent.GetChild(0).GetComponent<Image>().color;
 
+        maxBlocksCount = blocksParent.childCount;
+    }
+
+    private void Start()
+    {
         UpdateBar();
     }
 
@@ -37,7 +44,24 @@ public class ParameterBar : MonoBehaviour
         for(int i = 0; i< blocksParent.childCount; i++)
         {
             if (i < upgradeCount)
+            {
                 blocksParent.GetChild(i).gameObject.SetActive(true);
+
+                // Determine its color
+                float logValue = Mathf.Log(i +1, logMultilpier) + minValue;
+                if (logValue > gunBaseValue)
+                {
+                    Color newColor = origBlockColor;
+                    newColor.a *= .3f;
+                    blocksParent.GetChild(i).gameObject.GetComponent<Image>().color = newColor;
+                    blocksParent.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().color = newColor;
+                }
+                else
+                {
+                    blocksParent.GetChild(i).gameObject.GetComponent<Image>().color = origBlockColor;
+                    blocksParent.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().color = origBlockColor;
+                }
+            }
             else
                 blocksParent.GetChild(i).gameObject.SetActive(false);
         }

@@ -67,9 +67,9 @@ public class Gun : Weapon
         rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGunNum];
         fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGunNum];
 
-        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier);
-        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier);
-        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier);
+        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
+        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;
+        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier) + MinFireRate;
     }
 
     private void Start()
