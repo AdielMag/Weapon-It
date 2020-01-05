@@ -17,10 +17,11 @@ public class ParameterBar : MonoBehaviour
     public int upgradeCount { get; set; }
 
     public Transform blocksParent;
-    public Color origBlockColor;
-
+    Color origBlockColor;
     int maxBlocksCount;
     float valueBlockSize;
+
+    public Text valueIndicator;
 
     [HideInInspector]
     public StoreManager sManager;
@@ -52,7 +53,7 @@ public class ParameterBar : MonoBehaviour
                 if (logValue > gunBaseValue)
                 {
                     Color newColor = origBlockColor;
-                    newColor.a *= .3f;
+                    newColor.g *= .6f;
                     blocksParent.GetChild(i).gameObject.GetComponent<Image>().color = newColor;
                     blocksParent.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().color = newColor;
                 }
@@ -65,6 +66,9 @@ public class ParameterBar : MonoBehaviour
             else
                 blocksParent.GetChild(i).gameObject.SetActive(false);
         }
+
+        float targetValue = (float)System.Math.Round((double)value, 2);
+        valueIndicator.text = targetValue.ToString();
     }
 
     public void Add()
@@ -103,5 +107,4 @@ public class ParameterBar : MonoBehaviour
     {
         // Check the max Amount that can upgrade
     }
-
 }
