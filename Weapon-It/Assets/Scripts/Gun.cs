@@ -49,9 +49,9 @@ public class Gun : Weapon
         MinRange = range;
         MinFireRate = fireRate;
 
-        MaxDamage = Mathf.Log(15, damageLogMultilpier) + MinDamage;
-        MaxRange = Mathf.Log( 15, rangeLogMultilpier) + MinRange;
-        MaxFireRate = Mathf.Log(15, fireRateLogMultilpier) + MinFireRate;
+        MaxDamage = Mathf.Log(14, damageLogMultilpier) + MinDamage;
+        MaxRange = Mathf.Log( 14, rangeLogMultilpier) + MinRange;
+        MaxFireRate = Mathf.Log(14, fireRateLogMultilpier) + MinFireRate;
 
         // Check which child num is this weapon in the weapons parent
         // Used to match the one in the json file!!

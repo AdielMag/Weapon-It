@@ -89,7 +89,7 @@ public class StoreUIManager : MonoBehaviour
         upgradesUI.SetActive(true);
         mainStoreUI.SetActive(false);
 
-        SetBarsGunBaseParameters();
+        SetBarsBaseParameters();
 
         UpdateUpgradeMenu();
     }
@@ -109,13 +109,22 @@ public class StoreUIManager : MonoBehaviour
         UpdateBar(rangeBar, currentGun.MinRange, currentGun.MaxRange, currentGun.range);
     }
 
-    void SetBarsGunBaseParameters()
+    void SetBarsBaseParameters()
     {
         Gun currentGun = sManager.currentItem.GetComponent<Gun>();
 
         damageBar.gunBaseValue = currentGun.damage;
+        damageBar.logMultilpier = currentGun.damageLogMultilpier;
+        damageBar.upgradeCount = currentGun.damageUpgradeCount;
+
+
         rangeBar.gunBaseValue = currentGun.range;
+        rangeBar.logMultilpier = currentGun.rangeLogMultilpier;
+        rangeBar.upgradeCount = currentGun.rangeUpgradeCount;
+
         fireRateBar.gunBaseValue = currentGun.fireRate;
+        fireRateBar.logMultilpier = currentGun.fireRateLogMultilpier;
+        fireRateBar.upgradeCount = currentGun.fireRateUpgradeCount;
     }
 
     void UpdateBar(ParameterBar bar,float minValue,float maxValue,float currentValue)

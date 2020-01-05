@@ -5,13 +5,16 @@ using UnityEngine.UI;
 
 public class ParameterBar : MonoBehaviour
 {
-    public  float minValue, maxValue,value;
+    public float minValue, maxValue, value;
 
-    //[HideInInspector]
-    public float gunBaseValue;
 
-    [Range(0,1)]
-    public float precentage;
+    // Used to not the player subtract from this value!
+    public float gunBaseValue { get; set; }
+
+    public float logMultilpier { get; set; }
+
+    // Used to determine the block count that need to be shown.
+    public int upgradeCount { get; set; }
 
     public Transform blocksParent;
     int maxBlocksCount;
@@ -31,54 +34,43 @@ public class ParameterBar : MonoBehaviour
 
     public void UpdateBar()
     {
-        UpdatePrecentageViaValue();
-
-        for (int i = 0; i < maxBlocksCount; i++)
+        for(int i = 0; i< blocksParent.childCount; i++)
         {
-            if (i <= precentage * maxBlocksCount)
+            if (i <= upgradeCount)
                 blocksParent.GetChild(i).gameObject.SetActive(true);
             else
                 blocksParent.GetChild(i).gameObject.SetActive(false);
         }
     }
 
-    void UpdateValueViaPrecentage()
-    {
-        value = minValue + ((maxValue - minValue) * precentage);
-        value = Mathf.Clamp(value, minValue, maxValue);
-    }
-
-    void UpdatePrecentageViaValue()
-    {
-        precentage = (value - minValue) / (maxValue - minValue);
-    }
-
     public void Add()
     {
-        valueBlockSize = (maxValue - minValue) / maxBlocksCount;
+        float logValue = Mathf.Log(upgradeCount + 1, logMultilpier) + minValue;
 
-        if (value + valueBlockSize > maxValue)
+        if (logValue > maxValue)
         {
             Debug.Log("Too high");
             return;
         }
 
-        value += valueBlockSize;
+        upgradeCount++;
+        value = logValue;
 
         UpdateBar();
     }
 
     public void Subtract()
     {
-        valueBlockSize = (maxValue - minValue) / maxBlocksCount;
+        float logValue = Mathf.Log(upgradeCount - 1, logMultilpier) + minValue;
 
-        if (value - valueBlockSize < gunBaseValue)
+        if (logValue < gunBaseValue)
         {
             Debug.Log("Trying to get lower that the current gun value - ERROR");
             return;
         }
 
-        value -= valueBlockSize;
+        upgradeCount--;
+        value = logValue;
 
         UpdateBar();
     }
@@ -87,4 +79,5 @@ public class ParameterBar : MonoBehaviour
     {
         // Check the max Amount that can upgrade
     }
+
 }
