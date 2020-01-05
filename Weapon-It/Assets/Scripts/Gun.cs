@@ -25,10 +25,56 @@ public class Gun : Weapon
     public Transform muzzle;
     public Transform shellExit;
 
+    GameManager gMan;
     ObjectPooler objPool;
+
+   [Space]
+    public float damageLogMultilpier;
+    public float rangeLogMultilpier;
+    public float fireRateLogMultilpier;
+
+    // Change this if the gun equation changes
+    public float MinDamage { get; private set; }
+    public float MaxDamage { get; private set; }
+
+    public float MinRange { get; private set; }
+    public float MaxRange { get; private set; }
+
+    public float MinFireRate { get; private set; }
+    public float MaxFireRate { get; private set; }
+
+    void CalculateWeaponParameters()
+    {
+        MinDamage = damage;
+        MinRange = range;
+        MinFireRate = fireRate;
+
+        MaxDamage = Mathf.Log(15, damageLogMultilpier) + MinDamage;
+        MaxRange = Mathf.Log( 15, rangeLogMultilpier) + MinRange;
+        MaxFireRate = Mathf.Log(15, fireRateLogMultilpier) + MinFireRate;
+
+        // Check which child num is this weapon in the weapons parent
+        // Used to match the one in the json file!!
+        int currentGunNum = new int();
+
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            if (transform.parent.GetChild(i) == transform)
+                currentGunNum = i;
+        }
+
+        damageUpgradeCount =    gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGunNum];
+        rangeUpgradeCount =     gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGunNum];
+        fireRateUpgradeCount =  gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGunNum];
+
+        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
+        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;
+        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier) + MinFireRate;
+    }
 
     private void Start()
     {
+        gMan = GameManager.instance;
         objPool = ObjectPooler.instance;
 
         recoilLerpMultiplier = (fireRate + 0.316f) / 0.149333f;
@@ -38,6 +84,8 @@ public class Gun : Weapon
         // Set the weapons correct pos and rot.
         targetPos = transform.localPosition;
         slideTargetPos = slideOrigPos;
+
+        CalculateWeaponParameters();
     }
 
     private void FixedUpdate()
@@ -48,7 +96,6 @@ public class Gun : Weapon
             Vector3.Lerp(slide.localPosition, slideTargetPos, Time.deltaTime * recoilLerpMultiplier);
 
         CheckIfCanShoot();
-        //CalculateFireRate();
     }
 
     Vector3 targetRot;
@@ -81,11 +128,6 @@ public class Gun : Weapon
             Vector3.forward * recoilForce / 10;
 
         canShoot = false;
-
-        if(tempFireRate == 0)
-            timeOfStartShoot = Time.time;
-
-        tempFireRate++;
     }
 
     [HideInInspector]
@@ -105,18 +147,6 @@ public class Gun : Weapon
     [Header("IK objects for this gun")]
     public Transform shoulderIK;
     public Transform leftHandIdleIK;
-
-    float timeOfStartShoot;
-    float tempFireRate;
-    public void CalculateFireRate()
-    {
-        if (timeOfStartShoot + 10 < Time.time)
-        {
-            Debug.Log(tempFireRate);
-
-            tempFireRate = 0;
-        }
-    }
 
     public override void Attack(Vector3 projectileForward)
     {

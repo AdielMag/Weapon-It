@@ -7,20 +7,24 @@ public class ParameterBar : MonoBehaviour
 {
     public  float minValue, maxValue,value;
 
+    //[HideInInspector]
+    public float gunBaseValue;
+
     [Range(0,1)]
     public float precentage;
 
     public Transform blocksParent;
     int maxBlocksCount;
-    float precentageBlockSize;
+    float valueBlockSize;
+
+    [HideInInspector]
+    public StoreManager sManager;
 
     private void Start()
     {
         blocksParent = GetComponentInChildren<GridLayoutGroup>().transform;
 
         maxBlocksCount = blocksParent.childCount;
-
-        precentageBlockSize = 1f / maxBlocksCount;
 
         UpdateBar();
     }
@@ -29,15 +33,13 @@ public class ParameterBar : MonoBehaviour
     {
         UpdatePrecentageViaValue();
 
-        for(int i = 0; i< maxBlocksCount; i++)
+        for (int i = 0; i < maxBlocksCount; i++)
         {
             if (i <= precentage * maxBlocksCount)
                 blocksParent.GetChild(i).gameObject.SetActive(true);
             else
                 blocksParent.GetChild(i).gameObject.SetActive(false);
         }
-
-        UpdatePrecentageViaValue();
     }
 
     void UpdateValueViaPrecentage()
@@ -53,19 +55,30 @@ public class ParameterBar : MonoBehaviour
 
     public void Add()
     {
-        // Dont let it add more the the max value
+        valueBlockSize = (maxValue - minValue) / maxBlocksCount;
 
-        precentage += precentageBlockSize;
-        precentage = Mathf.Clamp(precentage, 0, 1);
+        if (value + valueBlockSize > maxValue)
+        {
+            Debug.Log("Too high");
+            return;
+        }
+
+        value += valueBlockSize;
 
         UpdateBar();
     }
 
     public void Subtract()
     {
-        // Dont let it subtract less than the current value
-        precentage -= precentageBlockSize;
-        precentage = Mathf.Clamp(precentage, 0, 1);
+        valueBlockSize = (maxValue - minValue) / maxBlocksCount;
+
+        if (value - valueBlockSize < gunBaseValue)
+        {
+            Debug.Log("Trying to get lower that the current gun value - ERROR");
+            return;
+        }
+
+        value -= valueBlockSize;
 
         UpdateBar();
     }

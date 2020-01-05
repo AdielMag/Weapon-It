@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class StoreUIManager : MonoBehaviour
 {
-    // Change this if the gun equation changes
-    public float MinDamage => 1;
-    public float MaxDamage => 55;
-
-    public float MinRange => 60;
-    public float MaxRange => 180;
-
-    public float MinFireRate => .9f;
-    public float MaxFireRate => 6;
-
     [HideInInspector]
     public Transform currentWindow;
 
@@ -42,6 +32,10 @@ public class StoreUIManager : MonoBehaviour
         OpenItemWindow("Character");
 
         GetCurrentItemNum();
+
+        damageBar.sManager = sManager;
+        fireRateBar.sManager = sManager;
+        rangeBar.sManager = sManager;
     }
 
     public void OpenItemWindow(string windowTypeName)
@@ -95,6 +89,8 @@ public class StoreUIManager : MonoBehaviour
         upgradesUI.SetActive(true);
         mainStoreUI.SetActive(false);
 
+        SetBarsGunBaseParameters();
+
         UpdateUpgradeMenu();
     }
 
@@ -108,9 +104,18 @@ public class StoreUIManager : MonoBehaviour
     {
         Gun currentGun = sManager.currentItem.GetComponent<Gun>();
 
-        UpdateBar(damageBar, MinDamage, MaxDamage, currentGun.damage);
-        UpdateBar(fireRateBar, MinFireRate, MaxFireRate, currentGun.fireRate);
-        UpdateBar(rangeBar, MinRange, MaxRange, currentGun.range);
+        UpdateBar(damageBar, currentGun.MinDamage, currentGun.MaxDamage, currentGun.damage);
+        UpdateBar(fireRateBar, currentGun.MinFireRate, currentGun.MaxFireRate, currentGun.fireRate);
+        UpdateBar(rangeBar, currentGun.MinRange, currentGun.MaxRange, currentGun.range);
+    }
+
+    void SetBarsGunBaseParameters()
+    {
+        Gun currentGun = sManager.currentItem.GetComponent<Gun>();
+
+        damageBar.gunBaseValue = currentGun.damage;
+        rangeBar.gunBaseValue = currentGun.range;
+        fireRateBar.gunBaseValue = currentGun.fireRate;
     }
 
     void UpdateBar(ParameterBar bar,float minValue,float maxValue,float currentValue)
