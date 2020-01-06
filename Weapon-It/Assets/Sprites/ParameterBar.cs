@@ -18,7 +18,6 @@ public class ParameterBar : MonoBehaviour
 
     public Transform blocksParent;
     Color origBlockColor;
-    int maxBlocksCount;
     float valueBlockSize;
 
     public Text valueIndicator;
@@ -31,8 +30,6 @@ public class ParameterBar : MonoBehaviour
         blocksParent = GetComponentInChildren<GridLayoutGroup>().transform;
 
         origBlockColor = blocksParent.GetChild(0).GetComponent<Image>().color;
-
-        maxBlocksCount = blocksParent.childCount;
     }
 
     private void Start()
@@ -110,5 +107,21 @@ public class ParameterBar : MonoBehaviour
     public void MaxAmountThatCanBuy()
     {
         // Check the max Amount that can upgrade
+
+        int startingUpgradeCount = upgradeCount;
+
+        for(int i = startingUpgradeCount; i < blocksParent.childCount; i++)
+        {
+            upgradeCount++;
+            if(sManager.coins < sManager.CalculateUpgradeCosts())
+            {
+                upgradeCount--;
+                break;
+            }
+        }
+
+        value = Mathf.Log(upgradeCount, logMultilpier) + minValue;
+
+        UpdateBar();
     }
 }
