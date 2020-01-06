@@ -17,6 +17,8 @@ public class StoreUIManager : MonoBehaviour
     public GameObject upgradesButton;
     public GameObject buyOrEquipButton;
 
+    public Text coinsIndiactor;
+
     // Upgrades stuff
     [Header("Upgrades Varaibles")]
     public ParameterBar damageBar;
@@ -36,6 +38,8 @@ public class StoreUIManager : MonoBehaviour
         damageBar.sManager = sManager;
         fireRateBar.sManager = sManager;
         rangeBar.sManager = sManager;
+
+        coinsIndiactor.text = sManager.coins.ToString();
     }
 
     public void OpenItemWindow(string windowTypeName)
@@ -107,6 +111,9 @@ public class StoreUIManager : MonoBehaviour
         {
             buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(true);
             buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(false);
+
+            buyOrEquipButton.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = 
+                sManager.currentItem.cost.ToString();
         }
     }
 

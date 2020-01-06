@@ -213,14 +213,17 @@ public class StoreManager : MonoBehaviour
         currentGun = currentItem.GetComponent<Gun>();
 
         // Get the upgrades count from the parametere bars
-        if(uiManager.damageBar.upgradeCount != currentGun.damageUpgradeCount)
-            TarDmgUpCount = uiManager.damageBar.upgradeCount;
+        TarDmgUpCount = 
+            uiManager.damageBar.upgradeCount == currentGun.damageUpgradeCount ?
+            0 : uiManager.damageBar.upgradeCount;
 
-        if (uiManager.rangeBar.upgradeCount != currentGun.rangeUpgradeCount)
-            TarRngUpCount = uiManager.rangeBar.upgradeCount;
+        TarRngUpCount = 
+            uiManager.rangeBar.upgradeCount == currentGun.rangeUpgradeCount ?
+            0:  uiManager.rangeBar.upgradeCount;
 
-        if (uiManager.fireRateBar.upgradeCount != currentGun.fireRateUpgradeCount)
-            TarFRUpCount = uiManager.fireRateBar.upgradeCount;
+        TarFRUpCount = 
+            uiManager.fireRateBar.upgradeCount == currentGun.fireRateUpgradeCount ?
+            0 : uiManager.fireRateBar.upgradeCount;
 
         // Calculate the currentUpgrades Costs
         // Cost = round(baseCost * power(costMultiplier,upgradeCount)
