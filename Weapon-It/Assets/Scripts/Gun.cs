@@ -25,6 +25,9 @@ public class Gun : Weapon
     public Transform muzzle;
     public Transform shellExit;
 
+    // The gun location as a child of the weapons parent (Used to get the correct data from data manager)
+    public int CurrentGunNum { get; private set; }
+
     GameManager gMan;
     ObjectPooler objPool;
 
@@ -43,35 +46,6 @@ public class Gun : Weapon
     public float MinFireRate { get; private set; }
     public float MaxFireRate { get; private set; }
 
-    void CalculateWeaponParameters()
-    {
-        MinDamage = damage;
-        MinRange = range;
-        MinFireRate = fireRate;
-
-        MaxDamage = Mathf.Log(15, damageLogMultilpier) + MinDamage;
-        MaxRange = Mathf.Log( 15, rangeLogMultilpier) + MinRange;
-        MaxFireRate = Mathf.Log(15, fireRateLogMultilpier) + MinFireRate;
-
-        // Check which child num is this weapon in the weapons parent
-        // Used to match the one in the json file!!
-        int currentGunNum = new int();
-
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            if (transform.parent.GetChild(i) == transform)
-                currentGunNum = i;
-        }
-
-        damageUpgradeCount = gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGunNum];
-        rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGunNum];
-        fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGunNum];
-
-        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
-        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;
-        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier) + MinFireRate;
-    }
-
     private void Start()
     {
         gMan = GameManager.instance;
@@ -85,7 +59,7 @@ public class Gun : Weapon
         targetPos = transform.localPosition;
         slideTargetPos = slideOrigPos;
 
-        CalculateWeaponParameters();
+        CalculateGunBaseParameters();
     }
 
     private void FixedUpdate()
@@ -141,6 +115,40 @@ public class Gun : Weapon
         {
             canShoot = true;
         }
+    }
+
+    // Gun parameters methods
+    void CalculateGunBaseParameters()
+    {
+        MinDamage = damage;
+        MinRange = range;
+        MinFireRate = fireRate;
+
+        MaxDamage = Mathf.Log(15, damageLogMultilpier) + MinDamage;
+        MaxRange = Mathf.Log(15, rangeLogMultilpier) + MinRange;
+        MaxFireRate = Mathf.Log(15, fireRateLogMultilpier) + MinFireRate;
+
+        // Check which child num is this weapon in the weapons parent
+        // Used to match the one in the json file!!
+
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            if (transform.parent.GetChild(i) == transform)
+                CurrentGunNum = i;
+        }
+
+        UpdateGunParameters();
+    }
+
+    public void UpdateGunParameters()
+    {
+        damageUpgradeCount = gMan.DataManager.storeData.weaponsDamageUpgradesCount[CurrentGunNum];
+        rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[CurrentGunNum];
+        fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[CurrentGunNum];
+
+        damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
+        range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;
+        fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier) + MinFireRate;
     }
 
     // IK objects used for this gun

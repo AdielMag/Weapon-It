@@ -133,13 +133,15 @@ public class StoreUIManager : MonoBehaviour
         mainStoreUI.SetActive(true);
     }
 
-    void UpdateUpgradeMenu()
+    public void UpdateUpgradeMenu()
     {
         Gun currentGun = sManager.currentItem.GetComponent<Gun>();
 
         UpdateBar(damageBar, currentGun.MinDamage, currentGun.MaxDamage, currentGun.damage);
         UpdateBar(fireRateBar, currentGun.MinFireRate, currentGun.MaxFireRate, currentGun.fireRate);
         UpdateBar(rangeBar, currentGun.MinRange, currentGun.MaxRange, currentGun.range);
+
+        coinsIndiactor.text = sManager.coins.ToString();
 
         UpdateUpgradeCosts();
     }
@@ -157,7 +159,7 @@ public class StoreUIManager : MonoBehaviour
             upgradesCostIndicator.color = Color.red;
     }
 
-    void SetBarsBaseParameters()
+    public void SetBarsBaseParameters()
     {
         Gun currentGun = sManager.currentItem.GetComponent<Gun>();
 

@@ -243,5 +243,26 @@ public class StoreManager : MonoBehaviour
 
     public void BuyUpgrades()
     {
+        if (coins < CalculateUpgradeCosts())
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+
+        coins -= (int)CalculateUpgradeCosts();
+
+        gMan.DataManager.storeData.Coins = coins;
+
+        // Save the upgrade data on the json files
+        gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGun.CurrentGunNum] = uiManager.damageBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGun.CurrentGunNum] = uiManager.rangeBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGun.CurrentGunNum] = uiManager.fireRateBar.upgradeCount;
+
+        currentGun.UpdateGunParameters();
+
+        uiManager.SetBarsBaseParameters();
+        uiManager.UpdateUpgradeMenu();
+
+        gMan.DataManager.SaveData();
     }
 }
