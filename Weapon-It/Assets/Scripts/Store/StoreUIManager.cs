@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreUIManager : MonoBehaviour
 {
@@ -23,6 +22,7 @@ public class StoreUIManager : MonoBehaviour
     public ParameterBar damageBar;
     public ParameterBar fireRateBar;
     public ParameterBar rangeBar;
+    public Text upgradesCostIndicator;
 
     [HideInInspector]
     public StoreManager sManager;
@@ -70,6 +70,32 @@ public class StoreUIManager : MonoBehaviour
         UpdateBuyOrEquipButton(sManager.currentItem.bought);
     }
 
+    // Check the current window for active obejcts
+    void GetCurrentItemNum()
+    {
+        if (currentWindow.childCount == 0)
+        {
+            Debug.LogWarning("No items in window");
+            return;
+        }
+
+        bool once = false; // used to check if there is more than 1 active object
+        for (int i = 0; i < currentWindow.childCount; i++)
+        {
+            if (currentWindow.GetChild(i).gameObject.activeSelf)
+            {
+                if (once)
+                {
+                    Debug.LogWarning("More than 1 active item - check your window!");
+                    return;
+                }
+
+                currentItemNum = i;
+                once = true;
+            }
+        }
+    }
+
     public void UpdateBuyOrEquipButton(bool equipedd)
     {
         if (equipedd)
@@ -107,6 +133,21 @@ public class StoreUIManager : MonoBehaviour
         UpdateBar(damageBar, currentGun.MinDamage, currentGun.MaxDamage, currentGun.damage);
         UpdateBar(fireRateBar, currentGun.MinFireRate, currentGun.MaxFireRate, currentGun.fireRate);
         UpdateBar(rangeBar, currentGun.MinRange, currentGun.MaxRange, currentGun.range);
+
+        UpdateUpgradeCosts();
+    }
+
+    public void UpdateUpgradeCosts()
+    {
+        float upgradesCost = sManager.CalculateUpgradeCosts();
+
+        // Determine if has enough money and show that on the cost indicator
+        upgradesCostIndicator.text = upgradesCost.ToString();
+
+        if (sManager.coins > upgradesCost) // Has enough money
+            upgradesCostIndicator.color = Color.black;
+        else
+            upgradesCostIndicator.color = Color.red;
     }
 
     void SetBarsBaseParameters()
@@ -136,29 +177,4 @@ public class StoreUIManager : MonoBehaviour
         bar.UpdateBar();
     }
 
-    // Check the current window for active obejcts
-    void GetCurrentItemNum()
-    {
-        if (currentWindow.childCount == 0)
-        {
-            Debug.LogWarning("No items in window");
-            return;
-        }
-
-        bool once = false; // used to check if there is more than 1 active object
-        for (int i = 0; i < currentWindow.childCount; i++)
-        {
-            if (currentWindow.GetChild(i).gameObject.activeSelf)
-            {
-                if (once)
-                {
-                    Debug.LogWarning("More than 1 active item - check your window!");
-                    return;
-                }
-
-                currentItemNum = i;
-                once = true;
-            }
-        }
-    }
 }

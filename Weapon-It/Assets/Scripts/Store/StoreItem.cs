@@ -10,4 +10,8 @@ public class StoreItem : MonoBehaviour
 
     public bool bought;
     public bool equipped;
+
+    [Header("Gun Variables")]
+    public float baseCost;
+    public float costMultiplier;
 }

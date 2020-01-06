@@ -198,4 +198,47 @@ public class StoreManager : MonoBehaviour
     {
         gMan.LoadScene("Game");
     }
+
+    //Upgrades Variables
+    Gun currentGun;
+
+    public int TarDmgUpCount   { get; set; }
+    public int TarRngUpCount    { get; set; }
+    public int TarFRUpCount { get; set; }
+
+    // Upgrades Methods
+
+    public float CalculateUpgradeCosts()
+    {
+        currentGun = currentItem.GetComponent<Gun>();
+
+        // Get the upgrades count from the parametere bars
+        if(uiManager.damageBar.upgradeCount != currentGun.damageUpgradeCount)
+            TarDmgUpCount = uiManager.damageBar.upgradeCount;
+
+        if (uiManager.rangeBar.upgradeCount != currentGun.rangeUpgradeCount)
+            TarRngUpCount = uiManager.rangeBar.upgradeCount;
+
+        if (uiManager.fireRateBar.upgradeCount != currentGun.fireRateUpgradeCount)
+            TarFRUpCount = uiManager.fireRateBar.upgradeCount;
+
+        // Calculate the currentUpgrades Costs
+        // Cost = round(baseCost * power(costMultiplier,upgradeCount)
+        float dmgUpCost =
+            Mathf.Ceil(currentItem.baseCost *
+            Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.baseCost);
+        float rngUpCost =
+            Mathf.Ceil(currentItem.baseCost *
+            Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.baseCost);
+        float frUpCost =
+            Mathf.Ceil(currentItem.baseCost *
+            Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.baseCost);
+
+        return Mathf.RoundToInt(dmgUpCost + rngUpCost + frUpCost);
+
+    }
+
+    public void BuyUpgrades()
+    {
+    }
 }

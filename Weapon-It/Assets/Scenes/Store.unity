@@ -293,6 +293,8 @@ MonoBehaviour:
   type: 0
   bought: 0
   equipped: 0
+  baseCost: 1.2
+  costMultiplier: 1.6
 --- !u!1 &31057673 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2100829700620419259, guid: 721ee9548f9a2524b8dc239e69c40edb,
@@ -315,6 +317,8 @@ MonoBehaviour:
   type: 0
   bought: 0
   equipped: 0
+  baseCost: 4
+  costMultiplier: 1.8
 --- !u!1 &47437745
 GameObject:
   m_ObjectHideFlags: 0
@@ -2934,6 +2938,7 @@ MonoBehaviour:
   damageBar: {fileID: 1866424634}
   fireRateBar: {fileID: 1589422735}
   rangeBar: {fileID: 1755103889}
+  upgradesCostIndicator: {fileID: 1815419443}
   sManager: {fileID: 1551704319}
 --- !u!1 &367762977
 GameObject:
@@ -5527,6 +5532,8 @@ MonoBehaviour:
   type: 0
   bought: 0
   equipped: 0
+  baseCost: 0.9
+  costMultiplier: 1.5
 --- !u!1 &768747796
 GameObject:
   m_ObjectHideFlags: 0
@@ -8621,6 +8628,8 @@ MonoBehaviour:
   type: 0
   bought: 0
   equipped: 0
+  baseCost: 2
+  costMultiplier: 1.7
 --- !u!1 &1195554892
 GameObject:
   m_ObjectHideFlags: 0
@@ -11076,6 +11085,8 @@ MonoBehaviour:
   type: 0
   bought: 0
   equipped: 0
+  baseCost: 7
+  costMultiplier: 2.2
 --- !u!1 &1529976865
 GameObject:
   m_ObjectHideFlags: 0
@@ -17207,6 +17218,8 @@ MonoBehaviour:
   type: 0
   bought: 0
   equipped: 0
+  baseCost: 5
+  costMultiplier: 2
 --- !u!1 &2131065863
 GameObject:
   m_ObjectHideFlags: 0
@@ -17282,6 +17295,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131065863}
   m_CullTransparentMesh: 0
+--- !u!1001 &2143393046
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1183071921263585429, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183071921263585428, guid: 95a348faff9c1744ea3e9becb97344aa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95a348faff9c1744ea3e9becb97344aa, type: 3}
 --- !u!1 &2144087051
 GameObject:
   m_ObjectHideFlags: 0
