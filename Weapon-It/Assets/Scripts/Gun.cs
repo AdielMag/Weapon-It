@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Gun : Weapon
 {
+    // The gun location as a child of the weapons parent (Used to get the correct data from data manager)
+    public int gunNum;
+
     [Header("Gun Parameters")]
     public float damage = 1;
     [Range(60, 180)]
@@ -24,9 +27,6 @@ public class Gun : Weapon
 
     public Transform muzzle;
     public Transform shellExit;
-
-    // The gun location as a child of the weapons parent (Used to get the correct data from data manager)
-    public int CurrentGunNum { get; private set; }
 
     GameManager gMan;
     ObjectPooler objPool;
@@ -59,7 +59,11 @@ public class Gun : Weapon
         targetPos = transform.localPosition;
         slideTargetPos = slideOrigPos;
 
+        gunNum--;
+
         CalculateGunBaseParameters();
+
+        GetComponent<Upgrades>().UpdateUpgradesAppearance(this);
     }
 
     private void FixedUpdate()
@@ -128,23 +132,14 @@ public class Gun : Weapon
         MaxRange = Mathf.Log(15, rangeLogMultilpier) + MinRange;
         MaxFireRate = Mathf.Log(15, fireRateLogMultilpier) + MinFireRate;
 
-        // Check which child num is this weapon in the weapons parent
-        // Used to match the one in the json file!!
-
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            if (transform.parent.GetChild(i) == transform)
-                CurrentGunNum = i;
-        }
-
         UpdateGunParameters();
     }
 
     public void UpdateGunParameters()
     {
-        damageUpgradeCount = gMan.DataManager.storeData.weaponsDamageUpgradesCount[CurrentGunNum];
-        rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[CurrentGunNum];
-        fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[CurrentGunNum];
+        damageUpgradeCount = gMan.DataManager.storeData.weaponsDamageUpgradesCount[gunNum];
+        rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[gunNum];
+        fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[gunNum];
 
         damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
         range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;

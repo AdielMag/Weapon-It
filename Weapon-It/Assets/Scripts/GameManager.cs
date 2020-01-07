@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     ObjectPooler objPooler;
 
+    public StoreManager SMan { get; set; }
+
     public JsonDataManager DataManager { get; private set; }
 
     private void Start()

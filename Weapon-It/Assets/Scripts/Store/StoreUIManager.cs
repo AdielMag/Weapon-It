@@ -131,6 +131,9 @@ public class StoreUIManager : MonoBehaviour
     {
         upgradesUI.SetActive(false);
         mainStoreUI.SetActive(true);
+
+        sManager.currentItem.GetComponent<Upgrades>().
+            UpdateUpgradesAppearance(sManager.currentItem.GetComponent<Gun>());
     }
 
     public void UpdateUpgradeMenu()
@@ -143,10 +146,10 @@ public class StoreUIManager : MonoBehaviour
 
         coinsIndiactor.text = sManager.coins.ToString();
 
-        UpdateUpgradeCosts();
+        UpdateUpgradeCostsAndAppearance();
     }
 
-    public void UpdateUpgradeCosts()
+    public void UpdateUpgradeCostsAndAppearance()
     {
         float upgradesCost = sManager.CalculateUpgradeCosts();
 
@@ -157,6 +160,8 @@ public class StoreUIManager : MonoBehaviour
             upgradesCostIndicator.color = Color.black;
         else
             upgradesCostIndicator.color = Color.red;
+
+        sManager.currentItem.GetComponent<Upgrades>().UpdateUpgradesAppearance(this);
     }
 
     public void SetBarsBaseParameters()

@@ -19,6 +19,8 @@ public class StoreManager : MonoBehaviour
     {
         gMan = GameManager.instance;
 
+        gMan.SMan = this;
+
         LoadStoreData();
 
         uiManager.sManager = this;
@@ -254,9 +256,9 @@ public class StoreManager : MonoBehaviour
         gMan.DataManager.storeData.Coins = coins;
 
         // Save the upgrade data on the json files
-        gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGun.CurrentGunNum] = uiManager.damageBar.upgradeCount;
-        gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGun.CurrentGunNum] = uiManager.rangeBar.upgradeCount;
-        gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGun.CurrentGunNum] = uiManager.fireRateBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGun.gunNum] = uiManager.damageBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGun.gunNum] = uiManager.rangeBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGun.gunNum] = uiManager.fireRateBar.upgradeCount;
 
         currentGun.UpdateGunParameters();
 

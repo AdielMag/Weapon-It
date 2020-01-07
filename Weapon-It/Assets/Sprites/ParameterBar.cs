@@ -67,7 +67,7 @@ public class ParameterBar : MonoBehaviour
         float targetValue = (float)System.Math.Round((double)value, 1);
         valueIndicator.text = targetValue.ToString();
 
-        sManager.uiManager.UpdateUpgradeCosts();
+        sManager.uiManager.UpdateUpgradeCostsAndAppearance();
     }
 
     public void Add()
