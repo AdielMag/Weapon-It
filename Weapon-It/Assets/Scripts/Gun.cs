@@ -7,7 +7,7 @@ public class Gun : Weapon
     // The gun location as a child of the weapons parent (Used to get the correct data from data manager)
     public int gunNum;
 
-    [Header("Gun Parameters")]
+    [Header("In Game Parameters")]
     public float damage = 1;
     [Range(60, 180)]
     public float range = 60;

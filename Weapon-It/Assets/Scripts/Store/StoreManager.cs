@@ -7,7 +7,7 @@ public class StoreManager : MonoBehaviour
     public int coins;
 
     // Declare all your item types.
-    public enum ItemTypes { Weapon, Character }
+    public enum ItemTypes { Weapon, Character, Base }
 
     [HideInInspector]
     public StoreItem currentItem;
@@ -76,6 +76,21 @@ public class StoreManager : MonoBehaviour
             if (i == gMan.DataManager.storeData.EquippedCharacter)
                 uiManager.charactersWindow.transform.GetChild(i).GetComponent<StoreItem>().equipped = true;
         }
+        // Check each item in 'Character window'
+        for (int i = 0; i < uiManager.basesWindow.transform.childCount; i++)
+        {
+            // Check each item in data manager
+            for (int y = 0; y < gMan.DataManager.storeData.BasesBought.Length; y++)
+            {
+                // If the data manager num matches this item - it means its bought
+                if (i == gMan.DataManager.storeData.BasesBought[y])
+                    uiManager.basesWindow.transform.GetChild(i).GetComponent<StoreItem>().bought = true;
+            }
+
+            // Check if the character equipped in data manager equals this one
+            if (i == gMan.DataManager.storeData.EquippedBase)
+                uiManager.basesWindow.transform.GetChild(i).GetComponent<StoreItem>().equipped = true;
+        }
     }
 
     void SaveStoreData()
@@ -112,6 +127,23 @@ public class StoreManager : MonoBehaviour
             sData.weaponsRangeUpgradesCount[i] =    gun.rangeUpgradeCount;
             sData.weaponsFireRateUpgradesCount[i] = gun.fireRateUpgradeCount;
         }
+
+        // Bases
+        List<int> basesList = new List<int>();    // Make list to add the bought item nums
+        for (int i = 0; i < uiManager.basesWindow.transform.childCount; i++) // Go through window objects
+        {
+            if (uiManager.basesWindow.transform.GetChild(i).GetComponent<StoreItem>().bought) // If bought
+            {
+                basesList.Add(i);         // Add to list
+            }
+
+            // Update gun upgrades parameters
+            Base _base = uiManager.weaponsWindow.transform.GetChild(i).GetComponent<Base>();
+            StoreData sData = gMan.DataManager.storeData;
+
+            sData.baseHealthUpgradesCount[i] = _base.healthUpgradeCount;
+        }
+
         gMan.DataManager.storeData.WeaponsBought = weaponsList.ToArray();  // Transform list to array
 
         gMan.DataManager.SaveData();

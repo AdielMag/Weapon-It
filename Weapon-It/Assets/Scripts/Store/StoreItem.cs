@@ -11,7 +11,7 @@ public class StoreItem : MonoBehaviour
     public bool bought;
     public bool equipped;
 
-    [Header("Gun Variables")]
+    [Header("Upgrades Variables")]
     public float baseCost;
     public float costMultiplier;
 }

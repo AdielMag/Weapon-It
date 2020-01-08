@@ -35,6 +35,34 @@ public class Upgrades : MonoBehaviour
         }
     }
 
+    public void UpdateUpgradesAppearance(Base _base)
+    {
+        // Iterate through all upgrades
+        foreach (Upgrade upgrade in upgrades)
+        {
+            // Check if has requierments
+            if (upgrade.requirements.Length != 0)
+            {
+                bool meetsRequierments = true;
+
+                foreach (Requirement req in upgrade.requirements)
+                {
+                    if (!MeetsRequirment(req, _base))
+                        meetsRequierments = false;
+                }
+
+                if (meetsRequierments)
+                    EnableOnlyUpgradeObj(upgrade);
+                else
+                    upgrade.obj.SetActive(false);
+            }
+            else
+            {
+                EnableOnlyUpgradeObj(upgrade);
+            }
+        }
+    }
+
     public void UpdateUpgradesAppearance(StoreUIManager sUIMan)
     {
         // Iterate through all upgrades
@@ -98,6 +126,20 @@ public class Upgrades : MonoBehaviour
         Debug.LogWarning("Theres no requirment - check the requirment tab");
         return false;
     }
+    private bool MeetsRequirment(Requirement req, Base _base)
+    {
+        switch (req.type)
+        {
+            case Requirement.Type.Health:
+                return Precentage(
+                    _base.MinHealth,
+                    _base.MaxHealth,
+                    _base.health) >= req.precentageValue ? true : false;
+        }
+
+        Debug.LogWarning("Theres no requirment - check the requirment tab");
+        return false;
+    }
     private bool MeetsRequirment(Requirement req, StoreUIManager storeUIMan)
     {
         switch(req.type)
@@ -142,7 +184,7 @@ class Upgrade
 [System.Serializable]
 class Requirement
 {
-    public enum Type {FireRate, Range, Damage }
+    public enum Type {FireRate, Range, Damage ,Health}
     public Type type;
 
     [Range(0.1f,100)]

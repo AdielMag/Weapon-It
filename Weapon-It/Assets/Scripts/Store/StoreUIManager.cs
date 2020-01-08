@@ -7,6 +7,7 @@ public class StoreUIManager : MonoBehaviour
 
     public GameObject weaponsWindow;
     public GameObject charactersWindow;
+    public GameObject basesWindow;
 
     public GameObject mainStoreUI, weaponsUpgradesUI, baseUpgradesUI;
 
@@ -67,6 +68,7 @@ public class StoreUIManager : MonoBehaviour
             currentWindow = weaponsWindow.transform;
             weaponsWindow.SetActive(true);
             charactersWindow.SetActive(false);
+            basesWindow.SetActive(false);
 
             GetCurrentItemNum();
         }
@@ -74,6 +76,16 @@ public class StoreUIManager : MonoBehaviour
         {
             currentWindow = charactersWindow.transform;
             charactersWindow.SetActive(true);
+            weaponsWindow.SetActive(false);
+            basesWindow.SetActive(false);
+
+            GetCurrentItemNum();
+        }
+        else if (windowTypeName == StoreManager.ItemTypes.Base.ToString())
+        {
+            currentWindow = basesWindow.transform;
+            basesWindow.SetActive(true);
+            charactersWindow.SetActive(false);
             weaponsWindow.SetActive(false);
 
             GetCurrentItemNum();
@@ -117,6 +129,7 @@ public class StoreUIManager : MonoBehaviour
     public void UpdateMainUI(StoreItem currentItem)
     {
         UpdateWeaponUpgradeButton(currentItem);
+        UpdateBaseUpgradeButton(currentItem);
         UpdateBuyOrEquipButton(currentItem.equipped);
     }
 
@@ -130,6 +143,19 @@ public class StoreUIManager : MonoBehaviour
                 weaponUpgradesButton.SetActive(true);
             else
                 weaponUpgradesButton.SetActive(false);
+        }
+    }
+
+    private void UpdateBaseUpgradeButton(StoreItem currentItem)
+    {
+        if (currentItem.type != StoreManager.ItemTypes.Base)
+            baseUpgradeButton.SetActive(false);
+        else
+        {
+            if (currentItem.bought)
+                baseUpgradeButton.SetActive(true);
+            else
+                baseUpgradeButton.SetActive(false);
         }
     }
 

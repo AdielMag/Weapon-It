@@ -26,21 +26,7 @@ public class JsonDataManager : MonoBehaviour
         {
             Debug.Log("Store data dosent exist - creating file");
 
-            // Make new items bought arrays for the first item to be bought 
-            storeData.CharactersBought = new int[1];
-            storeData.WeaponsBought = new int[1];
-
-            //(Change it if the number of total weapons changes)
-            storeData.weaponsDamageUpgradesCount =      new int[6];
-            storeData.weaponsRangeUpgradesCount =       new int[6];
-            storeData.weaponsFireRateUpgradesCount =    new int[6];
-
-            for (int i = 0; i < storeData.weaponsDamageUpgradesCount.Length; i++)
-                storeData.weaponsDamageUpgradesCount[i] = 1;
-            for (int i = 0; i < storeData.weaponsRangeUpgradesCount.Length; i++)
-                storeData.weaponsRangeUpgradesCount[i] = 1;
-            for (int i = 0; i < storeData.weaponsFireRateUpgradesCount.Length; i++)
-                storeData.weaponsFireRateUpgradesCount[i] = 1;
+            CreateNewStoreData();
 
             File.WriteAllText(storeDataPath, JsonUtility.ToJson(storeData));
         }
@@ -56,6 +42,31 @@ public class JsonDataManager : MonoBehaviour
         }
     }
 
+    private void CreateNewStoreData()
+    {
+        // Make new items bought arrays for the first item to be bought 
+        storeData.CharactersBought = new int[1];
+        storeData.WeaponsBought = new int[1];
+        storeData.BasesBought = new int[1];
+
+        //(Change it if the number of total weapons changes)
+        storeData.weaponsDamageUpgradesCount = new int[6];
+        storeData.weaponsRangeUpgradesCount = new int[6];
+        storeData.weaponsFireRateUpgradesCount = new int[6];
+
+        for (int i = 0; i < storeData.weaponsDamageUpgradesCount.Length; i++)
+            storeData.weaponsDamageUpgradesCount[i] = 1;
+        for (int i = 0; i < storeData.weaponsRangeUpgradesCount.Length; i++)
+            storeData.weaponsRangeUpgradesCount[i] = 1;
+        for (int i = 0; i < storeData.weaponsFireRateUpgradesCount.Length; i++)
+            storeData.weaponsFireRateUpgradesCount[i] = 1;
+
+        storeData.baseHealthUpgradesCount = new int[1];
+
+        for (int i = 0; i < storeData.baseHealthUpgradesCount.Length; i++)
+            storeData.baseHealthUpgradesCount[i] = 1;
+    }
+
     public void SaveData()
     {
         File.WriteAllText(storeDataPath, JsonUtility.ToJson(storeData));
@@ -68,15 +79,26 @@ public class StoreData
 {
     public int Coins;
 
+    // Store Items
     public int[] WeaponsBought;
     public int EquippedWeapon;
 
     public int[] CharactersBought;
     public int EquippedCharacter;
 
+    public int[] BasesBought;
+    public int EquippedBase;
+
+    // Upgrades
+
+    // Weapons
     public int[] weaponsDamageUpgradesCount;
     public int[] weaponsRangeUpgradesCount;
     public int[] weaponsFireRateUpgradesCount;
+
+    // Bases
+    public int[] baseHealthUpgradesCount;
+
 }
 
 [System.Serializable]
