@@ -8,7 +8,7 @@ public class ParameterBar : MonoBehaviour
     public float minValue, maxValue, value;
 
     // Used to not the player subtract from this value!
-    public float gunBaseValue { get; set; }
+    public float baseValue { get; set; }
 
     // Get this value from the current Gun
     public float logMultilpier { get; set; }
@@ -47,7 +47,7 @@ public class ParameterBar : MonoBehaviour
 
                 // Determine its color
                 float logValue = Mathf.Log(i +1, logMultilpier) + minValue;
-                if (logValue > gunBaseValue)
+                if (logValue > baseValue)
                 {
                     Color newColor = origBlockColor;
                     newColor.g *= .6f;
@@ -67,7 +67,7 @@ public class ParameterBar : MonoBehaviour
         float targetValue = (float)System.Math.Round((double)value, 1);
         valueIndicator.text = targetValue.ToString();
 
-        sManager.uiManager.UpdateUpgradeCostsAndAppearance();
+        sManager.uiManager.UpdateWeaponUpgradeCostsAndAppearance();
     }
 
     public void Add()
@@ -91,7 +91,7 @@ public class ParameterBar : MonoBehaviour
     {
         float logValue = Mathf.Log(upgradeCount - 1, logMultilpier) + minValue;
 
-        if (logValue < gunBaseValue)
+        if (logValue < baseValue)
         {
             Debug.Log("Trying to get lower that the current gun value - ERROR");
         }
@@ -113,7 +113,7 @@ public class ParameterBar : MonoBehaviour
         for(int i = startingUpgradeCount; i < blocksParent.childCount; i++)
         {
             upgradeCount++;
-            if(sManager.coins < sManager.CalculateUpgradeCosts())
+            if(sManager.coins < sManager.CalculateWeaponUpgradeCosts())
             {
                 upgradeCount--;
                 break;

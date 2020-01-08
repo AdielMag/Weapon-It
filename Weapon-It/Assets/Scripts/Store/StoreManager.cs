@@ -129,7 +129,8 @@ public class StoreManager : MonoBehaviour
 
         currentItem =
             uiManager.currentWindow.transform.GetChild(uiManager.currentItemNum).GetComponent<StoreItem>();
-        uiManager.UpdateBuyOrEquipButton(currentItem.bought);
+
+        uiManager.UpdateMainUI(currentItem);
     }
     public void PreviousItem()
     {
@@ -143,7 +144,8 @@ public class StoreManager : MonoBehaviour
 
         currentItem =
             uiManager.currentWindow.transform.GetChild(uiManager.currentItemNum).GetComponent<StoreItem>();
-        uiManager.UpdateBuyOrEquipButton(currentItem.bought);
+
+        uiManager.UpdateMainUI(currentItem);
     }
 
     public void BuyOrEquipWeapon()
@@ -191,7 +193,7 @@ public class StoreManager : MonoBehaviour
             // Add to item num to store data
         }
 
-        uiManager.UpdateBuyOrEquipButton(currentItem.bought);
+        uiManager.UpdateMainUI(currentItem);
 
         SaveStoreData();
     }
@@ -208,9 +210,9 @@ public class StoreManager : MonoBehaviour
     public int TarRngUpCount    { get; set; }
     public int TarFRUpCount { get; set; }
 
-    // Upgrades Methods
+    // Weapon Upgrades Methods
 
-    public float CalculateUpgradeCosts()
+    public float CalculateWeaponUpgradeCosts()
     {
         currentGun = currentItem.GetComponent<Gun>();
 
@@ -243,15 +245,15 @@ public class StoreManager : MonoBehaviour
 
     }
 
-    public void BuyUpgrades()
+    public void BuyWeaponUpgrades()
     {
-        if (coins < CalculateUpgradeCosts())
+        if (coins < CalculateWeaponUpgradeCosts())
         {
             Debug.Log("Not enough money!");
             return;
         }
 
-        coins -= (int)CalculateUpgradeCosts();
+        coins -= (int)CalculateWeaponUpgradeCosts();
 
         gMan.DataManager.storeData.Coins = coins;
 
@@ -262,8 +264,67 @@ public class StoreManager : MonoBehaviour
 
         currentGun.UpdateGunParameters();
 
-        uiManager.SetBarsBaseParameters();
-        uiManager.UpdateUpgradeMenu();
+        uiManager.SetBaseBarsBaseParameters();
+        uiManager.UpdateWeaponUpgradeMenu();
+
+        gMan.DataManager.SaveData();
+    }
+
+    // Base Upgrade Methods
+    public float CalculateBaseUpgradeCosts()
+    {
+        currentGun = currentItem.GetComponent<Gun>();
+
+        // Get the upgrades count from the parametere bars
+        TarDmgUpCount =
+            uiManager.damageBar.upgradeCount == currentGun.damageUpgradeCount ?
+            0 : uiManager.damageBar.upgradeCount;
+
+        TarRngUpCount =
+            uiManager.rangeBar.upgradeCount == currentGun.rangeUpgradeCount ?
+            0 : uiManager.rangeBar.upgradeCount;
+
+        TarFRUpCount =
+            uiManager.fireRateBar.upgradeCount == currentGun.fireRateUpgradeCount ?
+            0 : uiManager.fireRateBar.upgradeCount;
+
+        // Calculate the currentUpgrades Costs
+        // Cost = round(baseCost * power(costMultiplier,upgradeCount)
+        float dmgUpCost =
+            Mathf.Ceil(currentItem.baseCost *
+            Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.baseCost);
+        float rngUpCost =
+            Mathf.Ceil(currentItem.baseCost *
+            Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.baseCost);
+        float frUpCost =
+            Mathf.Ceil(currentItem.baseCost *
+            Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.baseCost);
+
+        return Mathf.RoundToInt(dmgUpCost + rngUpCost + frUpCost);
+
+    }
+
+    public void BuyBaseUpgrades()
+    {
+        if (coins < CalculateWeaponUpgradeCosts())
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+
+        coins -= (int)CalculateWeaponUpgradeCosts();
+
+        gMan.DataManager.storeData.Coins = coins;
+
+        // Save the upgrade data on the json files
+        gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGun.gunNum] = uiManager.damageBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGun.gunNum] = uiManager.rangeBar.upgradeCount;
+        gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGun.gunNum] = uiManager.fireRateBar.upgradeCount;
+
+        currentGun.UpdateGunParameters();
+
+        uiManager.SetBaseBarsBaseParameters();
+        uiManager.UpdateWeaponUpgradeMenu();
 
         gMan.DataManager.SaveData();
     }

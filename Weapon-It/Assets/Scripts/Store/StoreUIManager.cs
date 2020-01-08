@@ -3,28 +3,45 @@ using UnityEngine.UI;
 
 public class StoreUIManager : MonoBehaviour
 {
+    #region Main UI Variables
+
+    public GameObject weaponsWindow;
+    public GameObject charactersWindow;
+
+    public GameObject mainStoreUI, weaponsUpgradesUI, baseUpgradesUI;
+
+    public GameObject weaponUpgradesButton;
+    public GameObject baseUpgradeButton;
+
+    public GameObject buyOrEquipItemButton;
+
+    public Text coinsIndiactor;
+
+    #endregion
+
+    #region Weapon Upgrades Editor Variables
+
+    [Header("Weapon Upgrades Varaibles")]
+    public ParameterBar damageBar;
+    public ParameterBar fireRateBar;
+    public ParameterBar rangeBar;
+    public Text weaponUpgradesCostIndicator;
+
+    #endregion
+
+    #region Base Upgrades Editor Variables
+
+    [Header("Base Upgrades Varaibles")]
+    public ParameterBar healthBar;
+    public Text baseUpgradesCostIndicator;
+
+    #endregion
+
     [HideInInspector]
     public Transform currentWindow;
 
     [HideInInspector]
     public int currentItemNum;
-
-    public GameObject weaponsWindow;
-    public GameObject charactersWindow;
-
-    public GameObject mainStoreUI, upgradesUI;
-
-    public GameObject upgradesButton;
-    public GameObject buyOrEquipButton;
-
-    public Text coinsIndiactor;
-
-    // Upgrades stuff
-    [Header("Upgrades Varaibles")]
-    public ParameterBar damageBar;
-    public ParameterBar fireRateBar;
-    public ParameterBar rangeBar;
-    public Text upgradesCostIndicator;
 
     [HideInInspector]
     public StoreManager sManager;
@@ -51,8 +68,6 @@ public class StoreUIManager : MonoBehaviour
             weaponsWindow.SetActive(true);
             charactersWindow.SetActive(false);
 
-            upgradesButton.SetActive(true);
-
             GetCurrentItemNum();
         }
         else if (windowTypeName == StoreManager.ItemTypes.Character.ToString())
@@ -60,8 +75,6 @@ public class StoreUIManager : MonoBehaviour
             currentWindow = charactersWindow.transform;
             charactersWindow.SetActive(true);
             weaponsWindow.SetActive(false);
-
-            upgradesButton.SetActive(false);
 
             GetCurrentItemNum();
         }
@@ -72,10 +85,11 @@ public class StoreUIManager : MonoBehaviour
         sManager.currentItem =
             currentWindow.transform.GetChild(currentItemNum).GetComponent<StoreItem>();
         UpdateBuyOrEquipButton(sManager.currentItem.bought);
+
+        UpdateMainUI(sManager.currentItem);
     }
 
-    // Check the current window for active obejcts
-    void GetCurrentItemNum()
+    private void GetCurrentItemNum()
     {
         if (currentWindow.childCount == 0)
         {
@@ -100,43 +114,74 @@ public class StoreUIManager : MonoBehaviour
         }
     }
 
-    public void UpdateBuyOrEquipButton(bool equipedd)
+    public void UpdateMainUI(StoreItem currentItem)
+    {
+        UpdateWeaponUpgradeButton(currentItem);
+        UpdateBuyOrEquipButton(currentItem.equipped);
+    }
+
+    private void UpdateWeaponUpgradeButton(StoreItem currentItem)
+    {
+        if (currentItem.type != StoreManager.ItemTypes.Weapon)
+            weaponUpgradesButton.SetActive(false);
+        else
+        {
+            if (currentItem.bought)
+                weaponUpgradesButton.SetActive(true);
+            else
+                weaponUpgradesButton.SetActive(false);
+        }
+    }
+
+    private void UpdateBuyOrEquipButton(bool equipedd)
     {
         if (equipedd)
         {
-            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(true);
-            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(false);
+            buyOrEquipItemButton.transform.GetChild(1).gameObject.SetActive(true);
+            buyOrEquipItemButton.transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
-            buyOrEquipButton.transform.GetChild(0).gameObject.SetActive(true);
-            buyOrEquipButton.transform.GetChild(1).gameObject.SetActive(false);
+            buyOrEquipItemButton.transform.GetChild(0).gameObject.SetActive(true);
+            buyOrEquipItemButton.transform.GetChild(1).gameObject.SetActive(false);
 
-            buyOrEquipButton.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = 
+            buyOrEquipItemButton.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = 
                 sManager.currentItem.cost.ToString();
         }
     }
 
-    public void OpenUpgrades()
+    void UpdateBar(ParameterBar bar, float minValue, float maxValue, float currentValue)
     {
-        upgradesUI.SetActive(true);
-        mainStoreUI.SetActive(false);
+        bar.minValue = minValue;
+        bar.maxValue = maxValue;
+        bar.value = currentValue;
 
-        SetBarsBaseParameters();
-
-        UpdateUpgradeMenu();
+        bar.UpdateBar();
     }
 
-    public void CloseUpgrades()
+
+    #region Weapon Upgrades Methods
+
+    public void OpenWeaponUpgrades()
     {
-        upgradesUI.SetActive(false);
+        weaponsUpgradesUI.SetActive(true);
+        mainStoreUI.SetActive(false);
+
+        SetBaseBarsBaseParameters();
+
+        UpdateWeaponUpgradeMenu();
+    }
+
+    public void CloseWeaponUpgrades()
+    {
+        weaponsUpgradesUI.SetActive(false);
         mainStoreUI.SetActive(true);
 
         sManager.currentItem.GetComponent<Upgrades>().
             UpdateUpgradesAppearance(sManager.currentItem.GetComponent<Gun>());
     }
 
-    public void UpdateUpgradeMenu()
+    public void UpdateWeaponUpgradeMenu()
     {
         Gun currentGun = sManager.currentItem.GetComponent<Gun>();
 
@@ -146,49 +191,89 @@ public class StoreUIManager : MonoBehaviour
 
         coinsIndiactor.text = sManager.coins.ToString();
 
-        UpdateUpgradeCostsAndAppearance();
+        UpdateWeaponUpgradeCostsAndAppearance();
     }
 
-    public void UpdateUpgradeCostsAndAppearance()
+    public void UpdateWeaponUpgradeCostsAndAppearance()
     {
-        float upgradesCost = sManager.CalculateUpgradeCosts();
+        float upgradesCost = sManager.CalculateWeaponUpgradeCosts();
 
         // Determine if has enough money and show that on the cost indicator
-        upgradesCostIndicator.text = upgradesCost.ToString();
+        weaponUpgradesCostIndicator.text = upgradesCost.ToString();
 
         if (sManager.coins > upgradesCost) // Has enough money
-            upgradesCostIndicator.color = Color.black;
+            weaponUpgradesCostIndicator.color = Color.black;
         else
-            upgradesCostIndicator.color = Color.red;
+            weaponUpgradesCostIndicator.color = Color.red;
 
         sManager.currentItem.GetComponent<Upgrades>().UpdateUpgradesAppearance(this);
     }
 
-    public void SetBarsBaseParameters()
+    public void SetWeaponsBarsBaseParameters()
     {
         Gun currentGun = sManager.currentItem.GetComponent<Gun>();
 
-        damageBar.gunBaseValue = currentGun.damage;
+        damageBar.baseValue = currentGun.damage;
         damageBar.logMultilpier = currentGun.damageLogMultilpier;
         damageBar.upgradeCount = currentGun.damageUpgradeCount;
 
 
-        rangeBar.gunBaseValue = currentGun.range;
+        rangeBar.baseValue = currentGun.range;
         rangeBar.logMultilpier = currentGun.rangeLogMultilpier;
         rangeBar.upgradeCount = currentGun.rangeUpgradeCount;
 
-        fireRateBar.gunBaseValue = currentGun.fireRate;
+        fireRateBar.baseValue = currentGun.fireRate;
         fireRateBar.logMultilpier = currentGun.fireRateLogMultilpier;
         fireRateBar.upgradeCount = currentGun.fireRateUpgradeCount;
     }
 
-    void UpdateBar(ParameterBar bar,float minValue,float maxValue,float currentValue)
-    {
-        bar.minValue = minValue;
-        bar.maxValue = maxValue;
-        bar.value = currentValue;
+    #endregion
 
-        bar.UpdateBar();
+    #region Base Upgrades Methods
+
+    public void OpenBaseUpgrades()
+    {
+        baseUpgradesUI.SetActive(true);
+        mainStoreUI.SetActive(false);
+
+        SetBaseBarsBaseParameters();
+
+        UpdateBaseUpgradesMenu();
     }
 
+    public void CloseBaseUpgrades()
+    {
+        baseUpgradesUI.SetActive(false);
+        mainStoreUI.SetActive(true);
+    }
+
+    public void UpdateBaseUpgradesMenu()
+    {
+        //UpdateBar(healthBar,,,);
+
+        coinsIndiactor.text = sManager.coins.ToString();
+
+        UpdateBaseUpgradeCostsAndAppearance();
+    }
+
+    public void UpdateBaseUpgradeCostsAndAppearance()
+    {
+        float upgradesCost = sManager.CalculateBaseUpgradeCosts();
+
+        // Determine if has enough money and show that on the cost indicator
+        baseUpgradesCostIndicator.text = upgradesCost.ToString();
+
+        if (sManager.coins > upgradesCost) // Has enough money
+            baseUpgradesCostIndicator.color = Color.black;
+        else
+            baseUpgradesCostIndicator.color = Color.red;
+    }
+
+    public void SetBaseBarsBaseParameters()
+    {
+     //   healthBar.baseValue = currentGun.damage;
+     //   healthBar.logMultilpier = currentGun.damageLogMultilpier;
+     //   healthBar.upgradeCount = currentGun.damageUpgradeCount;
+    }
+    #endregion
 }
