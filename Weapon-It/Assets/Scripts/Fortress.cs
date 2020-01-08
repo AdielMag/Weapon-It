@@ -3,23 +3,30 @@ using UnityEngine.UI;
 
 public class Fortress : MonoBehaviour
 {
-    public float maxLife = 10;
-    float life = 10;
+    public Slider indicator;
 
-    private void Update()
+    public Transform baseParent;
+
+    GameManager gMan;
+    LevelController levelCon;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            TakeDamage(1);
+        gMan = GameManager.instance;
+        levelCon = LevelController.instance;
+
+        SpawnBase();
+    }
+
+    void SpawnBase()
+    {
+        GameObject currentBase = baseParent.GetChild(gMan.DataManager.storeData.EquippedBase).gameObject;
+
+        Instantiate(currentBase, transform);
     }
 
     public void TakeDamage(int damage)
     {
-        life -= damage;
-
-        if (life <= 0)
-            FortressDestroyed();
-
-        indiactor.value = 1 -( (maxLife - life) / maxLife);
     }
 
     void FortressDestroyed()
@@ -27,14 +34,4 @@ public class Fortress : MonoBehaviour
         levelCon.LevelLost();
     }
 
-    public Slider indiactor;
-
-    LevelController levelCon;
-
-    private void Start()
-    {
-        levelCon = LevelController.instance;
-
-        life = maxLife;
-    }
 }
