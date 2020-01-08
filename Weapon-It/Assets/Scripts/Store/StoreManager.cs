@@ -235,7 +235,7 @@ public class StoreManager : MonoBehaviour
         gMan.LoadScene("Game");
     }
 
-    //Upgrades Variables
+    //Weapon Upgrades Variables
     Gun currentGun;
 
     public int TarDmgUpCount   { get; set; }
@@ -302,38 +302,28 @@ public class StoreManager : MonoBehaviour
         gMan.DataManager.SaveData();
     }
 
+    //Weapon Upgrades Variables
+    Base currentBase;
+
+    public int TarHlthUpCount { get; set; }
+
     // Base Upgrade Methods
     public float CalculateBaseUpgradeCosts()
     {
-        currentGun = currentItem.GetComponent<Gun>();
+        currentBase = currentItem.GetComponent<Base>();
 
         // Get the upgrades count from the parametere bars
-        TarDmgUpCount =
-            uiManager.damageBar.upgradeCount == currentGun.damageUpgradeCount ?
-            0 : uiManager.damageBar.upgradeCount;
-
-        TarRngUpCount =
-            uiManager.rangeBar.upgradeCount == currentGun.rangeUpgradeCount ?
-            0 : uiManager.rangeBar.upgradeCount;
-
-        TarFRUpCount =
-            uiManager.fireRateBar.upgradeCount == currentGun.fireRateUpgradeCount ?
-            0 : uiManager.fireRateBar.upgradeCount;
+        TarHlthUpCount =
+            uiManager.healthBar.upgradeCount == currentBase.healthUpgradeCount ?
+            0 : uiManager.healthBar.upgradeCount;
 
         // Calculate the currentUpgrades Costs
         // Cost = round(baseCost * power(costMultiplier,upgradeCount)
-        float dmgUpCost =
+        float hlthUpCost =
             Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.baseCost);
-        float rngUpCost =
-            Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.baseCost);
-        float frUpCost =
-            Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.baseCost);
+            Mathf.Pow(currentItem.costMultiplier, TarHlthUpCount) - currentItem.baseCost);
 
-        return Mathf.RoundToInt(dmgUpCost + rngUpCost + frUpCost);
-
+        return Mathf.RoundToInt(hlthUpCost);
     }
 
     public void BuyBaseUpgrades()

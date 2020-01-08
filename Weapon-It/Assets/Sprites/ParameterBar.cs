@@ -7,12 +7,6 @@ public class ParameterBar : MonoBehaviour
 {
     public float minValue, maxValue, value;
 
-    // Used to not the player subtract from this value!
-    public float baseValue { get; set; }
-
-    // Get this value from the current Gun
-    public float logMultilpier { get; set; }
-
     // Used to determine the block count that need to be shown.
     public int upgradeCount;
 
@@ -21,6 +15,13 @@ public class ParameterBar : MonoBehaviour
     float valueBlockSize;
 
     public Text valueIndicator;
+    public int decimals = 1;
+
+    // Used to not the player subtract from this value!
+    public float baseValue { get; set; }
+
+    // Get this value from the current Gun
+    public float logMultilpier { get; set; }
 
     [HideInInspector]
     public StoreManager sManager;
@@ -64,10 +65,10 @@ public class ParameterBar : MonoBehaviour
                 blocksParent.GetChild(i).gameObject.SetActive(false);
         }
 
-        float targetValue = (float)System.Math.Round((double)value, 1);
+        float targetValue = (float)System.Math.Round((double)value,decimals);
         valueIndicator.text = targetValue.ToString();
 
-        sManager.uiManager.UpdateWeaponUpgradeCostsAndAppearance();
+        sManager.uiManager.UpdateUpgradeCostAndAppearance();
     }
 
     public void Add()

@@ -56,6 +56,7 @@ public class StoreUIManager : MonoBehaviour
         damageBar.sManager = sManager;
         fireRateBar.sManager = sManager;
         rangeBar.sManager = sManager;
+        healthBar.sManager = sManager;
 
         coinsIndiactor.text = sManager.coins.ToString();
     }
@@ -186,6 +187,16 @@ public class StoreUIManager : MonoBehaviour
     }
 
 
+    // Used by the Parametere bars to update costs and appearance
+    public void UpdateUpgradeCostAndAppearance()
+    {
+        if (sManager.currentItem.type == StoreManager.ItemTypes.Weapon)
+            UpdateWeaponUpgradeCostsAndAppearance();
+
+        else if (sManager.currentItem.type == StoreManager.ItemTypes.Base)
+            UpdateBaseUpgradeCostsAndAppearance();
+    }
+
     #region Weapon Upgrades Methods
 
     public void OpenWeaponUpgrades()
@@ -193,7 +204,7 @@ public class StoreUIManager : MonoBehaviour
         weaponsUpgradesUI.SetActive(true);
         mainStoreUI.SetActive(false);
 
-        SetBaseBarsBaseParameters();
+        SetWeaponsBarsBaseParameters();
 
         UpdateWeaponUpgradeMenu();
     }
@@ -220,7 +231,7 @@ public class StoreUIManager : MonoBehaviour
         UpdateWeaponUpgradeCostsAndAppearance();
     }
 
-    public void UpdateWeaponUpgradeCostsAndAppearance()
+    void UpdateWeaponUpgradeCostsAndAppearance()
     {
         float upgradesCost = sManager.CalculateWeaponUpgradeCosts();
 
@@ -275,14 +286,16 @@ public class StoreUIManager : MonoBehaviour
 
     public void UpdateBaseUpgradesMenu()
     {
-        //UpdateBar(healthBar,,,);
+        Base currentBase = sManager.currentItem.GetComponent<Base>();
+
+        UpdateBar(healthBar, currentBase.MinHealth, currentBase.MaxHealth, currentBase.health);
 
         coinsIndiactor.text = sManager.coins.ToString();
 
         UpdateBaseUpgradeCostsAndAppearance();
     }
 
-    public void UpdateBaseUpgradeCostsAndAppearance()
+    void UpdateBaseUpgradeCostsAndAppearance()
     {
         float upgradesCost = sManager.CalculateBaseUpgradeCosts();
 
@@ -297,9 +310,13 @@ public class StoreUIManager : MonoBehaviour
 
     public void SetBaseBarsBaseParameters()
     {
-     //   healthBar.baseValue = currentGun.damage;
-     //   healthBar.logMultilpier = currentGun.damageLogMultilpier;
-     //   healthBar.upgradeCount = currentGun.damageUpgradeCount;
+        Base currentBase = sManager.currentItem.GetComponent<Base>();
+
+        healthBar.baseValue = currentBase.health;
+        healthBar.logMultilpier = currentBase.healthLogMultiplier;
+        healthBar.upgradeCount = currentBase.healthUpgradeCount;
+
+        Debug.Log(currentBase.healthUpgradeCount);
     }
     #endregion
 }
