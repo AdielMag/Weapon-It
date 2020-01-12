@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5229048019730821886}
   - component: {fileID: 5229048019730821881}
   - component: {fileID: 3131752112082438807}
-  - component: {fileID: 2038022534}
   - component: {fileID: 5229048019730821885}
   m_Layer: 9
   m_Name: Moving Drone
@@ -62,21 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axis: 0
   stopDistance: 5
---- !u!114 &2038022534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229048019730821882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf55f798b977ce4a87a49c55fa1a55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationsMultiplier: {x: 5, y: 6, z: 0}
-  rotationLerpMultiplier: 8
-  reverseRotation: 1
 --- !u!54 &5229048019730821885
 Rigidbody:
   m_ObjectHideFlags: 0

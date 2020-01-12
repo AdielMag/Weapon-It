@@ -44,6 +44,9 @@ public class JsonDataManager : MonoBehaviour
 
     private void CreateNewStoreData()
     {
+        //Temporary - to have lots of money
+        storeData.Coins = 1000000;
+
         // Make new items bought arrays for the first item to be bought 
         storeData.CharactersBought = new int[1];
         storeData.WeaponsBought = new int[1];

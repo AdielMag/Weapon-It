@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5229048019730821886}
+  - component: {fileID: 1140869614989151370}
   - component: {fileID: 5229048019730821881}
-  - component: {fileID: -3470673350965769930}
-  - component: {fileID: 4780256799539826885}
   - component: {fileID: 5229048019730821885}
   m_Layer: 9
   m_Name: Regular Drone
@@ -29,12 +28,27 @@ Transform:
   m_GameObject: {fileID: 5229048019730821882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 6, z: 100}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4020515822389391}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1140869614989151370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5229048019730821882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf55f798b977ce4a87a49c55fa1a55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  movementSpeed: 20
+  stopDistance: 2
 --- !u!135 &5229048019730821881
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -48,34 +62,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.68
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-3470673350965769930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229048019730821882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f92ccc81a8c3b634798c395f43706059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopDistance: 5
---- !u!114 &4780256799539826885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229048019730821882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf55f798b977ce4a87a49c55fa1a55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationsMultiplier: {x: 3, y: 2, z: 2}
-  rotationLerpMultiplier: 12
-  reverseRotation: 0
 --- !u!54 &5229048019730821885
 Rigidbody:
   m_ObjectHideFlags: 0

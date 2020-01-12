@@ -2612,7 +2612,7 @@ PrefabInstance:
     - target: {fileID: 5229048019730821886, guid: 545e1f3d4f79e78488e183426a961322,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35
+      value: 70.31
       objectReference: {fileID: 0}
     - target: {fileID: 5229048019730821886, guid: 545e1f3d4f79e78488e183426a961322,
         type: 3}
@@ -2654,10 +2654,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5229048019730821885, guid: 545e1f3d4f79e78488e183426a961322,
+    - target: {fileID: 1140869614989151370, guid: 545e1f3d4f79e78488e183426a961322,
         type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140869614989151370, guid: 545e1f3d4f79e78488e183426a961322,
+        type: 3}
+      propertyPath: stopDistance
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 545e1f3d4f79e78488e183426a961322, type: 3}
@@ -6293,7 +6298,7 @@ PrefabInstance:
         type: 3}
       propertyPath: fortress
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 152457572}
     - target: {fileID: 4835919588815068046, guid: b1c05adf317a099429af46528c51291a,
         type: 3}
       propertyPath: uIManager

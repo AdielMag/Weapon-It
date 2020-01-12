@@ -14,13 +14,6 @@ public class LevelController : MonoBehaviour
 
     CircleSlider timeLeftSlider;
 
-    [Space]
-    // Array of level gameobejcts that will store the levels prefabs
-    public GameObject[] levelsPrefabs;
-
-    // Spawned level parent - used to call them when needed.
-    GameObject levelsParent;
-
     // Used to control active targets (Count them, disable them)
     public List<Enemy> currentLevelTargets = new List<Enemy>();
     public int activeLevelObjects;
@@ -35,7 +28,6 @@ public class LevelController : MonoBehaviour
         gMan = GameManager.instance;
 
         timeLeftSlider = uIManager.timeLeft;
-        SpawnAllLevels();
 
         currentLevel = gMan.CurrentLevel;
         StartLevel(currentLevel);
@@ -59,16 +51,6 @@ public class LevelController : MonoBehaviour
 
     }
 
-    public void SpawnAllLevels()
-    {
-        levelsParent = new GameObject("Levels Parent");
-
-        Vector3 levelStartPos = levelsParent.transform.position = Vector3.forward * 150;
-
-        foreach (GameObject level in levelsPrefabs)
-            Instantiate(level, levelsParent.transform).SetActive(false);
-    }
-
     public void StartLevel(int levelNum)
     {
         if (levelNum <= 0)
@@ -76,21 +58,11 @@ public class LevelController : MonoBehaviour
             Debug.LogWarning("Level num too low - change it!");
             return;
         }
-        else if(levelNum > levelsPrefabs.Length)
-        {
-            Debug.LogWarning("Level num too High - change it!");
-            return;
-        }
 
         activeLevelObjects = 0;
 
         levelStartTime = Time.time;
-        levelMaxTime = levelTime(levelNum)
-            // + Level time offset that was set in the level prefab
-            + levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().timeOffset;
-
-        levelsParent.transform.GetChild(levelNum - 1).gameObject.SetActive(true);
-        levelsParent.transform.GetChild(levelNum - 1).GetComponent<Level>().SpawnLevel();
+        levelMaxTime = levelTime(levelNum);
 
         currentLevel = levelNum;    // Set current level 
 
@@ -100,17 +72,18 @@ public class LevelController : MonoBehaviour
     float levelTime(int levelNum)
     {
         // Get the level last obejct
-        Transform lastObject =
-            levelsParent.transform.GetChild(levelNum - 1).
-            GetChild(levelsParent.transform.GetChild(levelNum - 1).childCount -1);
+        // Transform lastObject =
+        //     levelsParent.transform.GetChild(levelNum - 1).
+        //     GetChild(levelsParent.transform.GetChild(levelNum - 1).childCount -1);
 
         // time = distance / speed
 
-        float time =
-            Vector3.Distance(transform.position, lastObject.position)
-            / 17;
+        //  float time =
+        //      Vector3.Distance(transform.position, lastObject.position)
+        //      / 17;
 
-        return time;
+        // return time;
+        return 0;
     }
 
     public void LevelWon()
