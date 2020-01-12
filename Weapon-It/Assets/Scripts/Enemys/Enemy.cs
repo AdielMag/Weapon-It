@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     #region Main
 
     #region Variables
+    [Header("Main Variables")]
     public int health;
 
     // Used to get the current fortress
@@ -37,9 +38,10 @@ public class Enemy : MonoBehaviour
     #region Movement
 
     #region Variables
+    [Header("Movement Variables")]
+    public bool movingAside;
     public float movementSpeed;
     public float stopDistance;
-    public bool movingAside;
     public float floorWidth;
     // Needed to calculate the target future pos for accurate projectiles
     public Rigidbody Rigidbody { get; set; }
