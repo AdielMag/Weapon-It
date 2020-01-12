@@ -7,7 +7,9 @@ public class Drone : Enemy
     private void Start()
     {
         LevelCon = LevelController.instance;
-        rigidbody = GetComponent<Rigidbody>();
+        Rigidbody = GetComponent<Rigidbody>();
+
+        Init();
     }
 
     private void FixedUpdate()

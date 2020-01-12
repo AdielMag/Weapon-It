@@ -39,18 +39,36 @@ public class Enemy : MonoBehaviour
     #region Variables
     public float movementSpeed;
     public float stopDistance;
+    public bool movingAside;
 
     // Needed to calculate the target future pos for accurate projectiles
-    public Rigidbody rigidbody { get; set; }
+    public Rigidbody Rigidbody { get; set; }
     #endregion
 
     #region Methods
-    float currentSpeed;
+    float forwardSpeed, sideSpeed;
+    Vector3 sideDirection;
     public void HandleMovement()
     {
-        currentSpeed = StopMoving() ? 0 : movementSpeed;
+        forwardSpeed = StopMoving() ? 0 : movementSpeed;
+        sideSpeed = StopMoving() ? 0 : movementSpeed / 2;
 
-        rigidbody.velocity = -Vector3.forward * currentSpeed;
+        if (movingAside)
+            HandleSideMovement();
+
+        Rigidbody.velocity = -Vector3.forward * forwardSpeed + sideDirection * sideSpeed;
+
+    }
+
+    void HandleSideMovement()
+    {
+        // if gets to the right side - go left
+        if (transform.position.x > 9)
+            sideDirection = -Vector3.forward + Vector3.left;
+
+        // if get to the left side - go right
+        else if (transform.position.x < -9)
+            sideDirection = -Vector3.forward + Vector3.right;
     }
 
     float distanceToStopPos;
@@ -75,5 +93,14 @@ public class Enemy : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
+    #region MonoBehaviour Methods
+    public void Init()
+    {
+        if (movingAside)
+            sideDirection = Random.Range(0f, 1f) > .5f ?
+                Vector3.right + Vector3.forward : Vector3.left + Vector3.forward;
+    }
     #endregion
 }
