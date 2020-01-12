@@ -15,6 +15,7 @@ public class Mech : Enemy
     private void FixedUpdate()
     {
         HandleMovement();
+        HandleAttacking();
     }
 
 }

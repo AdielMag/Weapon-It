@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, -Vector3.forward);
 
-        // Check if theres any object withing stoping ditance
+        // Check if Going to collide with object
         if (Physics.SphereCast(ray, 2, 1))
             return true;
 
@@ -109,12 +109,55 @@ public class Enemy : MonoBehaviour
 
     #endregion
 
-    #region MonoBehaviour Methods
+    #region Attacking
+
+    #region Variables
+    [Header("Attack Variables")]
+    public int damage;
+    public float attackSpeed;
+    public bool ranged;
+    public LayerMask attackLayerMask;
+    #endregion
+
+    #region Methods
+    public void HandleAttacking()
+    {
+        if (!CanShoot())
+            return;
+
+        Ray ray = new Ray(transform.position, transform.forward);
+
+        if (Physics.Raycast(ray, stopDistance, attackLayerMask))
+        {
+            if (ranged)
+                return;
+
+            Attack();
+        }
+    }
+
+    void Attack()
+    {
+        // If not attacking via range
+        if (ranged)
+            return;
+
+        LevelCon.fortress.TakeDamage(damage);
+    }
+
+    float attackStartTime;
+    bool CanShoot()
+    {
+        return true;
+    }
+    #endregion
+
+    #endregion
+
     public void Init()
     {
         if (movingAside)
             sideDirection = Random.Range(0f, 1f) > .5f ?
                 Vector3.right : Vector3.left;
     }
-    #endregion
 }
