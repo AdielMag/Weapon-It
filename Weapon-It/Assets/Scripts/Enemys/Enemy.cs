@@ -62,13 +62,25 @@ public class Enemy : MonoBehaviour
 
     void HandleSideMovement()
     {
-        // if gets to the right side - go left
-        if (transform.position.x > 9)
-            sideDirection = -Vector3.forward + Vector3.left;
+        // Moving Left
+        if (sideDirection == Vector3.left)
+        {
+            // Check if reached the left end
+            if (transform.position.x < -9)
+                sideDirection = Vector3.right; // Change dir to right
+        }
+        // Moving Right
+        else
+        {
+            // Check if reached the right end
+            if (transform.position.x > 9)
+                sideDirection = Vector3.left; // Change dir to left
+        }
 
-        // if get to the left side - go right
-        else if (transform.position.x < -9)
-            sideDirection = -Vector3.forward + Vector3.right;
+        Ray ray = new Ray(transform.position, sideDirection);
+        // Check collision
+        if (Physics.SphereCast(ray, 2, 1))
+            sideDirection = -sideDirection;
     }
 
     float distanceToStopPos;
@@ -100,7 +112,7 @@ public class Enemy : MonoBehaviour
     {
         if (movingAside)
             sideDirection = Random.Range(0f, 1f) > .5f ?
-                Vector3.right + Vector3.forward : Vector3.left + Vector3.forward;
+                Vector3.right : Vector3.left;
     }
     #endregion
 }
