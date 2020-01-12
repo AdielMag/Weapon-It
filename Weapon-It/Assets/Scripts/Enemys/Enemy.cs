@@ -96,13 +96,12 @@ public class Enemy : MonoBehaviour
 
         // Check if reached stoping distance
         else if (transform.position.z - stopDistance < stopDistance)
+        {
+            inAttackRange = true;
             return true;
+        }        
 
-        // Check the distance to the stoping distnce
-        distanceToStopPos = transform.position.z - stopDistance;
-        if (distanceToStopPos < stopDistance)
-            return true;
-
+        inAttackRange = false;
         return false;
     }
     #endregion
@@ -114,26 +113,20 @@ public class Enemy : MonoBehaviour
     #region Variables
     [Header("Attack Variables")]
     public int damage;
-    public float attackSpeed;
+    public float attackPerMin;
     public bool ranged;
-    public LayerMask attackLayerMask;
     #endregion
 
     #region Methods
     public void HandleAttacking()
     {
-        if (!CanShoot())
+        if (!CanAttack())
             return;
 
-        Ray ray = new Ray(transform.position, transform.forward);
+        if (ranged)
+            return;
 
-        if (Physics.Raycast(ray, stopDistance, attackLayerMask))
-        {
-            if (ranged)
-                return;
-
-            Attack();
-        }
+        Attack();
     }
 
     void Attack()
@@ -143,12 +136,19 @@ public class Enemy : MonoBehaviour
             return;
 
         LevelCon.fortress.TakeDamage(damage);
+        attackTime = Time.time;
+
+        Debug.Log(LevelCon.fortress.currentBase.health);
     }
 
-    float attackStartTime;
-    bool CanShoot()
+    float attackTime;
+    bool inAttackRange;
+    bool CanAttack()
     {
-        return true;
+        if (inAttackRange && attackTime + (60 / attackPerMin) < Time.time)
+            return true;
+        else
+            return false;
     }
     #endregion
 

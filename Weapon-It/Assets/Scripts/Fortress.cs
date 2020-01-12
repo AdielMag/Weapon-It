@@ -7,6 +7,8 @@ public class Fortress : MonoBehaviour
 
     public Transform baseParent;
 
+    public Base currentBase;
+
     GameManager gMan;
     LevelController levelCon;
 
@@ -20,13 +22,17 @@ public class Fortress : MonoBehaviour
 
     void SpawnBase()
     {
-        GameObject currentBase = baseParent.GetChild(gMan.DataManager.storeData.EquippedBase).gameObject;
+        GameObject targetBase = baseParent.GetChild(gMan.DataManager.storeData.EquippedBase).gameObject;
 
-        Instantiate(currentBase, transform);
+        currentBase = Instantiate(targetBase, transform).GetComponent<Base>();
     }
 
     public void TakeDamage(int damage)
     {
+        currentBase.health -= damage;
+
+        if (currentBase.health <= 0)
+            FortressDestroyed();
     }
 
     void FortressDestroyed()
