@@ -106,7 +106,7 @@ public class WeaponController : MonoBehaviour
                 currentWeapon.Attack(currentWeapon.transform.forward);
 
             // Set target Indicator location.
-            targetIndicator.SetLocation(currentTarget.transform.position);
+            targetIndicator.SetLocation(currentTarget.transform);
             targetIndicator.onTarget = true;
         }
         else

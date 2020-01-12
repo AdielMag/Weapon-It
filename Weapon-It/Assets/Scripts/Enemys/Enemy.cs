@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
     public float movementSpeed;
     public float stopDistance;
     public bool movingAside;
-
+    public float floorWidth;
     // Needed to calculate the target future pos for accurate projectiles
     public Rigidbody Rigidbody { get; set; }
     #endregion
@@ -66,14 +66,14 @@ public class Enemy : MonoBehaviour
         if (sideDirection == Vector3.left)
         {
             // Check if reached the left end
-            if (transform.position.x < -9)
+            if (transform.position.x < -floorWidth)
                 sideDirection = Vector3.right; // Change dir to right
         }
         // Moving Right
         else
         {
             // Check if reached the right end
-            if (transform.position.x > 9)
+            if (transform.position.x > floorWidth)
                 sideDirection = Vector3.left; // Change dir to left
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Drone : Enemy
+public class Mech : Enemy
 {
     private void Start()
     {
