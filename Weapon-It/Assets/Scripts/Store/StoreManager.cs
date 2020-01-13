@@ -182,14 +182,7 @@ public class StoreManager : MonoBehaviour
 
     public void BuyOrEquipWeapon()
     {
-        // Check if has enough money
-        if (currentItem.cost > coins)
-            return;
-
-        coins -= currentItem.cost;
-
         // Check if bought
-        Debug.Log(currentItem);
         if (currentItem.bought)
         {
             // Equip item
@@ -219,10 +212,14 @@ public class StoreManager : MonoBehaviour
         }
         else
         {
+            // Check if has enough money
+            if (currentItem.cost > coins)
+                return;
+
+            coins -= currentItem.cost;
+
             // Buy item
             currentItem.bought = true;
-
-            // Add to item num to store data
         }
 
         uiManager.UpdateMainUI(currentItem);
@@ -296,7 +293,7 @@ public class StoreManager : MonoBehaviour
 
         currentGun.UpdateGunParameters();
 
-        uiManager.SetBaseBarsBaseParameters();
+        uiManager.SetWeaponsBarsBaseParameters();
         uiManager.UpdateWeaponUpgradeMenu();
 
         gMan.DataManager.SaveData();

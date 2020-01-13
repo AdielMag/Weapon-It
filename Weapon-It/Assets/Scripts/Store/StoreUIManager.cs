@@ -132,6 +132,8 @@ public class StoreUIManager : MonoBehaviour
         UpdateWeaponUpgradeButton(currentItem);
         UpdateBaseUpgradeButton(currentItem);
         UpdateBuyOrEquipButton(currentItem.equipped, currentItem.bought);
+
+        coinsIndiactor.text = sManager.coins.ToString();
     }
 
     private void UpdateWeaponUpgradeButton(StoreItem currentItem)
