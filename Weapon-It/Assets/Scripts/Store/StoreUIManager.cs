@@ -97,7 +97,7 @@ public class StoreUIManager : MonoBehaviour
         // Update Current item
         sManager.currentItem =
             currentWindow.transform.GetChild(currentItemNum).GetComponent<StoreItem>();
-        UpdateBuyOrEquipButton(sManager.currentItem.bought);
+        UpdateBuyOrEquipButton(sManager.currentItem.equipped, sManager.currentItem.bought);
 
         UpdateMainUI(sManager.currentItem);
     }
@@ -131,7 +131,7 @@ public class StoreUIManager : MonoBehaviour
     {
         UpdateWeaponUpgradeButton(currentItem);
         UpdateBaseUpgradeButton(currentItem);
-        UpdateBuyOrEquipButton(currentItem.equipped);
+        UpdateBuyOrEquipButton(currentItem.equipped, currentItem.bought);
     }
 
     private void UpdateWeaponUpgradeButton(StoreItem currentItem)
@@ -160,17 +160,25 @@ public class StoreUIManager : MonoBehaviour
         }
     }
 
-    private void UpdateBuyOrEquipButton(bool equipedd)
+    private void UpdateBuyOrEquipButton(bool equipedd,bool bought)
     {
         if (equipedd)
         {
-            buyOrEquipItemButton.transform.GetChild(1).gameObject.SetActive(true);
             buyOrEquipItemButton.transform.GetChild(0).gameObject.SetActive(false);
+            buyOrEquipItemButton.transform.GetChild(1).gameObject.SetActive(false);
+            buyOrEquipItemButton.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else if (bought)
+        {
+            buyOrEquipItemButton.transform.GetChild(0).gameObject.SetActive(false);
+            buyOrEquipItemButton.transform.GetChild(1).gameObject.SetActive(true);
+            buyOrEquipItemButton.transform.GetChild(2).gameObject.SetActive(false);
         }
         else
         {
             buyOrEquipItemButton.transform.GetChild(0).gameObject.SetActive(true);
             buyOrEquipItemButton.transform.GetChild(1).gameObject.SetActive(false);
+            buyOrEquipItemButton.transform.GetChild(2).gameObject.SetActive(false);
 
             buyOrEquipItemButton.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = 
                 sManager.currentItem.cost.ToString();

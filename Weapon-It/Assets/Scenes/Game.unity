@@ -724,6 +724,7 @@ MonoBehaviour:
   indicator: {fileID: 1332457049}
   baseParent: {fileID: 6073066200875625469, guid: 2ca4e051b9d2bf34f9b5e55d8d197830,
     type: 3}
+  currentBase: {fileID: 0}
 --- !u!1 &184028801
 GameObject:
   m_ObjectHideFlags: 0
@@ -2381,6 +2382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: movementSpeed
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140869614989151370, guid: 545e1f3d4f79e78488e183426a961322,
+        type: 3}
+      propertyPath: attackPerMin
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 545e1f3d4f79e78488e183426a961322, type: 3}

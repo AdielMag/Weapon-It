@@ -138,7 +138,7 @@ public class StoreManager : MonoBehaviour
             }
 
             // Update gun upgrades parameters
-            Base _base = uiManager.weaponsWindow.transform.GetChild(i).GetComponent<Base>();
+            Base _base = uiManager.basesWindow.transform.GetChild(i).GetComponent<Base>();
             StoreData sData = gMan.DataManager.storeData;
 
             sData.baseHealthUpgradesCount[i] = _base.healthUpgradeCount;
