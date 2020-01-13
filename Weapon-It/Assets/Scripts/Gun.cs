@@ -63,6 +63,8 @@ public class Gun : Weapon
 
         CalculateGunBaseParameters();
 
+        SetEquippedMuzzle();
+
         GetComponent<Upgrades>().UpdateUpgradesAppearance(this);
     }
 
@@ -88,11 +90,11 @@ public class Gun : Weapon
             Quaternion.Euler(muzzle.forward));
 
         // Spawn Bullet and add projectileForward. 
-        // ProjectileForward being calculated in 'PlayerController'.
+        // ProjectileForward being calculated in 'Weapon Controller'.
         objPool.SpawnFromPool(
             "Simple_Bullet",
             muzzle.transform.position,
-            Quaternion.Euler(muzzle.forward))
+            muzzle.rotation)
             .GetComponent<Rigidbody>().AddForce(
             projectileForward * 60, ForceMode.VelocityChange);
         // BE CAREFUL AND DONT CHANGE FORWARD MULTIPLIER!
@@ -146,6 +148,18 @@ public class Gun : Weapon
         fireRate = Mathf.Log(fireRateUpgradeCount, fireRateLogMultilpier) + MinFireRate;
     }
 
+    void SetEquippedMuzzle()
+    {
+        for (int i = 0; i < muzzle.childCount; i++)
+        {
+            if (muzzle.GetChild(i).gameObject.activeSelf)
+            {
+                muzzle = muzzle.GetChild(i).GetChild(0);
+                break;
+            }
+        }
+    }
+
     // IK objects used for this gun
     [Header("IK objects for this gun")]
     public Transform shoulderIK;
@@ -153,7 +167,6 @@ public class Gun : Weapon
 
     public override void Attack(Vector3 projectileForward)
     {
-        //base.Attack(projectileForward);
         Shoot(projectileForward);
     }
 

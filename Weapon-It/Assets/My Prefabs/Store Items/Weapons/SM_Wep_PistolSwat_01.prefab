@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
+  gunNum: 0
   damage: 1
   range: 60
   fireRate: 1.7
