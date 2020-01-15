@@ -41,35 +41,54 @@ public class MoneyManager
                 Hightest cost  10%
                 Second          7%
                 Third           3%
-
-        Current character cost 15%
+                           Total = 55%
 
         Current base cost 20%
             Base upgrades Costs 10%
                 Health  10%
+                           Total = 30%
+
+        Current character cost 15%
+
+                           Total = 100%
+
          */
 
+        #region Items
         // Items weighted costs
         float weaponWC = weapon.cost * .35f;
         float characterWC = weapon.cost * .15f;
         float baseWC = weapon.cost * .20f;
+        #endregion
 
-        // Upgrades weighted costs
+        #region Weapon Upgrades
+        // Weapon upgrades weighted costs
         Gun currentGun = weapon.GetComponent<Gun>();
 
         // Get the costs
-        float[] weaponUpgrades = new float[3];
-        weaponUpgrades[0] = UpgradeCost(weapon, storeData.weaponsDamageUpgradesCount[currentGun.gunNum - 1] + 1);
-        weaponUpgrades[1] = UpgradeCost(weapon, storeData.weaponsFireRateUpgradesCount[currentGun.gunNum - 1] + 1);
-        weaponUpgrades[2] = UpgradeCost(weapon, storeData.weaponsRangeUpgradesCount[currentGun.gunNum - 1] + 1);
+        float[] weaponUpgradesWC = new float[3];
+        weaponUpgradesWC[0] = UpgradeCost(weapon, storeData.weaponsDamageUpgradesCount[currentGun.gunNum - 1] + 1);
+        weaponUpgradesWC[1] = UpgradeCost(weapon, storeData.weaponsFireRateUpgradesCount[currentGun.gunNum - 1] + 1);
+        weaponUpgradesWC[2] = UpgradeCost(weapon, storeData.weaponsRangeUpgradesCount[currentGun.gunNum - 1] + 1);
 
-        // Set calculated values via checking the highest cost ones
-        Array.Sort(weaponUpgrades);
-        Array.Reverse(weaponUpgrades);
+        // Sort the values by highest cost first
+        Array.Sort(weaponUpgradesWC);
+        Array.Reverse(weaponUpgradesWC);
 
-        foreach (float num in weaponUpgrades)
-            Debug.Log(num);
+        weaponUpgradesWC[0] *= .1f;
+        weaponUpgradesWC[1] *= .07f;
+        weaponUpgradesWC[2] *= .03f;
+        #endregion
 
-        return 0;
+        #region Base Upgrades
+        Base currentBase = _base.GetComponent<Base>();
+
+        float baseHealthUpgradeWC = UpgradeCost(_base, storeData.baseHealthUpgradesCount[currentBase.baseNum - 1] + 1);
+
+        baseHealthUpgradeWC *= .1f;
+        #endregion
+
+        Debug.Log(Mathf.RoundToInt(weaponWC + characterWC + baseWC + weaponUpgradesWC[0] + weaponUpgradesWC[1] + weaponUpgradesWC[2] + baseHealthUpgradeWC));
+        return Mathf.RoundToInt(weaponWC + characterWC + baseWC + weaponUpgradesWC[0] + weaponUpgradesWC[1] + weaponUpgradesWC[2] + baseHealthUpgradeWC);
     }
 }
