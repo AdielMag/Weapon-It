@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 2351054}
   - component: {fileID: 6877725295964209991}
   - component: {fileID: 5376711093432364269}
+  - component: {fileID: 5639038244829643542}
   m_Layer: 0
   m_Name: SM_Wep_RifleSwat_01
   m_TagString: Untagged
@@ -612,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
+  gunNum: 2
   damage: 5
   range: 100
   fireRate: 3
@@ -629,6 +631,23 @@ MonoBehaviour:
   canShoot: 0
   shoulderIK: {fileID: 1219725138725248743}
   leftHandIdleIK: {fileID: 5974810394880463630}
+--- !u!114 &5639038244829643542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcc61aaa2180eb46808eaabb11fd47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 20
+  type: 0
+  bought: 0
+  equipped: 0
+  costMultiplier: 1.15
 --- !u!1 &1816994526833492561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,15 +1203,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17e0e9ad16bb2134691e8480a2a7f6aa, type: 3}
---- !u!1 &991316711681229698 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1269379747689934, guid: 17e0e9ad16bb2134691e8480a2a7f6aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 992303963595945548}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &996783736328438242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4528563636631470, guid: 17e0e9ad16bb2134691e8480a2a7f6aa,
+    type: 3}
+  m_PrefabInstance: {fileID: 992303963595945548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &991316711681229698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1269379747689934, guid: 17e0e9ad16bb2134691e8480a2a7f6aa,
     type: 3}
   m_PrefabInstance: {fileID: 992303963595945548}
   m_PrefabAsset: {fileID: 0}
@@ -1529,15 +1548,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2cc551f0384c4f44afd2420ca841cd9, type: 3}
---- !u!1 &5333006288596382368 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 161846, guid: c2cc551f0384c4f44afd2420ca841cd9,
-    type: 3}
-  m_PrefabInstance: {fileID: 5333006288596257430}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5333006288596157454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 429720, guid: c2cc551f0384c4f44afd2420ca841cd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 5333006288596257430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5333006288596382368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 161846, guid: c2cc551f0384c4f44afd2420ca841cd9,
     type: 3}
   m_PrefabInstance: {fileID: 5333006288596257430}
   m_PrefabAsset: {fileID: 0}
@@ -1687,15 +1706,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f088f933bf15e241848275adb71180c, type: 3}
---- !u!1 &5555771991503524000 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 167354, guid: 3f088f933bf15e241848275adb71180c,
-    type: 3}
-  m_PrefabInstance: {fileID: 5555771991503625498}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5555771991503757430 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 408940, guid: 3f088f933bf15e241848275adb71180c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5555771991503625498}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5555771991503524000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 167354, guid: 3f088f933bf15e241848275adb71180c,
     type: 3}
   m_PrefabInstance: {fileID: 5555771991503625498}
   m_PrefabAsset: {fileID: 0}
@@ -1908,10 +1927,6 @@ PrefabInstance:
     - target: {fileID: 1859184709852912, guid: d7d113d527530ce48b1831e0bde80f99, type: 3}
       propertyPath: m_Name
       value: SM_Wep_Attachment_Rack_03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859184709852912, guid: d7d113d527530ce48b1831e0bde80f99, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4936928262999102, guid: d7d113d527530ce48b1831e0bde80f99, type: 3}
       propertyPath: m_LocalPosition.x

@@ -139,9 +139,9 @@ public class Gun : Weapon
 
     public void UpdateGunParameters()
     {
-        damageUpgradeCount = gMan.DataManager.storeData.weaponsDamageUpgradesCount[gunNum];
-        rangeUpgradeCount = gMan.DataManager.storeData.weaponsRangeUpgradesCount[gunNum];
-        fireRateUpgradeCount = gMan.DataManager.storeData.weaponsFireRateUpgradesCount[gunNum];
+        damageUpgradeCount = gMan.dataManager.storeData.weaponsDamageUpgradesCount[gunNum];
+        rangeUpgradeCount = gMan.dataManager.storeData.weaponsRangeUpgradesCount[gunNum];
+        fireRateUpgradeCount = gMan.dataManager.storeData.weaponsFireRateUpgradesCount[gunNum];
 
         damage = Mathf.Log(damageUpgradeCount, damageLogMultilpier) + MinDamage;
         range = Mathf.Log(rangeUpgradeCount, rangeLogMultilpier) + MinRange;

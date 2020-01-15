@@ -91,11 +91,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 80.357994
       objectReference: {fileID: 0}
-    - target: {fileID: 666467348709231888, guid: 7e140394e95da314a9a63645d1c4a08f,
-        type: 3}
-      propertyPath: gunNum
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e140394e95da314a9a63645d1c4a08f, type: 3}
 --- !u!4 &2104142119110614671 stripped
@@ -158,11 +153,6 @@ PrefabInstance:
     - target: {fileID: 4940183928090928, guid: 724a05e511db5fa418277d5c2270f07d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 88.47199
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308743933970041218, guid: 724a05e511db5fa418277d5c2270f07d,
-        type: 3}
-      propertyPath: gunNum
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724a05e511db5fa418277d5c2270f07d, type: 3}
@@ -227,181 +217,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 80.34599
       objectReference: {fileID: 0}
-    - target: {fileID: 3815124544826859116, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: gunNum
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[0].requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[1].requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[2].requirements.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[3].requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[4].requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[5].requirements.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[6].requirements.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[0].requirements.Array.data[0].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[0].requirements.Array.data[0].precentageValue
-      value: 25.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[0].requirements.Array.data[1].precentageValue
-      value: 12.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[1].requirements.Array.data[0].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[1].requirements.Array.data[0].precentageValue
-      value: 71.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[1].requirements.Array.data[1].precentageValue
-      value: 40.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[2].requirements.Array.data[0].precentageValue
-      value: 72.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[2].requirements.Array.data[1].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[2].requirements.Array.data[1].precentageValue
-      value: 90.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[2].requirements.Array.data[2].type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[2].requirements.Array.data[2].precentageValue
-      value: 62.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[3].requirements.Array.data[0].type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[3].requirements.Array.data[0].precentageValue
-      value: 25.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[3].requirements.Array.data[1].precentageValue
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[4].requirements.Array.data[0].type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[4].requirements.Array.data[0].precentageValue
-      value: 81.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[4].requirements.Array.data[1].type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[4].requirements.Array.data[1].precentageValue
-      value: 89.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[5].requirements.Array.data[0].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[5].requirements.Array.data[0].precentageValue
-      value: 40.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[5].requirements.Array.data[1].type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[5].requirements.Array.data[1].precentageValue
-      value: 65.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[6].requirements.Array.data[0].precentageValue
-      value: 58.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[6].requirements.Array.data[1].type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[6].requirements.Array.data[1].precentageValue
-      value: 72.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[6].requirements.Array.data[2].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102073121875131420, guid: 5e41505804200314f8239458ca194166,
-        type: 3}
-      propertyPath: upgrades.Array.data[6].requirements.Array.data[2].precentageValue
-      value: 90.8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e41505804200314f8239458ca194166, type: 3}
 --- !u!4 &3355967333674314588 stripped
@@ -464,11 +279,6 @@ PrefabInstance:
     - target: {fileID: 410062, guid: 8be86b86610077a47be3a9a99fc8f89e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 88.711
-      objectReference: {fileID: 0}
-    - target: {fileID: 5376711093432364269, guid: 8be86b86610077a47be3a9a99fc8f89e,
-        type: 3}
-      propertyPath: gunNum
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be86b86610077a47be3a9a99fc8f89e, type: 3}
@@ -533,11 +343,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 81.034
       objectReference: {fileID: 0}
-    - target: {fileID: 1801359095980395337, guid: f78357a78db3dfd4e8c638310767dd56,
-        type: 3}
-      propertyPath: gunNum
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f78357a78db3dfd4e8c638310767dd56, type: 3}
 --- !u!4 &4722001673313539328 stripped
@@ -600,11 +405,6 @@ PrefabInstance:
     - target: {fileID: 445782, guid: f7397c12ba664d24989c07eba4e79ecb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 81.034
-      objectReference: {fileID: 0}
-    - target: {fileID: 4285987515372961746, guid: f7397c12ba664d24989c07eba4e79ecb,
-        type: 3}
-      propertyPath: gunNum
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7397c12ba664d24989c07eba4e79ecb, type: 3}

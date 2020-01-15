@@ -45,7 +45,7 @@ public class Base : MonoBehaviour
 
     public void UpdateParameters()
     {
-        healthUpgradeCount = gMan.DataManager.storeData.baseHealthUpgradesCount[baseNum];
+        healthUpgradeCount = gMan.dataManager.storeData.baseHealthUpgradesCount[baseNum];
 
         health = Mathf.RoundToInt(Mathf.Log(healthUpgradeCount, healthLogMultiplier) + MinHealth);
     }

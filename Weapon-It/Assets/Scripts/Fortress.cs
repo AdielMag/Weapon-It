@@ -22,7 +22,7 @@ public class Fortress : MonoBehaviour
 
     void SpawnBase()
     {
-        GameObject targetBase = baseParent.GetChild(gMan.DataManager.storeData.EquippedBase).gameObject;
+        GameObject targetBase = baseParent.GetChild(gMan.dataManager.storeData.EquippedBase).gameObject;
 
         currentBase = Instantiate(targetBase, transform).GetComponent<Base>();
     }

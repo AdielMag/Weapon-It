@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 2301690}
   - component: {fileID: 7102073121875131420}
   - component: {fileID: 3815124544826859116}
+  - component: {fileID: 6741462898176890889}
   m_Layer: 0
   m_Name: SM_Wep_PistolSwat_01
   m_TagString: Untagged
@@ -256,25 +257,57 @@ MonoBehaviour:
   upgrades:
   - name: Simple Redot
     obj: {fileID: 4972688067896421518}
-    requirements: []
+    requirements:
+    - type: 1
+      precentageValue: 25.3
+    - type: 0
+      precentageValue: 12.7
   - name: Advanced Redot
     obj: {fileID: 4103583021421941935}
-    requirements: []
+    requirements:
+    - type: 1
+      precentageValue: 71.2
+    - type: 0
+      precentageValue: 40.5
   - name: Scope
     obj: {fileID: 2196255240200509153}
-    requirements: []
+    requirements:
+    - type: 0
+      precentageValue: 72.1
+    - type: 1
+      precentageValue: 90.8
+    - type: 2
+      precentageValue: 62.1
   - name: Simple Silencer
     obj: {fileID: 4143662213185444880}
-    requirements: []
+    requirements:
+    - type: 2
+      precentageValue: 25.2
+    - type: 0
+      precentageValue: 30
   - name: Advanced Silencer
     obj: {fileID: 7086926106725122179}
-    requirements: []
+    requirements:
+    - type: 2
+      precentageValue: 81.7
+    - type: 0
+      precentageValue: 89.7
   - name: Simple Laser
     obj: {fileID: 9167843953844773712}
-    requirements: []
+    requirements:
+    - type: 1
+      precentageValue: 40.3
+    - type: 2
+      precentageValue: 65.2
   - name: Advanced Laser
     obj: {fileID: 9007260639371482447}
-    requirements: []
+    requirements:
+    - type: 0
+      precentageValue: 58.9
+    - type: 2
+      precentageValue: 72.9
+    - type: 1
+      precentageValue: 90.8
 --- !u!114 &3815124544826859116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
-  gunNum: 0
+  gunNum: 1
   damage: 1
   range: 60
   fireRate: 1.7
@@ -306,6 +339,23 @@ MonoBehaviour:
   canShoot: 0
   shoulderIK: {fileID: 7326871120035980042}
   leftHandIdleIK: {fileID: 1139643972448885071}
+--- !u!114 &6741462898176890889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcc61aaa2180eb46808eaabb11fd47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 5
+  type: 0
+  bought: 0
+  equipped: 0
+  costMultiplier: 1.15
 --- !u!1 &188506
 GameObject:
   m_ObjectHideFlags: 0

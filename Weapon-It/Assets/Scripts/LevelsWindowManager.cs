@@ -10,7 +10,7 @@ public class LevelsWindowManager : MonoBehaviour
     private void Start()
     {
         gMan = GameManager.instance;
-        maxLevel = gMan.DataManager.gamePlayData.playerHighestLevel;
+        maxLevel = gMan.dataManager.gamePlayData.playerHighestLevel;
 
         levelPrefab = transform.GetChild(3).GetChild(0).gameObject;
 

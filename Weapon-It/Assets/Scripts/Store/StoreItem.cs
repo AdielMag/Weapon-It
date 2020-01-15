@@ -12,6 +12,5 @@ public class StoreItem : MonoBehaviour
     public bool equipped;
 
     [Header("Upgrades Variables")]
-    public float baseCost;
     public float costMultiplier;
 }

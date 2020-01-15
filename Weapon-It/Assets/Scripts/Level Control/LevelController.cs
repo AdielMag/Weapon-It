@@ -19,18 +19,25 @@ public class LevelController : MonoBehaviour
     public int activeLevelObjects;
 
     [Space]
+    public PlayerController pCon;
     public Fortress fortress;
+
+    MoneyManager mMan = new MoneyManager();
 
     GameManager gMan;
 
     private void Start()
     {
         gMan = GameManager.instance;
+        gMan.LCon = this;
 
         timeLeftSlider = uIManager.timeLeft;
 
         currentLevel = gMan.CurrentLevel;
         StartLevel(currentLevel);
+
+        mMan.Init();
+        mMan.LevelCoinsReward();
     }
 
     private void Update()
@@ -90,10 +97,10 @@ public class LevelController : MonoBehaviour
     {
         HideAllTargets();
 
-        if (currentLevel + 1 >= gMan.DataManager.gamePlayData.playerHighestLevel)
+        if (currentLevel + 1 >= gMan.dataManager.gamePlayData.playerHighestLevel)
         {
-            gMan.DataManager.gamePlayData.playerHighestLevel = currentLevel + 1;
-            gMan.DataManager.SaveData();
+            gMan.dataManager.gamePlayData.playerHighestLevel = currentLevel + 1;
+            gMan.dataManager.SaveData();
         }
         
         uIManager.LevelCompleted();

@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 23543548735062024}
   - component: {fileID: 365224756232194974}
   - component: {fileID: 1308743933970041218}
+  - component: {fileID: 7646970509050594437}
   m_Layer: 0
   m_Name: SM_Wep_MachinePistol_Gen2_01
   m_TagString: Untagged
@@ -350,6 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pCon: {fileID: 0}
+  gunNum: 5
   damage: 23
   range: 90
   fireRate: 4
@@ -367,6 +369,23 @@ MonoBehaviour:
   canShoot: 0
   shoulderIK: {fileID: 8646499531352405541}
   leftHandIdleIK: {fileID: 4586548687806640792}
+--- !u!114 &7646970509050594437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333114963308854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcc61aaa2180eb46808eaabb11fd47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1250
+  type: 0
+  bought: 0
+  equipped: 0
+  costMultiplier: 1.15
 --- !u!1 &1597203421068184
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,6 +968,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4748160850954230, guid: 55ff4510a8f242c428a6fefd45ff3514, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4748160850954230, guid: 55ff4510a8f242c428a6fefd45ff3514, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.09494
       objectReference: {fileID: 0}
@@ -956,21 +979,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.57374996
       objectReference: {fileID: 0}
-    - target: {fileID: 4748160850954230, guid: 55ff4510a8f242c428a6fefd45ff3514, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.9
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55ff4510a8f242c428a6fefd45ff3514, type: 3}
---- !u!4 &3010114534602627333 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4748160850954230, guid: 55ff4510a8f242c428a6fefd45ff3514,
-    type: 3}
-  m_PrefabInstance: {fileID: 3014822768897253107}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3014360930884566383 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1095244423750556, guid: 55ff4510a8f242c428a6fefd45ff3514,
+    type: 3}
+  m_PrefabInstance: {fileID: 3014822768897253107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3010114534602627333 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4748160850954230, guid: 55ff4510a8f242c428a6fefd45ff3514,
     type: 3}
   m_PrefabInstance: {fileID: 3014822768897253107}
   m_PrefabAsset: {fileID: 0}
@@ -1266,15 +1285,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70f2e5584cfb58c40a774b996ba23a43, type: 3}
---- !u!4 &4899397147768499930 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4562020149097974, guid: 70f2e5584cfb58c40a774b996ba23a43,
-    type: 3}
-  m_PrefabInstance: {fileID: 4894870312534694700}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4894808116233436680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1064951031964964, guid: 70f2e5584cfb58c40a774b996ba23a43,
+    type: 3}
+  m_PrefabInstance: {fileID: 4894870312534694700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4899397147768499930 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4562020149097974, guid: 70f2e5584cfb58c40a774b996ba23a43,
     type: 3}
   m_PrefabInstance: {fileID: 4894870312534694700}
   m_PrefabAsset: {fileID: 0}
@@ -1624,10 +1643,6 @@ PrefabInstance:
     - target: {fileID: 1367703048483420, guid: f96d2731f2c30534b95a906cbfc46278, type: 3}
       propertyPath: m_Name
       value: SM_Wep_Attachment_Scope_01 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1367703048483420, guid: f96d2731f2c30534b95a906cbfc46278, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4210972527538176, guid: f96d2731f2c30534b95a906cbfc46278, type: 3}
       propertyPath: m_LocalPosition.x

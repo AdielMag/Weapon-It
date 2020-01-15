@@ -14,14 +14,17 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        DataManager = GetComponent<JsonDataManager>();
+        dataManager = GetComponent<JsonDataManager>();
     }
 
-    ObjectPooler objPooler;
-
+    // Variables that being set by external scripts
     public StoreManager SMan { get; set; }
+    public LevelController LCon { get; set; }
 
-    public JsonDataManager DataManager { get; private set; }
+    // Variables that this script sets.
+    ObjectPooler objPooler;
+    [HideInInspector]
+    public JsonDataManager dataManager;
 
     private void Start()
     {
@@ -32,7 +35,6 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
-
 
     // The level con gets it when the level starts do know which level to start.
     public int CurrentLevel { get; set; }

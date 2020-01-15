@@ -30,32 +30,32 @@ public class StoreManager : MonoBehaviour
     // Get data from json file and set bought and equiped items
     void LoadStoreData()
     {
-        gMan.DataManager.LoadData();
+        gMan.dataManager.LoadData();
 
         /* 
          * ! Need to have data for each item type - check 'jsonDataManager.StoreData'
          * ! Need to do this for each item type
          */
 
-        coins = gMan.DataManager.storeData.Coins;
+        coins = gMan.dataManager.storeData.Coins;
 
         // Check each item in 'Weapons window'
         for (int i = 0; i < uiManager.weaponsWindow.transform.childCount; i++)
         {
             // Check each item in data manager
-            for (int y = 0; y < gMan.DataManager.storeData.WeaponsBought.Length; y++)
+            for (int y = 0; y < gMan.dataManager.storeData.WeaponsBought.Length; y++)
             {
-                if (i == gMan.DataManager.storeData.WeaponsBought[y])
+                if (i == gMan.dataManager.storeData.WeaponsBought[y])
                     uiManager.weaponsWindow.transform.GetChild(i).GetComponent<StoreItem>().bought = true;
             }
 
             // Check if the weapon equipped in data manager equals this one
-            if (i == gMan.DataManager.storeData.EquippedWeapon)
+            if (i == gMan.dataManager.storeData.EquippedWeapon)
                 uiManager.weaponsWindow.transform.GetChild(i).GetComponent<StoreItem>().equipped = true;
 
             // Update gun upgrades parameters
             Gun gun = uiManager.weaponsWindow.transform.GetChild(i).GetComponent<Gun>();
-            StoreData sData = gMan.DataManager.storeData;
+            StoreData sData = gMan.dataManager.storeData;
 
             gun.damageUpgradeCount =    sData.weaponsDamageUpgradesCount[i];
             gun.rangeUpgradeCount =     sData.weaponsRangeUpgradesCount[i];
@@ -65,37 +65,37 @@ public class StoreManager : MonoBehaviour
         for (int i = 0; i < uiManager.charactersWindow.transform.childCount; i++) 
         {
             // Check each item in data manager
-            for (int y = 0; y < gMan.DataManager.storeData.CharactersBought.Length; y++)
+            for (int y = 0; y < gMan.dataManager.storeData.CharactersBought.Length; y++)
             {
                 // If the data manager num matches this item - it means its bought
-                if (i == gMan.DataManager.storeData.CharactersBought[y])
+                if (i == gMan.dataManager.storeData.CharactersBought[y])
                     uiManager.charactersWindow.transform.GetChild(i).GetComponent<StoreItem>().bought = true;
             }
 
             // Check if the character equipped in data manager equals this one
-            if (i == gMan.DataManager.storeData.EquippedCharacter)
+            if (i == gMan.dataManager.storeData.EquippedCharacter)
                 uiManager.charactersWindow.transform.GetChild(i).GetComponent<StoreItem>().equipped = true;
         }
         // Check each item in 'Character window'
         for (int i = 0; i < uiManager.basesWindow.transform.childCount; i++)
         {
             // Check each item in data manager
-            for (int y = 0; y < gMan.DataManager.storeData.BasesBought.Length; y++)
+            for (int y = 0; y < gMan.dataManager.storeData.BasesBought.Length; y++)
             {
                 // If the data manager num matches this item - it means its bought
-                if (i == gMan.DataManager.storeData.BasesBought[y])
+                if (i == gMan.dataManager.storeData.BasesBought[y])
                     uiManager.basesWindow.transform.GetChild(i).GetComponent<StoreItem>().bought = true;
             }
 
             // Check if the character equipped in data manager equals this one
-            if (i == gMan.DataManager.storeData.EquippedBase)
+            if (i == gMan.dataManager.storeData.EquippedBase)
                 uiManager.basesWindow.transform.GetChild(i).GetComponent<StoreItem>().equipped = true;
         }
     }
 
     void SaveStoreData()
     {
-        gMan.DataManager.storeData.Coins = coins;
+        gMan.dataManager.storeData.Coins = coins;
 
         // Need to it for each item type
 
@@ -108,7 +108,7 @@ public class StoreManager : MonoBehaviour
                 characterList.Add(i);         // Add to list
             }
         }
-        gMan.DataManager.storeData.CharactersBought = characterList.ToArray(); // Transform list to array
+        gMan.dataManager.storeData.CharactersBought = characterList.ToArray(); // Transform list to array
 
         // Weapons 
         List<int> weaponsList = new List<int>();    // Make list to add the bought item nums
@@ -121,7 +121,7 @@ public class StoreManager : MonoBehaviour
 
             // Update gun upgrades parameters
             Gun gun = uiManager.weaponsWindow.transform.GetChild(i).GetComponent<Gun>();
-            StoreData sData = gMan.DataManager.storeData;
+            StoreData sData = gMan.dataManager.storeData;
 
             sData.weaponsDamageUpgradesCount[i] =   gun.damageUpgradeCount;
             sData.weaponsRangeUpgradesCount[i] =    gun.rangeUpgradeCount;
@@ -139,14 +139,14 @@ public class StoreManager : MonoBehaviour
 
             // Update gun upgrades parameters
             Base _base = uiManager.basesWindow.transform.GetChild(i).GetComponent<Base>();
-            StoreData sData = gMan.DataManager.storeData;
+            StoreData sData = gMan.dataManager.storeData;
 
             sData.baseHealthUpgradesCount[i] = _base.healthUpgradeCount;
         }
 
-        gMan.DataManager.storeData.WeaponsBought = weaponsList.ToArray();  // Transform list to array
+        gMan.dataManager.storeData.WeaponsBought = weaponsList.ToArray();  // Transform list to array
 
-        gMan.DataManager.SaveData();
+        gMan.dataManager.SaveData();
     }
 
     public void NextItem()
@@ -192,21 +192,21 @@ public class StoreManager : MonoBehaviour
 
                 case ItemTypes.Weapon:
                     // Uneqip equipped item
-                    uiManager.weaponsWindow.transform.GetChild(gMan.DataManager.storeData.EquippedWeapon) 
+                    uiManager.weaponsWindow.transform.GetChild(gMan.dataManager.storeData.EquippedWeapon) 
                         .GetComponent<StoreItem>().equipped = false;
                     // Equip current item
                     currentItem.equipped = true;
                     // Set equipped weapon in data manager
-                    gMan.DataManager.storeData.EquippedWeapon = uiManager.currentItemNum;
+                    gMan.dataManager.storeData.EquippedWeapon = uiManager.currentItemNum;
                     break;
                 case ItemTypes.Character:
                     // Uneqip equipped item
-                    uiManager.charactersWindow.transform.GetChild(gMan.DataManager.storeData.EquippedCharacter)    
+                    uiManager.charactersWindow.transform.GetChild(gMan.dataManager.storeData.EquippedCharacter)    
                         .GetComponent<StoreItem>().equipped = false;
                     // Equip current item
                     currentItem.equipped = true;
                     // Set equipped character in data manager
-                    gMan.DataManager.storeData.EquippedCharacter = uiManager.currentItemNum;
+                    gMan.dataManager.storeData.EquippedCharacter = uiManager.currentItemNum;
                     break;
             }
         }
@@ -261,14 +261,14 @@ public class StoreManager : MonoBehaviour
         // Calculate the currentUpgrades Costs
         // Cost = round(baseCost * power(costMultiplier,upgradeCount)
         float dmgUpCost =
-            Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.baseCost);
+            Mathf.Ceil(currentItem.cost *
+            Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.cost);
         float rngUpCost =
-            Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.baseCost);
+            Mathf.Ceil(currentItem.cost *
+            Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.cost);
         float frUpCost =
-            Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.baseCost);
+            Mathf.Ceil(currentItem.cost *
+            Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.cost);
 
         return Mathf.RoundToInt(dmgUpCost + rngUpCost + frUpCost);
 
@@ -284,19 +284,19 @@ public class StoreManager : MonoBehaviour
 
         coins -= (int)CalculateWeaponUpgradeCosts();
 
-        gMan.DataManager.storeData.Coins = coins;
+        gMan.dataManager.storeData.Coins = coins;
 
         // Save the upgrade data on the json files
-        gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGun.gunNum] = uiManager.damageBar.upgradeCount;
-        gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGun.gunNum] = uiManager.rangeBar.upgradeCount;
-        gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGun.gunNum] = uiManager.fireRateBar.upgradeCount;
+        gMan.dataManager.storeData.weaponsDamageUpgradesCount[currentGun.gunNum] = uiManager.damageBar.upgradeCount;
+        gMan.dataManager.storeData.weaponsRangeUpgradesCount[currentGun.gunNum] = uiManager.rangeBar.upgradeCount;
+        gMan.dataManager.storeData.weaponsFireRateUpgradesCount[currentGun.gunNum] = uiManager.fireRateBar.upgradeCount;
 
         currentGun.UpdateGunParameters();
 
         uiManager.SetWeaponsBarsBaseParameters();
         uiManager.UpdateWeaponUpgradeMenu();
 
-        gMan.DataManager.SaveData();
+        gMan.dataManager.SaveData();
     }
 
     //Weapon Upgrades Variables
@@ -317,8 +317,8 @@ public class StoreManager : MonoBehaviour
         // Calculate the currentUpgrades Costs
         // Cost = round(baseCost * power(costMultiplier,upgradeCount)
         float hlthUpCost =
-            Mathf.Ceil(currentItem.baseCost *
-            Mathf.Pow(currentItem.costMultiplier, TarHlthUpCount) - currentItem.baseCost);
+            Mathf.Ceil(currentItem.cost *
+            Mathf.Pow(currentItem.costMultiplier, TarHlthUpCount) - currentItem.cost);
 
         return Mathf.RoundToInt(hlthUpCost);
     }
@@ -333,18 +333,18 @@ public class StoreManager : MonoBehaviour
 
         coins -= (int)CalculateWeaponUpgradeCosts();
 
-        gMan.DataManager.storeData.Coins = coins;
+        gMan.dataManager.storeData.Coins = coins;
 
         // Save the upgrade data on the json files
-        gMan.DataManager.storeData.weaponsDamageUpgradesCount[currentGun.gunNum] = uiManager.damageBar.upgradeCount;
-        gMan.DataManager.storeData.weaponsRangeUpgradesCount[currentGun.gunNum] = uiManager.rangeBar.upgradeCount;
-        gMan.DataManager.storeData.weaponsFireRateUpgradesCount[currentGun.gunNum] = uiManager.fireRateBar.upgradeCount;
+        gMan.dataManager.storeData.weaponsDamageUpgradesCount[currentGun.gunNum] = uiManager.damageBar.upgradeCount;
+        gMan.dataManager.storeData.weaponsRangeUpgradesCount[currentGun.gunNum] = uiManager.rangeBar.upgradeCount;
+        gMan.dataManager.storeData.weaponsFireRateUpgradesCount[currentGun.gunNum] = uiManager.fireRateBar.upgradeCount;
 
         currentGun.UpdateGunParameters();
 
         uiManager.SetBaseBarsBaseParameters();
         uiManager.UpdateWeaponUpgradeMenu();
 
-        gMan.DataManager.SaveData();
+        gMan.dataManager.SaveData();
     }
 }

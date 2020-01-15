@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
     {        
         // Get the equipped character
         GameObject playerCharacterPrefab =
-            charactersItemsParent.GetChild(gMan.DataManager.storeData.EquippedCharacter).gameObject;
+            charactersItemsParent.GetChild(gMan.dataManager.storeData.EquippedCharacter).gameObject;
 
         Transform currentCharacter = Instantiate(playerCharacterPrefab, transform).transform;
         currentCharacter.gameObject.SetActive(true); // Set it active
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
         // Get equipped weapon
         GameObject playerWeaponPrefab =
-            weaponsItemsParent.GetChild(gMan.DataManager.storeData.EquippedWeapon).gameObject;
+            weaponsItemsParent.GetChild(gMan.dataManager.storeData.EquippedWeapon).gameObject;
 
         GameObject currentWeapon = Instantiate(playerWeaponPrefab, characterRightHand);
         currentWeapon.SetActive(true); // Set it active
