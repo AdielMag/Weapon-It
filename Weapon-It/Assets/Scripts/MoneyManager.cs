@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoneyManager 
+public class MoneyManager
 {
     GameManager gMan;
 
@@ -30,8 +30,18 @@ public class MoneyManager
                  Mathf.Pow(currentItem.costMultiplier, upgradeCount) - currentItem.cost);
     }
 
-    public int LevelCoinsReward()
+    public int LevelCoinsReward(int levelNum)
     {
+        int rewardBase = 4;
+        float rewradMultiplier = 1.15f;
+
+        Debug.Log(Mathf.CeilToInt(rewardBase * Mathf.Pow(rewradMultiplier, levelNum) - rewardBase));
+        return Mathf.CeilToInt(rewardBase * Mathf.Pow(rewradMultiplier, levelNum) - rewardBase);
+
+        // לא פעיל
+        // ||
+        // \/
+        #region ממוצע משוקלל
         // Update Store data
         storeData = gMan.dataManager.storeData;
 
@@ -90,5 +100,6 @@ public class MoneyManager
 
         Debug.Log(Mathf.RoundToInt(weaponWC + characterWC + baseWC + weaponUpgradesWC[0] + weaponUpgradesWC[1] + weaponUpgradesWC[2] + baseHealthUpgradeWC));
         return Mathf.RoundToInt(weaponWC + characterWC + baseWC + weaponUpgradesWC[0] + weaponUpgradesWC[1] + weaponUpgradesWC[2] + baseHealthUpgradeWC);
+#endregion
     }
 }

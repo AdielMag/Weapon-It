@@ -37,7 +37,7 @@ public class LevelController : MonoBehaviour
         StartLevel(currentLevel);
 
         mMan.Init();
-        mMan.LevelCoinsReward();
+        mMan.LevelCoinsReward(currentLevel);
     }
 
     private void Update()
