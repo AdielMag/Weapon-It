@@ -15,6 +15,8 @@ public class StoreManager : MonoBehaviour
     GameManager gMan;
     public StoreUIManager uiManager;
 
+    MoneyManager monMan = new MoneyManager();
+
     private void Start()
     {
         gMan = GameManager.instance;
@@ -260,15 +262,15 @@ public class StoreManager : MonoBehaviour
 
         // Calculate the currentUpgrades Costs
         // Cost = round(baseCost * power(costMultiplier,upgradeCount)
-        float dmgUpCost =
-            Mathf.Ceil(currentItem.cost *
-            Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.cost);
-        float rngUpCost =
-            Mathf.Ceil(currentItem.cost *
-            Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.cost);
-        float frUpCost =
-            Mathf.Ceil(currentItem.cost *
-            Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.cost);
+        float dmgUpCost = monMan.UpgradeCost(currentItem, TarDmgUpCount);
+        //    Mathf.Ceil(currentItem.cost *
+        //    Mathf.Pow(currentItem.costMultiplier, TarDmgUpCount) - currentItem.cost);
+        float rngUpCost = monMan.UpgradeCost(currentItem, TarRngUpCount);
+        //    Mathf.Ceil(currentItem.cost *
+        //    Mathf.Pow(currentItem.costMultiplier, TarRngUpCount) - currentItem.cost);
+        float frUpCost = monMan.UpgradeCost(currentItem, TarFRUpCount);
+        //    Mathf.Ceil(currentItem.cost *
+        //    Mathf.Pow(currentItem.costMultiplier, TarFRUpCount) - currentItem.cost);
 
         return Mathf.RoundToInt(dmgUpCost + rngUpCost + frUpCost);
 

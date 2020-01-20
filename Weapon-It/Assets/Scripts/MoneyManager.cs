@@ -26,8 +26,18 @@ public class MoneyManager
 
     public float UpgradeCost(StoreItem currentItem, int upgradeCount)
     {
-        return Mathf.Ceil(currentItem.cost *
-                 Mathf.Pow(currentItem.costMultiplier, upgradeCount) - currentItem.cost);
+        if (upgradeCount == 0)
+            return 0;
+
+        float targetCost = new float();
+
+        for (int i = 1; i < upgradeCount; i++)
+        {
+            targetCost += Mathf.Ceil(currentItem.cost * Mathf.Pow(currentItem.costMultiplier, i) - currentItem.cost / 1.5f);
+        }
+
+        return targetCost;
+                
     }
 
     public int LevelCoinsReward(int levelNum)
