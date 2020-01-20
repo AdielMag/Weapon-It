@@ -131,16 +131,15 @@ public class WeaponController : MonoBehaviour
             currentTarget.transform.position);
 
         // If the target is close - set the bullet speed super fast (to get current pos)
-        if (distanceFromTarget < 40)
+        // if (distanceFromTarget < 0)
 
-            travelTime = distanceFromTarget / 600;
-        else
-            // Calculae travel time
-            travelTime = distanceFromTarget / 60;
+        //    travelTime = distanceFromTarget / 600;
+        //else
+        // Calculae travel time
+        travelTime = distanceFromTarget / 72;
 
         /* 
          * FuturePosition = 
-         * Y offset
          * currentTargetPosition +
          * targetVelocity(movmentDirection and force) *
          * travelTime
