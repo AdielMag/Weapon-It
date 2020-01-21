@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8918177617440129904}
   - component: {fileID: 6011238905558084820}
   m_Layer: 9
-  m_Name: Side Moving Drone
+  m_Name: Drone_Side Moving
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,11 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf55f798b977ce4a87a49c55fa1a55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 4
   movingAside: 1
-  movementSpeed: 12
-  stopDistance: 4
+  movementSpeed: 15
+  stopDistance: 8
   floorWidth: 8.5
+  damage: 1
+  attackPerMin: 3
+  ranged: 0
 --- !u!54 &8918177617440129904
 Rigidbody:
   m_ObjectHideFlags: 0

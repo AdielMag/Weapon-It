@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4090599020646326451}
   - component: {fileID: 4090599020646326453}
   m_Layer: 9
-  m_Name: Exploding Drone
+  m_Name: Drone_Exploding
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,11 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf55f798b977ce4a87a49c55fa1a55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  movementSpeed: 17
-  stopDistance: 4
+  health: 2
   movingAside: 0
+  movementSpeed: 24
+  stopDistance: 5
   floorWidth: 7.6
+  damage: 3
+  attackPerMin: 1
+  ranged: 0
 --- !u!54 &4090599020646326451
 Rigidbody:
   m_ObjectHideFlags: 0
