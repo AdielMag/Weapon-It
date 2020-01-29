@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4090599020646326448}
   - component: {fileID: 9187584599849148100}
   - component: {fileID: 4090599020646326451}
-  - component: {fileID: 4090599020646326453}
+  - component: {fileID: 2045169467189614296}
   m_Layer: 9
   m_Name: Drone_Exploding
   m_TagString: Target
@@ -50,7 +50,9 @@ MonoBehaviour:
   movingAside: 0
   movementSpeed: 24
   stopDistance: 5
-  floorWidth: 7.6
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 6967
   damage: 3
   attackPerMin: 1
   ranged: 0
@@ -70,8 +72,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!135 &4090599020646326453
-SphereCollider:
+--- !u!65 &2045169467189614296
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -81,7 +83,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.36
+  m_Size: {x: 0.6, y: 0.6, z: 0.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &9204118330714652455
 PrefabInstance:

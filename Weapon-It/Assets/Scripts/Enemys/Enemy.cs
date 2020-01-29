@@ -42,7 +42,6 @@ public class Enemy : MonoBehaviour
     public bool movingAside;
     public float movementSpeed;
     public float stopDistance;
-    public float floorWidth;
     // Needed to calculate the target future pos for accurate projectiles
     public Rigidbody Rigidbody { get; set; }
     #endregion
@@ -50,59 +49,50 @@ public class Enemy : MonoBehaviour
     #region Methods
     float forwardSpeed, sideSpeed;
     Vector3 sideDirection;
+    Collider collider;
+    public LayerMask collisionLayerMask;
     public void HandleMovement()
     {
-        forwardSpeed = StopMoving() ? 0 : movementSpeed;
-        sideSpeed = StopMoving() ? 0 : movementSpeed / 2;
-
         if (movingAside)
             HandleSideMovement();
 
-        Rigidbody.velocity = -Vector3.forward * forwardSpeed + sideDirection * sideSpeed;
+        HandleCollisions();
 
+        Rigidbody.velocity = -Vector3.forward * forwardSpeed + sideDirection * sideSpeed;
     }
 
     void HandleSideMovement()
     {
-        // Moving Left
-        if (sideDirection == Vector3.left)
-        {
-            // Check if reached the left end
-            if (transform.position.x < -floorWidth)
-                sideDirection = Vector3.right; // Change dir to right
-        }
-        // Moving Right
-        else
-        {
-            // Check if reached the right end
-            if (transform.position.x > floorWidth)
-                sideDirection = Vector3.left; // Change dir to left
-        }
-
-        Ray ray = new Ray(transform.position, sideDirection);
         // Check collision
-        if (Physics.SphereCast(ray, 2, 1))
-            sideDirection = -sideDirection;
+        if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents, Vector3.right, Quaternion.identity, .2f, collisionLayerMask))
+            sideDirection = Vector3.left;
+        else if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents, Vector3.left, Quaternion.identity, .2f, collisionLayerMask))
+            sideDirection = Vector3.right;
     }
 
     float distanceToStopPos;
-    bool StopMoving()
+    void HandleCollisions()
     {
-        Ray ray = new Ray(transform.position, -Vector3.forward);
-
-        // Check if Going to collide with object
-        if (Physics.SphereCast(ray, 2, 1))
-            return true;
+        // Check forward collision
+        if (Physics.BoxCast(collider.bounds.center, collider.bounds.extents,
+                -Vector3.forward, Quaternion.identity, .3f, collisionLayerMask))
+        {
+            forwardSpeed = 0;
+        }
 
         // Check if reached stoping distance
         else if (transform.position.z - stopDistance < stopDistance)
         {
             inAttackRange = true;
-            return true;
-        }        
-
-        inAttackRange = false;
-        return false;
+            forwardSpeed = 0;
+            sideSpeed = 0;
+        }
+        else
+        {
+            inAttackRange = false;
+            forwardSpeed = movementSpeed;
+            sideSpeed = movementSpeed / 2;
+        }
     }
     #endregion
 
@@ -138,7 +128,7 @@ public class Enemy : MonoBehaviour
         LevelCon.fortress.TakeDamage(damage);
         attackTime = Time.time;
 
-        Debug.Log(LevelCon.fortress.currentBase.health);
+        Debug.Log(transform.gameObject.name);
     }
 
     float attackTime;
@@ -156,6 +146,7 @@ public class Enemy : MonoBehaviour
 
     public void Init()
     {
+        collider = GetComponent<Collider>();
         if (movingAside)
             sideDirection = Random.Range(0f, 1f) > .5f ?
                 Vector3.right : Vector3.left;

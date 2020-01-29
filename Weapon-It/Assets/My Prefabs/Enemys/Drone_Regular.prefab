@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5229048019730821886}
   - component: {fileID: 1140869614989151370}
-  - component: {fileID: 5229048019730821881}
   - component: {fileID: 5229048019730821885}
+  - component: {fileID: 3406481448027211481}
   m_Layer: 9
   m_Name: Drone_Regular
   m_TagString: Target
@@ -47,26 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  movingAside: 0
+  movingAside: 1
   movementSpeed: 18
-  stopDistance: 8
-  floorWidth: 0
+  stopDistance: 6
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 6967
   damage: 1
   attackPerMin: 1
   ranged: 0
---- !u!135 &5229048019730821881
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229048019730821882}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.68
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5229048019730821885
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,6 +72,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &3406481448027211481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5229048019730821882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.51, y: 0.8, z: 0.76}
+  m_Center: {x: 0, y: -0.04, z: 0}
 --- !u!1001 &1830459637
 PrefabInstance:
   m_ObjectHideFlags: 0

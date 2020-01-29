@@ -10,9 +10,8 @@ public class ParameterBar : MonoBehaviour
     // Used to determine the block count that need to be shown.
     public int upgradeCount;
 
-    public Transform blocksParent;
-    Color origBlockColor;
-    float valueBlockSize;
+    public RectTransform blockIndicator;
+    float blockSize;
 
     public Text valueIndicator;
     public int decimals = 1;
@@ -28,9 +27,7 @@ public class ParameterBar : MonoBehaviour
 
     private void Awake()
     {
-        blocksParent = GetComponentInChildren<GridLayoutGroup>().transform;
-
-        origBlockColor = blocksParent.GetChild(0).GetComponent<Image>().color;
+        blockSize = blockIndicator.rect.width / 15;
     }
 
     private void Start()
@@ -40,29 +37,22 @@ public class ParameterBar : MonoBehaviour
 
     public void UpdateBar()
     {
-        for(int i = 0; i< blocksParent.childCount; i++)
+        // Determine if update the current upgrade indicator or just the cost one
+        for (int i = 0; i < upgradeCount +1; i++)
         {
-            if (i < upgradeCount)
-            {
-                blocksParent.GetChild(i).gameObject.SetActive(true);
+            float baseWidth = blockIndicator.rect.position.x + blockSize * i;
 
-                // Determine its color
-                float logValue = Mathf.Log(i +1, logMultilpier) + minValue;
-                if (logValue > baseValue)
-                {
-                    Color newColor = origBlockColor;
-                    newColor.g *= .6f;
-                    blocksParent.GetChild(i).gameObject.GetComponent<Image>().color = newColor;
-                    blocksParent.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().color = newColor;
-                }
-                else
-                {
-                    blocksParent.GetChild(i).gameObject.GetComponent<Image>().color = origBlockColor;
-                    blocksParent.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().color = origBlockColor;
-                }
-            }
+            float logValue = Mathf.Log(i, logMultilpier) + minValue;
+            if (logValue > baseValue)
+                blockIndicator.GetChild(0).GetComponent<RectTransform>()
+                    .SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, baseWidth);
             else
-                blocksParent.GetChild(i).gameObject.SetActive(false);
+            {
+                blockIndicator.GetChild(0).GetComponent<RectTransform>()
+                    .SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, baseWidth);
+                blockIndicator.GetChild(1).GetComponent<RectTransform>()
+                    .SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, baseWidth);
+            }
         }
 
         float targetValue = (float)System.Math.Round((double)value,decimals);
@@ -111,7 +101,7 @@ public class ParameterBar : MonoBehaviour
 
         int startingUpgradeCount = upgradeCount;
 
-        for(int i = startingUpgradeCount; i < blocksParent.childCount; i++)
+        for(int i = startingUpgradeCount; i < 15; i++)
         {
             upgradeCount++;
             if(sManager.coins < sManager.CalculateWeaponUpgradeCosts())

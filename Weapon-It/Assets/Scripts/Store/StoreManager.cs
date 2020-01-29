@@ -15,7 +15,8 @@ public class StoreManager : MonoBehaviour
     GameManager gMan;
     public StoreUIManager uiManager;
 
-    MoneyManager monMan = new MoneyManager();
+    [HideInInspector]
+    public MoneyManager monMan = new MoneyManager();
 
     private void Start()
     {

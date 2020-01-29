@@ -50,7 +50,9 @@ MonoBehaviour:
   movingAside: 0
   movementSpeed: 22
   stopDistance: 7
-  floorWidth: 7.6
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 6967
   damage: 4
   attackPerMin: 1
   ranged: 0

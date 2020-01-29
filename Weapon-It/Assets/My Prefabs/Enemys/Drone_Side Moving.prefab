@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8918177617440129907}
   - component: {fileID: 4361695471458008327}
   - component: {fileID: 8918177617440129904}
-  - component: {fileID: 6011238905558084820}
+  - component: {fileID: 528238671271269213}
   m_Layer: 9
   m_Name: Drone_Side Moving
   m_TagString: Target
@@ -49,8 +49,10 @@ MonoBehaviour:
   health: 4
   movingAside: 1
   movementSpeed: 15
-  stopDistance: 8
-  floorWidth: 8.5
+  stopDistance: 6
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 6967
   damage: 1
   attackPerMin: 3
   ranged: 0
@@ -70,8 +72,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!135 &6011238905558084820
-SphereCollider:
+--- !u!65 &528238671271269213
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -81,8 +83,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.28, y: 0.37, z: 1.17}
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!1001 &5785656708294345001
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -50,7 +50,9 @@ MonoBehaviour:
   movingAside: 1
   movementSpeed: 15
   stopDistance: 8
-  floorWidth: 7.6
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 6967
   damage: 1
   attackPerMin: 4
   ranged: 0
@@ -81,8 +83,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.72, y: 1.6, z: 5.14}
-  m_Center: {x: 0, y: 0.92, z: 0}
+  m_Size: {x: 2.41, y: 1.6, z: 5.55}
+  m_Center: {x: 0, y: 0.92, z: -0.16}
 --- !u!1001 &6791629273642534497
 PrefabInstance:
   m_ObjectHideFlags: 0
